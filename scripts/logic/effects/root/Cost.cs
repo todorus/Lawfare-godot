@@ -1,0 +1,29 @@
+using Godot;
+using Lawfare.scripts.logic.effects.property;
+using Lawfare.scripts.logic.@event;
+using Lawfare.scripts.subject;
+using Lawfare.scripts.subject.quantities;
+using AmountProvider = Lawfare.scripts.logic.effects.property.amounts.AmountProvider;
+
+namespace Lawfare.scripts.logic.effects.root;
+
+[GlobalClass]
+public partial class Cost : Resource
+{
+    [Export] public AmountProvider AmountProvider;
+
+    [Export] public Property Property;
+
+    public bool CanMeet(GameEvent gameEvent, ISubject subject, int multiplier = 1)
+    {
+        var amount = AmountProvider.GetAmount(gameEvent, subject);
+        var subjectValue = subject.Available(Property, gameEvent);
+        return subjectValue >= amount * multiplier;
+    }
+
+    public PropertyAddEffect.PropertyAddChange Stage(GameEvent gameEvent, ISubject subject)
+    {
+        var amount = AmountProvider.GetAmount(gameEvent, subject);
+        return new PropertyAddEffect.PropertyAddChange(gameEvent.Space, Property, -amount, subject);
+    }
+}
