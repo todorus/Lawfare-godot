@@ -1,0 +1,26 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="scripts\dice\DicePool.cs.uid" />
+    <Content Include="scripts\dice\DicePoolExt.cs.uid" />
+    <Content Include="scripts\dice\DiceRoll.cs.uid" />
+    <Content Include="scripts\dice\DieRoll.cs.uid" />
+    <Content Include="scripts\dice\SkillPool.cs.uid" />
+    <Content Include="scripts\subject\factions\Allegiances.cs.uid" />
+    <Content Include="scripts\subject\factions\Controlled.cs.uid" />
+    <Content Include="scripts\subject\factions\Faction.cs.uid" />
+    <Content Include="scripts\subject\factions\FactionExt.cs.uid" />
+    <Content Include="scripts\subject\quantities\Category.cs.uid" />
+    <Content Include="scripts\subject\quantities\IAvailable.cs.uid" />
+    <Content Include="scripts\subject\quantities\Property.cs.uid" />
+    <Content Include="scripts\subject\quantities\PropertyConfig.cs.uid" />
+    <Content Include="scripts\subject\quantities\Quantities.cs.uid" />
+    <Content Include="scripts\subject\quantities\Quantity.cs.uid" />
+    <Content Include="scripts\subject\quantities\Skill.cs.uid" />
+    <Content Include="scripts\subject\quantities\SkillQuantity.cs.uid" />
+  </ItemGroup>
+</Project>
