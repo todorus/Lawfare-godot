@@ -1,6 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbwxvmo6277pw"]
+[gd_scene load_steps=10 format=3 uid="uid://cbwxvmo6277pw"]
 
-[ext_resource type="Texture2D" uid="uid://pd4yhcj3vqta" path="res://data/lawyers/lawyer1.png" id="1_lpavh"]
+[ext_resource type="Script" uid="uid://mxuq1pto8vy4" path="res://scripts/ui/character/TeamDisplay.cs" id="1_i1kge"]
+[ext_resource type="PackedScene" uid="uid://rtdumsb4nhvl" path="res://scenes/character.tscn" id="2_ogvvj"]
+[ext_resource type="Script" uid="uid://p2w0mheipgfs" path="res://scripts/characters/Team.cs" id="3_3ufgy"]
+[ext_resource type="Resource" uid="uid://bq8kmrasa7whw" path="res://data/lawyers/Lawyer1.tres" id="3_tqw82"]
+[ext_resource type="Script" uid="uid://cpgdywaelog6m" path="res://scripts/characters/Lawyer.cs" id="4_qqgq3"]
+[ext_resource type="Resource" uid="uid://dxamvp3krvewl" path="res://data/lawyers/Lawyer2.tres" id="5_qyj8n"]
+
+[sub_resource type="Resource" id="Resource_15585"]
+script = ExtResource("4_qqgq3")
+_definition = ExtResource("3_tqw82")
+metadata/_custom_type_script = "uid://cpgdywaelog6m"
+
+[sub_resource type="Resource" id="Resource_h0b8m"]
+script = ExtResource("4_qqgq3")
+_definition = ExtResource("5_qyj8n")
+metadata/_custom_type_script = "uid://cpgdywaelog6m"
+
+[sub_resource type="Resource" id="Resource_tqw82"]
+script = ExtResource("3_3ufgy")
+Members = [SubResource("Resource_15585"), SubResource("Resource_h0b8m")]
+metadata/_custom_type_script = "uid://p2w0mheipgfs"
 
 [node name="Court" type="Node3D"]
 
@@ -12,7 +32,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+[node name="TeamA" type="HBoxContainer" parent="UI"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 1
 anchors_preset = -1
@@ -22,17 +42,7 @@ anchor_bottom = 1.0
 offset_top = 94.888
 offset_right = -168.86401
 grow_vertical = 0
-
-[node name="Control" type="Control" parent="UI/HBoxContainer"]
-custom_minimum_size = Vector2(100, 152)
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_lpavh")
-expand_mode = 3
+theme_override_constants/separation = 20
+script = ExtResource("1_i1kge")
+_characterScene = ExtResource("2_ogvvj")
+_debugTeam = SubResource("Resource_tqw82")

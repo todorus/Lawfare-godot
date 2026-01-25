@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LawyerDef" load_steps=3 format=3 uid="uid://dxamvp3krvewl"]
+
+[ext_resource type="Texture2D" uid="uid://dltuk38xvfupd" path="res://data/lawyers/lawyer2.png" id="1_h8a00"]
+[ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/LawyerDef.cs" id="1_hstcw"]
+
+[resource]
+script = ExtResource("1_hstcw")
+Image = ExtResource("1_h8a00")
+StartingQuantities = null
+Skills = null
+Keywords = null
+metadata/_custom_type_script = "uid://cnj2arvpule3p"
