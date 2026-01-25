@@ -15,6 +15,13 @@ run/main_scene="uid://cbwxvmo6277pw"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=1680
+window/size/viewport_height=1050
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
 [dotnet]
 
 project/assembly_name="Lawfare"

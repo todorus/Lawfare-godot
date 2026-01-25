@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bck6hda2qxaix"]
+
+[ext_resource type="Script" uid="uid://1folx8cwdcpi" path="res://scripts/ui/action/CardDisplay.cs" id="1_d81rb"]
+
+[node name="Card" type="Control"]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_d81rb")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 150.0
+text = "Button Text"
+autowrap_mode = 2
+
+[connection signal="LabelChanged" from="." to="Button" method="set_text" flags=3]

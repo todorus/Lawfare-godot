@@ -9,9 +9,17 @@ public partial class CharacterObserver : Node
     public delegate void ImageChangeEventHandler(Texture2D texture);
     [Signal]
     public delegate void LabelChangedEventHandler(string label);
+    
+    [Signal]
+    public delegate void MirrorChangedEventHandler(bool mirror);
 
-    [Export] 
-    private Lawyer _startingCharacter;
+    public bool Mirror
+    {
+        set
+        {
+            EmitSignalMirrorChanged(value);
+        }
+    }
 
     public ICharacter Character
     {
@@ -20,11 +28,5 @@ public partial class CharacterObserver : Node
             EmitSignalImageChange(value?.Image);
             EmitSignalLabelChanged(value?.Label);
         }
-    }
-
-    public override void _Ready()
-    {
-        base._Ready();
-        Character = _startingCharacter;
     }
 }

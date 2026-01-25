@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Action" load_steps=2 format=3 uid="uid://chypiquc6ve56"]
+
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_7i75q"]
+
+[resource]
+script = ExtResource("1_7i75q")
+Label = "Charm"
+DicePools = Array[Object]([])
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"

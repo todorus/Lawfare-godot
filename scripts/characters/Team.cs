@@ -4,7 +4,7 @@ using Lawfare.scripts.board.factions;
 namespace Lawfare.scripts.characters;
 
 [GlobalClass]
-public partial class Team : Resource
+public partial class Team : GodotObject
 {
     [Export]
     public Faction Faction;

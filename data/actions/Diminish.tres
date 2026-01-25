@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Action" load_steps=2 format=3 uid="uid://6wesnofhtwsj"]
+
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_iy503"]
+
+[resource]
+script = ExtResource("1_iy503")
+Label = "Diminish"
+DicePools = null
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"

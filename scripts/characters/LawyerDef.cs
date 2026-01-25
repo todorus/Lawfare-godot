@@ -1,5 +1,6 @@
 using Godot;
 using Lawfare.scripts.board.factions;
+using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.subject.quantities;
 
@@ -18,6 +19,9 @@ public partial class LawyerDef : Resource
     [ExportCategory("Gameplay")]
     [Export] 
     public Faction Faction { get; private set; }
+    
+    [Export]
+    public Action[] Actions { get; private set; } = [];
     
     [Export]
     public Quantity[] StartingQuantities { get; private set; } = [];

@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using Lawfare.scripts.characters;
 
@@ -9,7 +10,10 @@ public partial class TeamDisplay : Container
     PackedScene _characterScene;
     
     [Export]
-    private Team _debugTeam;
+    private LawyerDef[] _debugTeam;
+    
+    [Export]
+    private bool _mirror = false;
     
     public Team Team
     {
@@ -22,6 +26,7 @@ public partial class TeamDisplay : Container
             {
                 var characterObserver = _characterScene.Instantiate<CharacterObserver>();
                 characterObserver.Character = member;
+                characterObserver.Mirror = _mirror;
                 AddChild(characterObserver);
             }
         }
@@ -30,6 +35,9 @@ public partial class TeamDisplay : Container
     public override void _Ready()
     {
         base._Ready();
-        Team = _debugTeam;
+        Team = new Team
+        {
+            Members = _debugTeam.Select(def => new Lawyer(def)).ToArray()
+        };
     }
 }
