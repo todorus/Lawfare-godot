@@ -10,9 +10,6 @@ namespace Lawfare.scripts.subject;
 
 public interface ISubject
 {
-    public string Label { get; }
-
-    public Texture2D Image { get; }
     public Quantities Quantities { get; }
 
     public HostedTrigger[] Triggers { get; }

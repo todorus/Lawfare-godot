@@ -1,5 +1,6 @@
 using System.Linq;
 using Lawfare.scripts.board.factions;
+using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 using Enumerable = System.Linq.Enumerable;

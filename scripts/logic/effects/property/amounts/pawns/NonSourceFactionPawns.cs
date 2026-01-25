@@ -1,5 +1,6 @@
 using System.Linq;
 using Godot;
+using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 
