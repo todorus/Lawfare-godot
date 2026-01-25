@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Action" load_steps=2 format=3 uid="uid://bdtlhlybp3ouk"]
+
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_nlu0a"]
+
+[resource]
+script = ExtResource("1_nlu0a")
+Label = "Belidger"
+DicePools = null
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"

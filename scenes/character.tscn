@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://rtdumsb4nhvl"]
+[gd_scene load_steps=4 format=3 uid="uid://rtdumsb4nhvl"]
 
 [ext_resource type="Texture2D" uid="uid://pd4yhcj3vqta" path="res://data/lawyers/lawyer1.png" id="1_agfs1"]
 [ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_rkhd4"]
+[ext_resource type="Script" uid="uid://5e8whvir25un" path="res://scripts/ui/Clickable.cs" id="3_lrhn5"]
 
 [node name="Character" type="Control"]
 custom_minimum_size = Vector2(200, 304)
@@ -18,6 +19,8 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_agfs1")
 expand_mode = 3
+script = ExtResource("3_lrhn5")
 
 [connection signal="ImageChange" from="." to="TextureRect" method="set_texture" flags=3]
 [connection signal="MirrorChanged" from="." to="TextureRect" method="set_flip_h" flags=3]
+[connection signal="Clicked" from="TextureRect" to="." method="OnClicked" flags=3]

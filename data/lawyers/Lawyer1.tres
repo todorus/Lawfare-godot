@@ -1,12 +1,15 @@
-[gd_resource type="Resource" script_class="LawyerDef" load_steps=3 format=3 uid="uid://bq8kmrasa7whw"]
+[gd_resource type="Resource" script_class="LawyerDef" load_steps=5 format=3 uid="uid://bq8kmrasa7whw"]
 
 [ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/LawyerDef.cs" id="1_5x042"]
+[ext_resource type="Resource" uid="uid://chypiquc6ve56" path="res://data/actions/Charm.tres" id="1_b1p8y"]
 [ext_resource type="Texture2D" uid="uid://pd4yhcj3vqta" path="res://data/lawyers/lawyer1.png" id="1_wjcu5"]
+[ext_resource type="Resource" uid="uid://c7yjjeyb8t3i3" path="res://data/actions/Expose.tres" id="2_waia8"]
 
 [resource]
 script = ExtResource("1_5x042")
 Label = "Larry"
 Image = ExtResource("1_wjcu5")
+Actions = Array[Object]([ExtResource("1_b1p8y"), ExtResource("2_waia8")])
 StartingQuantities = null
 Skills = null
 Keywords = null

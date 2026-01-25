@@ -1,4 +1,3 @@
-using System.Linq;
 using Godot;
 using Lawfare.scripts.logic.cards;
 
@@ -8,9 +7,6 @@ public partial class HandDisplay : Container
 {
     [Export]
     private PackedScene _cardScene;
-
-    [Export] 
-    private Action[] _debugActions;
     
     public Card[] Cards 
     {
@@ -25,13 +21,10 @@ public partial class HandDisplay : Container
             }
         }
     }
-    
-    public override void _Ready()
+
+    public void SetCards(Card[] cards)
     {
-        // Debug
-        Cards = _debugActions
-            .Select(action => new Card(action))
-            .ToArray();
+        Cards = cards;
     }
 
 }

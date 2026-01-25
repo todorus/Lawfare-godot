@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
+using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.logic.triggers;
 using Lawfare.scripts.subject;
@@ -15,6 +16,8 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
 {
     public string Label => definition.Label;
     public Texture2D Image => definition.Image;
+    
+    public Action[] Actions => definition.Actions;
     
     private Quantities _quantities => new(definition.StartingQuantities as Quantity[]);
     public Quantities Quantities => _quantities;

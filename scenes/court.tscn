@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cbwxvmo6277pw"]
+[gd_scene load_steps=9 format=3 uid="uid://cbwxvmo6277pw"]
 
 [ext_resource type="Script" uid="uid://mxuq1pto8vy4" path="res://scripts/ui/character/TeamDisplay.cs" id="1_i1kge"]
 [ext_resource type="PackedScene" uid="uid://rtdumsb4nhvl" path="res://scenes/character.tscn" id="2_ogvvj"]
@@ -8,9 +8,6 @@
 [ext_resource type="Resource" uid="uid://cjuy3821reygg" path="res://data/lawyers/Lawyer5.tres" id="7_15585"]
 [ext_resource type="Script" uid="uid://ciidppm6330xl" path="res://scripts/ui/action/HandDisplay.cs" id="7_qyj8n"]
 [ext_resource type="PackedScene" uid="uid://bck6hda2qxaix" path="res://scenes/card.tscn" id="8_15585"]
-[ext_resource type="Resource" uid="uid://chypiquc6ve56" path="res://data/actions/Charm.tres" id="9_c7axm"]
-[ext_resource type="Resource" uid="uid://c7yjjeyb8t3i3" path="res://data/actions/Expose.tres" id="10_5mv5b"]
-[ext_resource type="Resource" uid="uid://6wesnofhtwsj" path="res://data/actions/Diminish.tres" id="11_2768l"]
 
 [node name="Court" type="Node3D"]
 
@@ -19,6 +16,10 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -99.0
+offset_top = 66.0
+offset_right = -99.0
+offset_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -71,4 +72,6 @@ grow_vertical = 0
 alignment = 1
 script = ExtResource("7_qyj8n")
 _cardScene = ExtResource("8_15585")
-_debugActions = Array[Object]([ExtResource("9_c7axm"), ExtResource("10_5mv5b"), ExtResource("11_2768l")])
+
+[connection signal="HandChanged" from="UI/TeamA" to="UI/Hand" method="SetCards" flags=3]
+[connection signal="HandChanged" from="UI/TeamB" to="UI/Hand" method="SetCards" flags=3]

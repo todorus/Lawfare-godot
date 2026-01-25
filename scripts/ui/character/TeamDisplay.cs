@@ -1,11 +1,18 @@
 using System.Linq;
 using Godot;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.logic.cards;
 
 namespace Lawfare.scripts.ui.character;
 
 public partial class TeamDisplay : Container
 {
+    [Signal]
+    public delegate void CharacterClickedEventHandler(GodotObject character);
+    
+    [Signal]
+    public delegate void HandChangedEventHandler(Card[] cards);
+    
     [Export]
     PackedScene _characterScene;
     
@@ -27,6 +34,8 @@ public partial class TeamDisplay : Container
                 var characterObserver = _characterScene.Instantiate<CharacterObserver>();
                 characterObserver.Character = member;
                 characterObserver.Mirror = _mirror;
+                characterObserver.CharacterClicked += OnCharacterClicked;
+                characterObserver.HandChanged += OnHandChanged;
                 AddChild(characterObserver);
             }
         }
@@ -39,5 +48,15 @@ public partial class TeamDisplay : Container
         {
             Members = _debugTeam.Select(def => new Lawyer(def)).ToArray()
         };
+    }
+    
+    public void OnCharacterClicked(GodotObject character)
+    {
+        EmitSignalCharacterClicked(character);
+    }
+    
+    public void OnHandChanged(Card[] cards)
+    {
+        EmitSignalHandChanged(cards);
     }
 }
