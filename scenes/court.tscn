@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://cbwxvmo6277pw"]
+[gd_scene load_steps=10 format=3 uid="uid://cbwxvmo6277pw"]
 
+[ext_resource type="Script" uid="uid://cu8fsnn8ylvnj" path="res://scripts/interaction/Selection.cs" id="1_15585"]
 [ext_resource type="Script" uid="uid://mxuq1pto8vy4" path="res://scripts/ui/character/TeamDisplay.cs" id="1_i1kge"]
 [ext_resource type="PackedScene" uid="uid://rtdumsb4nhvl" path="res://scenes/character.tscn" id="2_ogvvj"]
 [ext_resource type="Resource" uid="uid://bq8kmrasa7whw" path="res://data/lawyers/Lawyer1.tres" id="3_tqw82"]
@@ -10,6 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://bck6hda2qxaix" path="res://scenes/card.tscn" id="8_15585"]
 
 [node name="Court" type="Node3D"]
+
+[node name="Interaction" type="Node" parent="."]
+script = ExtResource("1_15585")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -69,5 +73,8 @@ alignment = 1
 script = ExtResource("7_qyj8n")
 _cardScene = ExtResource("8_15585")
 
+[connection signal="CharacterClicked" from="UI/TeamA" to="Interaction" method="Primary" flags=3]
 [connection signal="HandChanged" from="UI/TeamA" to="UI/Hand" method="SetCards" flags=3]
+[connection signal="CharacterClicked" from="UI/TeamB" to="Interaction" method="Primary" flags=3]
 [connection signal="HandChanged" from="UI/TeamB" to="UI/Hand" method="SetCards" flags=3]
+[connection signal="CardSelected" from="UI/Hand" to="Interaction" method="Primary" flags=3]

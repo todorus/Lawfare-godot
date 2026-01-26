@@ -16,3 +16,4 @@ text = "Button Text"
 autowrap_mode = 2
 
 [connection signal="LabelChanged" from="." to="Button" method="set_text" flags=3]
+[connection signal="pressed" from="Button" to="." method="OnClick" flags=3]

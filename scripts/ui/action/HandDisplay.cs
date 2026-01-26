@@ -8,6 +8,9 @@ public partial class HandDisplay : Container
     [Export]
     private PackedScene _cardScene;
     
+    [Signal]
+    public delegate void CardSelectedEventHandler(Card card);
+    
     public Card[] Cards 
     {
         set
@@ -17,6 +20,7 @@ public partial class HandDisplay : Container
             {
                 var cardDisplay = _cardScene.Instantiate<CardDisplay>();
                 cardDisplay.Card = card;
+                cardDisplay.OnClicked += EmitSignalCardSelected;
                 AddChild(cardDisplay);
             }
         }

@@ -16,7 +16,7 @@ public partial class Action : Resource, IAction
     
     public bool Applies(GameEvent gameEvent)
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 
     public ChangeGroup[] Stage(GameEvent gameEvent)

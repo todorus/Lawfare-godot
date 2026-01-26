@@ -11,15 +11,17 @@ public static class DicePoolExt
 {
     public static DicePool GetDicePools(this GameEvent gameEvent, Faction faction)
     {
-        if (gameEvent.Action == null) return new DicePool(faction, []);
-
+        if(gameEvent.Action == null)
+        {
+            return new DicePool(faction, []);
+        }
+        
         var skills = gameEvent.Action.DicePools;
-        var pools = Enumerable.ToArray(Enumerable.Where(
-            Enumerable.SelectMany(
-                Enumerable.Where(
-                    Enumerable.Where(gameEvent.Subjects,
-                        subject => subject.CanHaveFaction && subject.Allegiances.Contains(faction)),
-                    subject => subject is ICharacter), pawn => pawn.Pools), pool => skills.Contains(pool.Skill)));
+        var pools = gameEvent.Subjects
+            .Where(subject => subject.CanHaveFaction && subject.Allegiances.Contains(faction))
+            .SelectMany(subject => subject.Pools)
+            .Where(pool => skills.Contains(pool.Skill))
+            .ToArray();
         return new DicePool(faction, pools);
     }
 }

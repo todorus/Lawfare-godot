@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.logic.triggers;
@@ -11,6 +12,8 @@ public struct GameEvent
     public EventType Type;
     public IAction Action;
     public ISubject Source;
+    public ISubject Target;
+    
     public ISubject Host;
     public ISubject Space;
 
@@ -18,6 +21,8 @@ public struct GameEvent
     public DiceRoll[] DiceRolls;
 
     public IEnumerable<HostedTrigger> Triggers => [];
-    public ISubject[] Subjects => [Source, Host, Space];
+    public ISubject[] Subjects => new[]{
+        Source, Target, Host, Space
+    }.Where(subject => subject != null).ToArray();
     public Faction Faction;
 }
