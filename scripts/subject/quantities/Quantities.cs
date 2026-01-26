@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
 namespace Lawfare.scripts.subject.quantities;
 
-public class Quantities : IAvailable
+public partial class Quantities : GodotObject, IAvailable
 {
     private readonly Dictionary<Property, int> _quantities;
 

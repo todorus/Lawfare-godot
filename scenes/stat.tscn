@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://5e8dlwob8q77"]
+
+[ext_resource type="Texture2D" uid="uid://q6kxqmadqh4" path="res://icon.svg" id="1_1jl2q"]
+[ext_resource type="Script" uid="uid://7g0puvfjjbpj" path="res://scripts/ui/quantities/QuantityObserver.cs" id="1_t6tu3"]
+
+[node name="Stat" type="HBoxContainer"]
+script = ExtResource("1_t6tu3")
+
+[node name="Icon" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_1jl2q")
+expand_mode = 3
+
+[node name="Amount" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 30
+text = "10"
+
+[connection signal="AmountChanged" from="." to="Amount" method="set_text" flags=3]
+[connection signal="IconChanged" from="." to="Icon" method="set_texture" flags=3]

@@ -34,7 +34,7 @@ public partial class BasicEffect : RootEffect
 
     public override ChangeGroup[] Stage(GameEvent gameEvent, ISubject root)
     {
-        var changes = Effects.SelectMany(effect => effect.Stage(gameEvent, root)).ToArray();
+        var changes = Effects.SelectMany(effect => effect.Stage(gameEvent, gameEvent.Target)).ToArray();
         var changeGroup = changes.ToChangeGroup();
         return [changeGroup];
     }

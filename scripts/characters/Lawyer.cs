@@ -19,8 +19,7 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
     
     public Action[] Actions => definition.Actions;
     
-    private Quantities _quantities => new(definition.StartingQuantities as Quantity[]);
-    public Quantities Quantities => _quantities;
+    public Quantities Quantities { get; } = new(definition.StartingQuantities as Quantity[]);
 
     public HostedTrigger[] Triggers =>
         definition.Keywords

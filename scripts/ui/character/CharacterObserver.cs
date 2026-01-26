@@ -2,6 +2,7 @@ using System.Linq;
 using Godot;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.cards;
+using Lawfare.scripts.subject.quantities;
 
 namespace Lawfare.scripts.ui.character;
 
@@ -11,6 +12,9 @@ public partial class CharacterObserver : Node
     public delegate void ImageChangeEventHandler(Texture2D texture);
     [Signal]
     public delegate void LabelChangedEventHandler(string label);
+    
+    [Signal]
+    public delegate void QuantitiesChangedEventHandler(Quantities quantities);
     
     [Signal]
     public delegate void MirrorChangedEventHandler(bool mirror);
@@ -38,6 +42,7 @@ public partial class CharacterObserver : Node
             _character = value;
             EmitSignalImageChange(value?.Image);
             EmitSignalLabelChanged(value?.Label);
+            EmitSignalQuantitiesChanged(value?.Quantities);
         }
     }
     

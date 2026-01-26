@@ -1,20 +1,26 @@
-[gd_resource type="Resource" script_class="Action" load_steps=9 format=3 uid="uid://bqk366drvqyud"]
+[gd_resource type="Resource" script_class="Action" load_steps=11 format=3 uid="uid://bqk366drvqyud"]
 
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_5njbj"]
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_h4fy5"]
 [ext_resource type="Resource" uid="uid://cnm3jrueqy1xy" path="res://data/properties/Stress.tres" id="2_50jps"]
+[ext_resource type="Script" uid="uid://cpy3a6fcqqgda" path="res://scripts/logic/conditions/subject/role/IsTarget.cs" id="3_50jps"]
 [ext_resource type="Script" uid="uid://dsxkqn0fvmpgl" path="res://scripts/logic/effects/property/PropertyAddEffect.cs" id="3_flom0"]
 [ext_resource type="Script" uid="uid://b2u2rn01b0l0o" path="res://scripts/logic/effects/root/BasicEffect.cs" id="4_nlo17"]
 
 [sub_resource type="Resource" id="Resource_a0qv0"]
 script = ExtResource("1_h4fy5")
-Amount = -4
+Amount = 4
 metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+
+[sub_resource type="Resource" id="Resource_flom0"]
+script = ExtResource("3_50jps")
+metadata/_custom_type_script = "uid://cpy3a6fcqqgda"
 
 [sub_resource type="Resource" id="Resource_a5brh"]
 script = ExtResource("3_flom0")
 AmountProvider = SubResource("Resource_a0qv0")
 Property = ExtResource("2_50jps")
+SubjectConditions = [SubResource("Resource_flom0")]
 metadata/_custom_type_script = "uid://dsxkqn0fvmpgl"
 
 [sub_resource type="Resource" id="Resource_fort0"]

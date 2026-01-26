@@ -11,6 +11,9 @@ public partial class Selection : Node
     public delegate void ActionChangedEventHandler(GodotObject action);
     [Signal]
     public delegate void SourceChangedEventHandler(GodotObject source);
+    
+    [Signal]
+    public delegate void ResolutionEventHandler(Resolution resolution);
 
     private IAction _action;
 
@@ -100,5 +103,6 @@ public partial class Selection : Node
             Action = action
         };
         var resolution = gameEvent.Resolve();
+        EmitSignalResolution(resolution);
     } 
 }

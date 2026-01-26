@@ -13,7 +13,7 @@ namespace Lawfare.scripts.characters;
 [GlobalClass]
 public partial class Judge(JudgeDef definition) : GodotObject, ISubject, ICharacter
 {
-    public Quantities Quantities => new Quantities();
+    public Quantities Quantities { get; } = new Quantities();
     public HostedTrigger[] Triggers => [];
     public KeywordBase[] Keywords => [];
     public Allegiances Allegiances => new Allegiances();
