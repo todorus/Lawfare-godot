@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="JudgeDef" load_steps=3 format=3 uid="uid://cd2egwxvsclnr"]
+
+[ext_resource type="Texture2D" uid="uid://ch77i8ec205bu" path="res://data/judges/Elizabeth.png" id="1_a03tr"]
+[ext_resource type="Script" uid="uid://cg2v1rc01xr2i" path="res://scripts/characters/JudgeDef.cs" id="1_r6fa8"]
+
+[resource]
+script = ExtResource("1_r6fa8")
+Label = "Elizabeth"
+Image = ExtResource("1_a03tr")
+metadata/_custom_type_script = "uid://cg2v1rc01xr2i"
