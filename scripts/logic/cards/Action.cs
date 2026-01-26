@@ -1,5 +1,8 @@
+using System.Linq;
 using Godot;
+using Lawfare.scripts.logic.conditions.subject;
 using Lawfare.scripts.logic.effects;
+using Lawfare.scripts.logic.effects.root;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject.quantities;
 
@@ -13,14 +16,14 @@ public partial class Action : Resource, IAction
     
     [Export]
     public Skill[] DicePools { get; private set; } = [];
+    [Export]
+    public RootEffect Effect { get; set; }
     
-    public bool Applies(GameEvent gameEvent)
-    {
-        return false;
-    }
+    public bool Applies(GameEvent gameEvent) =>
+        Effect?.Applies(gameEvent, gameEvent.Source) ?? false;
 
     public ChangeGroup[] Stage(GameEvent gameEvent)
     {
-        throw new System.NotImplementedException();
+        return Effect?.Stage(gameEvent, gameEvent.Source) ?? [];
     }
 }

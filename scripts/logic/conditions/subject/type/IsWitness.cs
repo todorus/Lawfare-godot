@@ -1,14 +1,15 @@
 using Godot;
+using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 
 namespace Lawfare.scripts.logic.conditions.subject.type;
 
 [GlobalClass]
-public partial class IsNotHost : SubjectCondition
+public partial class IsWitness : SubjectCondition
 {
     public override bool Evaluate(GameEvent gameEventData, ISubject subject)
     {
-        return gameEventData.Host != subject;
+        return subject is Witness;
     }
 }

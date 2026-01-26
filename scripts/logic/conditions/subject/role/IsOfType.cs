@@ -3,7 +3,7 @@ using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 
-namespace Lawfare.scripts.logic.conditions.subject.type;
+namespace Lawfare.scripts.logic.conditions.subject.role;
 
 [GlobalClass]
 public partial class IsOfType : SubjectCondition

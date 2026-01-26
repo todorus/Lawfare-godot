@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbwxvmo6277pw"]
+[gd_scene load_steps=12 format=3 uid="uid://cbwxvmo6277pw"]
 
 [ext_resource type="Script" uid="uid://cu8fsnn8ylvnj" path="res://scripts/interaction/Selection.cs" id="1_15585"]
 [ext_resource type="Script" uid="uid://mxuq1pto8vy4" path="res://scripts/ui/character/TeamDisplay.cs" id="1_i1kge"]
+[ext_resource type="Script" uid="uid://b8ahrbftbgx62" path="res://scripts/ui/character/WitnessDisplay.cs" id="2_h0b8m"]
 [ext_resource type="PackedScene" uid="uid://rtdumsb4nhvl" path="res://scenes/character.tscn" id="2_ogvvj"]
+[ext_resource type="Resource" uid="uid://cvv80drdpkbax" path="res://data/cases/testcase/witnesses/Molly.tres" id="3_c7axm"]
 [ext_resource type="Resource" uid="uid://bq8kmrasa7whw" path="res://data/lawyers/Lawyer1.tres" id="3_tqw82"]
 [ext_resource type="Resource" uid="uid://dxamvp3krvewl" path="res://data/lawyers/Lawyer2.tres" id="5_qyj8n"]
 [ext_resource type="Resource" uid="uid://b6xs3if2fxonr" path="res://data/lawyers/Lawyer4.tres" id="6_qyj8n"]
@@ -24,6 +26,20 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="WitnessStand" type="HBoxContainer" parent="UI"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+script = ExtResource("2_h0b8m")
+_characterScene = ExtResource("2_ogvvj")
+_debugWitnesses = Array[Object]([ExtResource("3_c7axm")])
+_mirror = true
 
 [node name="TeamA" type="HBoxContainer" parent="UI"]
 custom_minimum_size = Vector2(300, 100)
@@ -73,6 +89,7 @@ alignment = 1
 script = ExtResource("7_qyj8n")
 _cardScene = ExtResource("8_15585")
 
+[connection signal="CharacterClicked" from="UI/WitnessStand" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/TeamA" to="Interaction" method="Primary" flags=3]
 [connection signal="HandChanged" from="UI/TeamA" to="UI/Hand" method="SetCards" flags=3]
 [connection signal="CharacterClicked" from="UI/TeamB" to="Interaction" method="Primary" flags=3]

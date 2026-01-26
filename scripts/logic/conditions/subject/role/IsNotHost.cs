@@ -2,13 +2,13 @@ using Godot;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 
-namespace Lawfare.scripts.logic.conditions.subject.type;
+namespace Lawfare.scripts.logic.conditions.subject.role;
 
 [GlobalClass]
-public partial class IsSource : SubjectCondition
+public partial class IsNotHost : SubjectCondition
 {
     public override bool Evaluate(GameEvent gameEventData, ISubject subject)
     {
-        return gameEventData.Source == subject;
+        return gameEventData.Host != subject;
     }
 }

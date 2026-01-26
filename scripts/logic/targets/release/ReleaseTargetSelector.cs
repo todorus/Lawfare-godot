@@ -2,6 +2,7 @@ using Godot;
 using Lawfare.scripts.logic.conditions.subject.property;
 using Lawfare.scripts.logic.conditions.subject.type;
 using Lawfare.scripts.subject.quantities;
+using IsHost = Lawfare.scripts.logic.conditions.subject.role.IsHost;
 using StaticAmount = Lawfare.scripts.logic.effects.property.amounts.StaticAmount;
 using SubjectCondition = Lawfare.scripts.logic.conditions.subject.SubjectCondition;
 

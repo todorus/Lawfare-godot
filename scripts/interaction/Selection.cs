@@ -1,4 +1,5 @@
 using Godot;
+using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 
@@ -54,14 +55,37 @@ public partial class Selection : Node
         
         if (Action != null)
         {
-            // TODO check if the action can be executed by the source on the subject
+            var gameEvent = ToActionEvent(_source, subject, Action);
+            if (!CanExecute(gameEvent))
+            {
+                // TODO feedback
+                return;
+            }
+            
             Execute(_source, subject, Action);
             Action = null;
         }
-        else
+        else if(subject is Lawyer)
         {
             Source = subject;
+            Action = null;
         }
+    }
+
+    private bool CanExecute(GameEvent gameEvent)
+    {
+        return gameEvent.Action.Applies(gameEvent);
+    }
+
+    private GameEvent ToActionEvent(ISubject source, ISubject target, IAction action)
+    {
+        return new GameEvent
+        {
+            Type = EventType.Action,
+            Source = source,
+            Target = target,
+            Action = action
+        };
     }
 
     public void Execute(ISubject source, ISubject target, IAction action)
