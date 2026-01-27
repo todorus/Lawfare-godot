@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Property" load_steps=2 format=3 uid="uid://b17vqvbjpbkc8"]
-
-[ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_66veq"]
-
-[resource]
-script = ExtResource("1_66veq")
-Label = "Confidence"
-metadata/_custom_type_script = "uid://bui75swsppjh6"
