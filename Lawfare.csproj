@@ -22,5 +22,6 @@
     <Content Include="scripts\subject\quantities\Quantity.cs.uid" />
     <Content Include="scripts\subject\quantities\Skill.cs.uid" />
     <Content Include="scripts\subject\quantities\SkillQuantity.cs.uid" />
+    <Content Include="scripts\subject\relations\Relation.cs.uid" />
   </ItemGroup>
 </Project>

@@ -5,12 +5,15 @@ using Lawfare.scripts.board.factions;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.logic.triggers;
 using Lawfare.scripts.subject.quantities;
+using Lawfare.scripts.subject.relations;
 
 namespace Lawfare.scripts.subject;
 
 public interface ISubject
 {
     public Quantities Quantities { get; }
+    
+    public Relations Relations { get; }
 
     public HostedTrigger[] Triggers { get; }
 

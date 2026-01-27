@@ -7,6 +7,7 @@ using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.logic.triggers;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
+using Lawfare.scripts.subject.relations;
 
 namespace Lawfare.scripts.characters;
 
@@ -14,6 +15,8 @@ namespace Lawfare.scripts.characters;
 public partial class Judge(JudgeDef definition) : GodotObject, ISubject, ICharacter
 {
     public Quantities Quantities { get; } = new Quantities();
+    public Relations Relations { get; } = new Relations();
+    
     public HostedTrigger[] Triggers => [];
     public KeywordBase[] Keywords => [];
     public Allegiances Allegiances => new Allegiances();

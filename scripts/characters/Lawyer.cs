@@ -8,6 +8,7 @@ using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.logic.triggers;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
+using Lawfare.scripts.subject.relations;
 
 namespace Lawfare.scripts.characters;
 
@@ -20,6 +21,7 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
     public Action[] Actions => definition.Actions;
     
     public Quantities Quantities { get; } = new(definition.StartingQuantities as Quantity[]);
+    public Relations Relations { get; } = new Relations();
 
     public HostedTrigger[] Triggers =>
         definition.Keywords
