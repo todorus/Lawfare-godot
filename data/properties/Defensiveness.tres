@@ -1,7 +1,10 @@
-[gd_resource type="Resource" script_class="Property" load_steps=2 format=3 uid="uid://cibhkmlu2qqg0"]
+[gd_resource type="Resource" script_class="Property" load_steps=3 format=3 uid="uid://cibhkmlu2qqg0"]
 
+[ext_resource type="Texture2D" uid="uid://d0jwpy4hp4wll" path="res://data/properties/defensiveness.png" id="1_0pwgh"]
 [ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_vgke4"]
 
 [resource]
 script = ExtResource("1_vgke4")
+Label = "Defensiveness"
+Icon = ExtResource("1_0pwgh")
 metadata/_custom_type_script = "uid://bui75swsppjh6"

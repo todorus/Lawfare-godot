@@ -1,7 +1,10 @@
-[gd_resource type="Resource" script_class="Property" load_steps=2 format=3 uid="uid://cqoe0iuv53eqr"]
+[gd_resource type="Resource" script_class="Property" load_steps=3 format=3 uid="uid://cqoe0iuv53eqr"]
 
+[ext_resource type="Texture2D" uid="uid://cbng8ols6mer2" path="res://data/properties/credibility.png" id="1_jm5tq"]
 [ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_q2gd5"]
 
 [resource]
 script = ExtResource("1_q2gd5")
+Label = "Credibility"
+Icon = ExtResource("1_jm5tq")
 metadata/_custom_type_script = "uid://bui75swsppjh6"
