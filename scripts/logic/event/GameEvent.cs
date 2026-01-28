@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
+using Lawfare.scripts.context;
 using Lawfare.scripts.logic.triggers;
 using Lawfare.scripts.subject;
 
@@ -16,6 +17,8 @@ public struct GameEvent
     
     public ISubject Host;
     public ISubject Space;
+    
+    public IContext Context;
 
     // Intermediary data
     public DiceRoll[] DiceRolls;

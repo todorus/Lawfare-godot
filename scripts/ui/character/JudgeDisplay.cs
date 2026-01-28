@@ -12,8 +12,10 @@ public partial class JudgeDisplay : Container
     [Export]
     PackedScene _characterScene;
     
-    [Export]
-    private JudgeDef[] _debugJudges;
+    public void SetJudges(Judge[] judges)
+    {
+        Judges = judges;
+    }
     
     [Export]
     private bool _mirror = false;
@@ -34,11 +36,5 @@ public partial class JudgeDisplay : Container
                 AddChild(characterObserver);
             }
         }
-    }
-    
-    public override void _Ready()
-    {
-        base._Ready();
-        Judges = _debugJudges.Select(def => new Judge(def)).ToArray();
     }
 }

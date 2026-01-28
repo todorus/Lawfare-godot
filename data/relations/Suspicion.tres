@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Property" load_steps=3 format=3 uid="uid://beq04cnqn0ieg"]
+
+[ext_resource type="Texture2D" uid="uid://bbopd3jnkgscp" path="res://data/relations/suspicion.png" id="1_jc1t7"]
+[ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_jhwp6"]
+
+[resource]
+script = ExtResource("1_jhwp6")
+Label = "Suspicion"
+Icon = ExtResource("1_jc1t7")
+metadata/_custom_type_script = "uid://bui75swsppjh6"

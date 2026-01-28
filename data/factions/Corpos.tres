@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Faction" load_steps=2 format=3 uid="uid://d2lxbo3stp4qg"]
+
+[ext_resource type="Script" uid="uid://tqjsxtk28gq8" path="res://scripts/subject/factions/Faction.cs" id="1_s8bwg"]
+
+[resource]
+script = ExtResource("1_s8bwg")
+Label = "Corpos"
+metadata/_custom_type_script = "uid://tqjsxtk28gq8"

@@ -1,5 +1,6 @@
 using Godot;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.context;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 
@@ -14,6 +15,9 @@ public partial class Selection : Node
     
     [Signal]
     public delegate void ResolutionEventHandler(Resolution resolution);
+    
+    [Export]
+    private Context _context;
 
     private IAction _action;
 
@@ -87,7 +91,8 @@ public partial class Selection : Node
             Type = EventType.Action,
             Source = source,
             Target = target,
-            Action = action
+            Action = action,
+            Context = _context
         };
     }
 
@@ -100,7 +105,8 @@ public partial class Selection : Node
             Type = EventType.Action,
             Source = source,
             Target = target,
-            Action = action
+            Action = action,
+            Context = _context
         };
         var resolution = gameEvent.Resolve();
         EmitSignalResolution(resolution);

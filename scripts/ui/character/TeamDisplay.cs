@@ -17,10 +17,12 @@ public partial class TeamDisplay : Container
     PackedScene _characterScene;
     
     [Export]
-    private LawyerDef[] _debugTeam;
-    
-    [Export]
     private bool _mirror = false;
+    
+    public void SetTeam(Team team)
+    {
+        Team = team;
+    }
     
     public Team Team
     {
@@ -39,15 +41,6 @@ public partial class TeamDisplay : Container
                 AddChild(characterObserver);
             }
         }
-    }
-    
-    public override void _Ready()
-    {
-        base._Ready();
-        Team = new Team
-        {
-            Members = _debugTeam.Select(def => new Lawyer(def)).ToArray()
-        };
     }
     
     public void OnCharacterClicked(GodotObject character)

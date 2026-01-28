@@ -13,10 +13,12 @@ public partial class WitnessDisplay : Container
     PackedScene _characterScene;
     
     [Export]
-    private WitnessDef[] _debugWitnesses;
-    
-    [Export]
     private bool _mirror = false;
+    
+    public void SetWitnesses(Witness[] witnesses)
+    {
+        Witnesses = witnesses;
+    }
     
     public Witness[] Witnesses
     {
@@ -34,11 +36,5 @@ public partial class WitnessDisplay : Container
                 AddChild(characterObserver);
             }
         }
-    }
-    
-    public override void _Ready()
-    {
-        base._Ready();
-        Witnesses = _debugWitnesses.Select(def => new Witness(def)).ToArray();
     }
 }

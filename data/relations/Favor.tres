@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Property" load_steps=3 format=3 uid="uid://cf62sltuoikad"]
+
+[ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_bx1fy"]
+[ext_resource type="Texture2D" uid="uid://jpb3aq2ct7n3" path="res://data/relations/favor.png" id="1_epmpf"]
+
+[resource]
+script = ExtResource("1_bx1fy")
+Label = "Favor"
+Icon = ExtResource("1_epmpf")
+metadata/_custom_type_script = "uid://bui75swsppjh6"

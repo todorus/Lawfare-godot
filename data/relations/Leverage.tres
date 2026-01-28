@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Property" load_steps=3 format=3 uid="uid://dosc3cg1n3wu4"]
+
+[ext_resource type="Texture2D" uid="uid://m8cbn4k80fl5" path="res://data/relations/leverage.png" id="1_a88bv"]
+[ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_dvr5r"]
+
+[resource]
+script = ExtResource("1_dvr5r")
+Label = "Leverage"
+Icon = ExtResource("1_a88bv")
+metadata/_custom_type_script = "uid://bui75swsppjh6"
