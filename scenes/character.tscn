@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://rtdumsb4nhvl"]
+[gd_scene load_steps=8 format=3 uid="uid://rtdumsb4nhvl"]
 
 [ext_resource type="Texture2D" uid="uid://pd4yhcj3vqta" path="res://data/lawyers/lawyer1.png" id="1_agfs1"]
 [ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_rkhd4"]
 [ext_resource type="Script" uid="uid://5e8whvir25un" path="res://scripts/ui/Clickable.cs" id="3_lrhn5"]
 [ext_resource type="Script" uid="uid://bpsgy63nxrko8" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="4_dp8ca"]
 [ext_resource type="PackedScene" uid="uid://5e8dlwob8q77" path="res://scenes/stat.tscn" id="5_0lw5n"]
+[ext_resource type="Script" uid="uid://cn5a8uepq262k" path="res://scripts/ui/relations/RelationsObserver.cs" id="6_0lw5n"]
+[ext_resource type="PackedScene" uid="uid://wvnkkx5gkjbr" path="res://scenes/relation.tscn" id="7_2cgup"]
 
 [node name="Character" type="Control"]
 custom_minimum_size = Vector2(200, 304)
@@ -29,10 +31,24 @@ script = ExtResource("3_lrhn5")
 layout_mode = 0
 offset_right = 73.0
 offset_bottom = 304.0
+mouse_filter = 2
 script = ExtResource("4_dp8ca")
 _quantityScene = ExtResource("5_0lw5n")
+
+[node name="Relations" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_bottom = 309.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("6_0lw5n")
+_relationScene = ExtResource("7_2cgup")
 
 [connection signal="ImageChange" from="." to="TextureRect" method="set_texture"]
 [connection signal="MirrorChanged" from="." to="TextureRect" method="set_flip_h"]
 [connection signal="QuantitiesChanged" from="." to="Stats" method="SetQuantities" flags=3]
+[connection signal="RelationsChanged" from="." to="Relations" method="SetRelations" flags=3]
 [connection signal="Clicked" from="TextureRect" to="." method="OnClicked" flags=3]

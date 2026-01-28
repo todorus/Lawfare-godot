@@ -3,6 +3,7 @@ using Godot;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.subject.quantities;
+using Lawfare.scripts.subject.relations;
 
 namespace Lawfare.scripts.ui.character;
 
@@ -15,6 +16,9 @@ public partial class CharacterObserver : Node
     
     [Signal]
     public delegate void QuantitiesChangedEventHandler(Quantities quantities);
+    
+    [Signal]
+    public delegate void RelationsChangedEventHandler(Relations relations);
     
     [Signal]
     public delegate void MirrorChangedEventHandler(bool mirror);
@@ -43,6 +47,7 @@ public partial class CharacterObserver : Node
             EmitSignalImageChange(value?.Image);
             EmitSignalLabelChanged(value?.Label);
             EmitSignalQuantitiesChanged(value?.Quantities);
+            EmitSignalRelationsChanged(value?.Relations);
         }
     }
     

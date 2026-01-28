@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Faction" load_steps=2 format=3 uid="uid://cvuhvwqt47jr7"]
-
-[ext_resource type="Script" uid="uid://tqjsxtk28gq8" path="res://scripts/subject/factions/Faction.cs" id="1_hkbcg"]
-
-[resource]
-script = ExtResource("1_hkbcg")
-Label = "Public"
-metadata/_custom_type_script = "uid://tqjsxtk28gq8"

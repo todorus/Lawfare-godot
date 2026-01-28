@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dakbd7iyjfg5u" path="res://scripts/context/court/Hearing.cs" id="1_rnrgf"]
 [ext_resource type="Script" uid="uid://fykgxeo6cpvd" path="res://scripts/ui/character/JudgeDisplay.cs" id="2_5mv5b"]
 [ext_resource type="Script" uid="uid://b8ahrbftbgx62" path="res://scripts/ui/character/WitnessDisplay.cs" id="2_h0b8m"]
-[ext_resource type="Resource" uid="uid://cvuhvwqt47jr7" path="res://data/factions/Public.tres" id="2_lc033"]
+[ext_resource type="Resource" uid="uid://cvuhvwqt47jr7" path="res://data/factions/Government.tres" id="2_lc033"]
 [ext_resource type="PackedScene" uid="uid://rtdumsb4nhvl" path="res://scenes/character.tscn" id="2_ogvvj"]
 [ext_resource type="Resource" uid="uid://cd2egwxvsclnr" path="res://data/judges/Elizabeth.tres" id="3_2768l"]
 [ext_resource type="Script" uid="uid://p2w0mheipgfs" path="res://scripts/characters/Team.cs" id="3_c6ra0"]

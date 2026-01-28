@@ -7,7 +7,6 @@
 script = ExtResource("1_t6tu3")
 
 [node name="Icon" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 texture = ExtResource("1_1jl2q")
 expand_mode = 3
@@ -16,7 +15,7 @@ expand_mode = 3
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "10"
 
 [connection signal="AmountChanged" from="." to="Amount" method="set_text" flags=3]

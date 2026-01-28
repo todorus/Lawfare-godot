@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://wvnkkx5gkjbr"]
+
+[ext_resource type="Script" uid="uid://b5dxx65vsgtiq" path="res://scripts/ui/relations/RelationObserver.cs" id="1_wyrpg"]
+[ext_resource type="Texture2D" uid="uid://q6kxqmadqh4" path="res://icon.svg" id="2_cl2em"]
+
+[node name="Stat" type="HBoxContainer"]
+script = ExtResource("1_wyrpg")
+
+[node name="Amount" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 20
+text = "10"
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_cl2em")
+expand_mode = 3
+
+[node name="Faction" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_cl2em")
+expand_mode = 3
+
+[connection signal="AmountChanged" from="." to="Amount" method="set_text" flags=3]
+[connection signal="FactionChanged" from="." to="Faction" method="set_texture" flags=3]
+[connection signal="IconChanged" from="." to="Icon" method="set_texture" flags=3]

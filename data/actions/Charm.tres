@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_7i75q"]
 [ext_resource type="Script" uid="uid://b2u2rn01b0l0o" path="res://scripts/logic/effects/root/BasicEffect.cs" id="1_feejd"]
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_ffvgk"]
-[ext_resource type="Script" uid="uid://cjuspvcpekfge" path="res://scripts/logic/effects/relation/faction/OwnTeamFactionProvider.cs" id="2_ffvgk"]
+[ext_resource type="Script" uid="uid://cjuspvcpekfge" path="res://scripts/logic/effects/relation/faction/SourceTeamFactionProvider.cs" id="2_ffvgk"]
 [ext_resource type="Resource" uid="uid://cf62sltuoikad" path="res://data/relations/Favor.tres" id="3_uxfgl"]
 [ext_resource type="Script" uid="uid://dlfwebu7jm0xp" path="res://scripts/logic/effects/relation/RelationAddEffect.cs" id="4_3lbv7"]
 [ext_resource type="Script" uid="uid://b3p2noi6tp34d" path="res://scripts/logic/conditions/subject/team/BelongsNotToSourceTeam.cs" id="5_ffvgk"]

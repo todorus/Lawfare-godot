@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="Faction" load_steps=2 format=3 uid="uid://d2lxbo3stp4qg"]
+[gd_resource type="Resource" script_class="Faction" load_steps=3 format=3 uid="uid://d2lxbo3stp4qg"]
 
+[ext_resource type="Texture2D" uid="uid://cchtm6c81sx0w" path="res://data/factions/corpo.png" id="1_o6g4u"]
 [ext_resource type="Script" uid="uid://tqjsxtk28gq8" path="res://scripts/subject/factions/Faction.cs" id="1_s8bwg"]
 
 [resource]
 script = ExtResource("1_s8bwg")
+Icon = ExtResource("1_o6g4u")
 Label = "Corpos"
 metadata/_custom_type_script = "uid://tqjsxtk28gq8"

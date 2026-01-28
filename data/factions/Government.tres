@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Faction" load_steps=3 format=3 uid="uid://cvuhvwqt47jr7"]
+
+[ext_resource type="Texture2D" uid="uid://yhltlasmsmmr" path="res://data/factions/government.png" id="1_jcetu"]
+[ext_resource type="Script" uid="uid://tqjsxtk28gq8" path="res://scripts/subject/factions/Faction.cs" id="2_b7wti"]
+
+[resource]
+script = ExtResource("2_b7wti")
+Icon = ExtResource("1_jcetu")
+Label = "Government"
+metadata/_custom_type_script = "uid://tqjsxtk28gq8"

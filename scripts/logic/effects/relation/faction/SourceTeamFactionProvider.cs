@@ -7,12 +7,12 @@ using Lawfare.scripts.subject;
 namespace Lawfare.scripts.logic.effects.relation.faction;
 
 [GlobalClass]
-public partial class OwnTeamFactionProvider : FactionProvider
+public partial class SourceTeamFactionProvider : FactionProvider
 {
     public override Faction GetFaction(GameEvent gameEvent, ISubject subject)
     {
-        var ownFaction = gameEvent.Context.GetTeam(subject)?.Faction;
+        var sourceFaction = gameEvent.Context.GetTeam(gameEvent.Source)?.Faction;
         return gameEvent.Context
-            .Factions.FirstOrDefault(faction => faction == ownFaction);
+            .Factions.FirstOrDefault(faction => faction == sourceFaction);
     }
 }
