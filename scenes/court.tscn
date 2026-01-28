@@ -44,8 +44,9 @@ metadata/_custom_type_script = "uid://dkj1ucewrg5v4"
 script = ExtResource("1_rnrgf")
 _docketEntry = SubResource("Resource_lc033")
 
-[node name="Interaction" type="Node" parent="."]
+[node name="Interaction" type="Node" parent="." node_paths=PackedStringArray("_context")]
 script = ExtResource("1_15585")
+_context = NodePath("..")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
