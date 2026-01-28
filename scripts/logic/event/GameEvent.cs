@@ -27,5 +27,6 @@ public struct GameEvent
     public ISubject[] Subjects => new[]{
         Source, Target, Host, Space
     }.Where(subject => subject != null).ToArray();
+
     public Faction Faction;
 }

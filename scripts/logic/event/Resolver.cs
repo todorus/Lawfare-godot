@@ -62,7 +62,7 @@ public static class Resolver
         if (!gameEventData.ShouldRunAction()) return [];
 
         if (gameEventData.Action == null || !gameEventData.Action.Applies(gameEventData)) return [];
-        return gameEventData.Action.Stage(gameEventData);
+        return gameEventData.Action.Stage(gameEventData with { Faction = gameEventData.Source?.Allegiances?.Primary });
     }
 
     public static int Read(this ISubject subject, Property property, GameEvent gameEventData)

@@ -45,6 +45,12 @@ public partial class Hearing : Context
             .Concat(DocketEntry.Prosecution.Members)
             .ToArray();
     
+    public override Team[] Teams => 
+    [
+        DocketEntry.Prosecution,
+        DocketEntry.Defense
+    ];
+    
     public override Witness[] Witnesses => DocketEntry.Witnesses;
 
     private Witness _currentWitness;

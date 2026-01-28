@@ -13,8 +13,7 @@ public partial class Team : Resource
     [Export] private LawyerDef[] _lawyerDefs = [];
 
     private Lawyer[] _members;
-    public Lawyer[] Members {
-        set => _members = value;
+    public Lawyer[] Members { 
         get {
             if (_members == null) 
             {

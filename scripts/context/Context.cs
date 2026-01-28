@@ -1,6 +1,8 @@
+using System.Linq;
 using Godot;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.subject;
 
 namespace Lawfare.scripts.context;
 
@@ -10,4 +12,6 @@ public abstract partial class Context : Node, IContext
     public abstract Lawyer[] Lawyers { get; }
     public abstract Witness[] Witnesses { get; }
     public abstract Judge[] Judges { get; }
+    public abstract Team[] Teams { get; }
+    public Team GetTeam(ISubject subject) => Teams.FirstOrDefault(team => team.Members.Contains(subject));
 }

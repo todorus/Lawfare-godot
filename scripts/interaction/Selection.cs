@@ -92,7 +92,8 @@ public partial class Selection : Node
             Source = source,
             Target = target,
             Action = action,
-            Context = _context
+            Context = _context,
+            Faction = source?.Allegiances?.Primary
         };
     }
 

@@ -1,5 +1,6 @@
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.subject;
 
 namespace Lawfare.scripts.context;
 
@@ -9,4 +10,8 @@ public interface IContext
     public Lawyer[] Lawyers { get; }
     public Witness[] Witnesses { get; }
     public Judge[] Judges { get; }
+    
+    public Team[] Teams { get; }
+    
+    public Team GetTeam(ISubject subject);
 }

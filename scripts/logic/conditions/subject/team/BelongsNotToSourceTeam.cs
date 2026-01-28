@@ -1,0 +1,17 @@
+using Godot;
+using Lawfare.scripts.logic.@event;
+using Lawfare.scripts.subject;
+
+namespace Lawfare.scripts.logic.conditions.subject.team;
+
+[GlobalClass]
+public partial class BelongsNotToSourceTeam : SubjectCondition
+{
+    public override bool Evaluate(GameEvent gameEventData, ISubject subject)
+    {
+        var context = gameEventData.Context;
+        var sourceTeam = context.GetTeam(gameEventData.Source);
+        var subjectTeam = context.GetTeam(subject);
+        return sourceTeam != subjectTeam;
+    }
+}
