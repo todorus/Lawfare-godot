@@ -37,7 +37,7 @@ public partial class PropertyTransferEffect : Effect
     {
         var oldAmount = source.Quantities.Get(Property);
         var newAmount = source.Quantities.StageAdd(Property, amount);
-        return new PropertyAddEffect.PropertyAddDiff(
+        return new PropertyAddEffect.PropertyDiff(
             source,
             new Quantity
             {

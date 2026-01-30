@@ -18,7 +18,7 @@ public partial class ChangeDisplaySpawner : Node3D
 
     public void DisplayChanges(IDiff[] changes)
     {
-        var propertyChanges = changes.OfType<PropertyAddEffect.PropertyAddDiff>();
+        var propertyChanges = changes.OfType<PropertyAddEffect.PropertyDiff>();
 
         var grouped = propertyChanges
             .GroupBy(pc => new { pc.Subject, pc.Original.Property })

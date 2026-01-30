@@ -1,0 +1,74 @@
+[gd_resource type="Resource" script_class="Trigger" load_steps=23 format=3 uid="uid://cxmk1wsrr6w7d"]
+
+[ext_resource type="Script" uid="uid://n7tb763sln31" path="res://scripts/logic/conditions/diff/subject/IsHostDiffCondition.cs" id="1_6d4ad"]
+[ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="2_hmol5"]
+[ext_resource type="Script" uid="uid://b0xy6yt21nq44" path="res://scripts/logic/conditions/quantity/property/HasPropertyCondition.cs" id="3_hmgbm"]
+[ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="4_g41oi"]
+[ext_resource type="Script" uid="uid://b024d1d42h006" path="res://scripts/logic/conditions/quantity/amount/IsSmallerThan.cs" id="5_pp6hg"]
+[ext_resource type="Script" uid="uid://sf0js3ls6sp5" path="res://scripts/logic/conditions/diff/property/BasePropertyDiffCondition.cs" id="6_0o4pk"]
+[ext_resource type="Script" uid="uid://d1ulyleelnntg" path="res://scripts/logic/conditions/event/diff/property/HasDiffWith.cs" id="7_75y1v"]
+[ext_resource type="Resource" uid="uid://careqb4lcckol" path="res://data/properties/Alpha.tres" id="8_syir8"]
+[ext_resource type="Script" uid="uid://dsxkqn0fvmpgl" path="res://scripts/logic/effects/property/PropertyAddEffect.cs" id="9_xpsw4"]
+[ext_resource type="Script" uid="uid://d30fxqo2jwojw" path="res://scripts/logic/effects/targets/role/HostProvider.cs" id="10_tfq6r"]
+[ext_resource type="Script" uid="uid://drxu3481eg66a" path="res://scripts/logic/effects/root/TargetedEffect.cs" id="11_544hl"]
+[ext_resource type="Script" uid="uid://binuvquyum7to" path="res://scripts/logic/triggers/Trigger.cs" id="12_n4iue"]
+
+[sub_resource type="Resource" id="Resource_fvs2h"]
+script = ExtResource("1_6d4ad")
+metadata/_custom_type_script = "uid://n7tb763sln31"
+
+[sub_resource type="Resource" id="Resource_xaboi"]
+script = ExtResource("3_hmgbm")
+_property = ExtResource("2_hmol5")
+metadata/_custom_type_script = "uid://b0xy6yt21nq44"
+
+[sub_resource type="Resource" id="Resource_11prp"]
+script = ExtResource("4_g41oi")
+metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+
+[sub_resource type="Resource" id="Resource_pxr1n"]
+script = ExtResource("5_pp6hg")
+_amountProvider = SubResource("Resource_11prp")
+metadata/_custom_type_script = "uid://b024d1d42h006"
+
+[sub_resource type="Resource" id="Resource_auklb"]
+script = ExtResource("6_0o4pk")
+_conditions = [SubResource("Resource_xaboi"), SubResource("Resource_pxr1n")]
+metadata/_custom_type_script = "uid://sf0js3ls6sp5"
+
+[sub_resource type="Resource" id="Resource_8vgf6"]
+script = ExtResource("7_75y1v")
+_conditions = Array[Object]([SubResource("Resource_fvs2h"), SubResource("Resource_auklb")])
+metadata/_custom_type_script = "uid://d1ulyleelnntg"
+
+[sub_resource type="Resource" id="Resource_b7sre"]
+script = ExtResource("4_g41oi")
+Amount = 2
+metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+
+[sub_resource type="Resource" id="Resource_nuhc6"]
+script = ExtResource("9_xpsw4")
+AmountProvider = SubResource("Resource_b7sre")
+Property = ExtResource("8_syir8")
+metadata/_custom_type_script = "uid://dsxkqn0fvmpgl"
+
+[sub_resource type="Resource" id="Resource_57cpw"]
+script = ExtResource("10_tfq6r")
+metadata/_custom_type_script = "uid://d30fxqo2jwojw"
+
+[sub_resource type="Resource" id="Resource_n6tfj"]
+script = ExtResource("11_544hl")
+TargetProvider = SubResource("Resource_57cpw")
+SourceConditions = Array[Object]([])
+TargetConditions = Array[Object]([])
+SpaceConditions = Array[Object]([])
+Effects = [SubResource("Resource_nuhc6")]
+metadata/_custom_type_script = "uid://drxu3481eg66a"
+
+[resource]
+script = ExtResource("12_n4iue")
+EventConditions = [SubResource("Resource_8vgf6")]
+RootEffect = SubResource("Resource_n6tfj")
+Type = 4
+Label = "Arrogant"
+metadata/_custom_type_script = "uid://binuvquyum7to"

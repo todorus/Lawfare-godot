@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="Trigger" load_steps=4 format=3 uid="uid://cxmk1wsrr6w7d"]
+[gd_resource type="Resource" script_class="Keyword" load_steps=3 format=3 uid="uid://dm25638f8xarv"]
 
-[ext_resource type="Script" uid="uid://cbu2v23q2ci0p" path="res://scripts/logic/effects/root/None.cs" id="1_nwgyr"]
-[ext_resource type="Script" uid="uid://binuvquyum7to" path="res://scripts/logic/triggers/Trigger.cs" id="2_nb13e"]
-
-[sub_resource type="Resource" id="Resource_wmq6w"]
-script = ExtResource("1_nwgyr")
+[ext_resource type="Resource" uid="uid://cxmk1wsrr6w7d" path="res://data/keywords/ArrogantTrigger.tres" id="1_nwgyr"]
+[ext_resource type="Script" uid="uid://d1yojxyksi7ub" path="res://scripts/logic/keywords/Keyword.cs" id="1_txga0"]
 
 [resource]
-script = ExtResource("2_nb13e")
-metadata/_custom_type_script = "uid://binuvquyum7to"
+script = ExtResource("1_txga0")
+Triggers = Array[Object]([ExtResource("1_nwgyr")])
+Quantities = Array[Object]([])
+Label = "Arrogant"
+metadata/_custom_type_script = "uid://d1yojxyksi7ub"

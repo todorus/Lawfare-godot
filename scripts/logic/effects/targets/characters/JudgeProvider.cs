@@ -3,7 +3,7 @@ using Godot;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 
-namespace Lawfare.scripts.logic.effects.targets;
+namespace Lawfare.scripts.logic.effects.targets.characters;
 
 [GlobalClass]
 public partial class JudgeProvider : SubjectProvider

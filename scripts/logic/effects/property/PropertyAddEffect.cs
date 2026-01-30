@@ -24,7 +24,7 @@ public partial class PropertyAddEffect : PropertyEffect
                 Property = Property,
                 Amount = 0
             };
-            return [new PropertyAddDiff(subject, zeroQuantity, zeroQuantity)];
+            return [new PropertyDiff(subject, zeroQuantity, zeroQuantity)];
         }
 
         var original = new Quantity
@@ -41,10 +41,10 @@ public partial class PropertyAddEffect : PropertyEffect
             Amount = stagedValue
         };
             
-        return [new PropertyAddDiff(subject, original, updated)];
+        return [new PropertyDiff(subject, original, updated)];
     }
     
-    public readonly struct PropertyAddDiff(ISubject subject, Quantity original, Quantity updated) : IDiff<Quantity>
+    public readonly struct PropertyDiff(ISubject subject, Quantity original, Quantity updated) : IDiff<Quantity>
     {
         public ISubject Subject { get; } = subject;
         public Quantity Original { get; } = original;
@@ -54,7 +54,7 @@ public partial class PropertyAddEffect : PropertyEffect
         
         public bool CanMerge(IDiff<Quantity> other)
         {
-            if (other is not PropertyAddDiff otherDiff)
+            if (other is not PropertyDiff otherDiff)
             {
                 return false;
             }
@@ -66,7 +66,7 @@ public partial class PropertyAddEffect : PropertyEffect
         
         public IDiff Merge(IDiff other)
         {
-            if (other is not PropertyAddDiff otherDiff)
+            if (other is not PropertyDiff otherDiff)
             {
                 GD.PushWarning("PropertyAddDiff.Merge: other is not PropertyAddDiff");
                 return this;
@@ -84,7 +84,7 @@ public partial class PropertyAddEffect : PropertyEffect
                 Amount = Updated.Amount + otherDiff.Updated.Amount - Original.Amount
             };
 
-            return new PropertyAddDiff(Subject, Original, mergedUpdated);
+            return new PropertyDiff(Subject, Original, mergedUpdated);
         }
         
         public IDiff Apply()
@@ -101,7 +101,7 @@ public partial class PropertyAddEffect : PropertyEffect
                 Property = Original.Property,
                 Amount = actualAmount
             };
-            return new PropertyAddDiff(Subject, Original, newUpdated);
+            return new PropertyDiff(Subject, Original, newUpdated);
         }
     }
 }

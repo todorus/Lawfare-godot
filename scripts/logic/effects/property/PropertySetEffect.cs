@@ -17,7 +17,7 @@ public partial class PropertySetEffect : PropertyEffect
         var newAmount = AmountProvider.GetAmount(gameEvent, subject);
         return
         [
-            new PropertyAddEffect.PropertyAddDiff(
+            new PropertyAddEffect.PropertyDiff(
                 subject,
                 new Quantity
                 {

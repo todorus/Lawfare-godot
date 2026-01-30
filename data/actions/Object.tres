@@ -10,13 +10,13 @@
 [ext_resource type="Script" uid="uid://cjuspvcpekfge" path="res://scripts/logic/effects/relation/faction/SourceTeamFactionProvider.cs" id="7_cjnh3"]
 [ext_resource type="Resource" uid="uid://beq04cnqn0ieg" path="res://data/relations/Suspicion.tres" id="8_scmc2"]
 [ext_resource type="Script" uid="uid://dlfwebu7jm0xp" path="res://scripts/logic/effects/relation/RelationAddEffect.cs" id="9_qjqp4"]
-[ext_resource type="Script" uid="uid://bvoptgs40k1gi" path="res://scripts/logic/effects/targets/JudgeProvider.cs" id="10_slqy4"]
+[ext_resource type="Script" uid="uid://bvoptgs40k1gi" path="res://scripts/logic/effects/targets/characters/JudgeProvider.cs" id="10_slqy4"]
 [ext_resource type="Script" uid="uid://drxu3481eg66a" path="res://scripts/logic/effects/root/TargetedEffect.cs" id="11_fw6e8"]
 [ext_resource type="Script" uid="uid://blba6n07exhaq" path="res://scripts/logic/effects/root/MultiEffect.cs" id="12_ah6so"]
 
 [sub_resource type="Resource" id="Resource_fm13e"]
 script = ExtResource("1_h4fy5")
-Amount = 2
+Amount = -2
 metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
 
 [sub_resource type="Resource" id="Resource_2x0sg"]

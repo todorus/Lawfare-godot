@@ -21,12 +21,12 @@ public partial class Cost : Resource
         return subjectValue >= amount * multiplier;
     }
 
-    public PropertyAddEffect.PropertyAddDiff Stage(GameEvent gameEvent, ISubject subject)
+    public PropertyAddEffect.PropertyDiff Stage(GameEvent gameEvent, ISubject subject)
     {
         var amount = AmountProvider.GetAmount(gameEvent, subject);
         var oldAmount = subject.Quantities.Get(Property);
         var newAmount = subject.Quantities.StageAdd(Property, amount);
-        return new PropertyAddEffect.PropertyAddDiff(
+        return new PropertyAddEffect.PropertyDiff(
             subject,
             new Quantity
             {

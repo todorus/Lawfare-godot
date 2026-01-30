@@ -11,5 +11,5 @@ Image = ExtResource("1_o40us")
 Actions = Array[Object]([ExtResource("1_1qsth"), ExtResource("2_0jb1g")])
 StartingQuantities = null
 Skills = null
-Keywords = null
+Keywords = Array[Object]([])
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

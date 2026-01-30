@@ -101,7 +101,7 @@ public partial class Selection : Node
     {
         if (source == null || target == null) return;
 
-        var gameEvent = new GameEvent
+        var actionEvent = new GameEvent
         {
             Type = EventType.Action,
             Source = source,
@@ -109,7 +109,15 @@ public partial class Selection : Node
             Action = action,
             Context = _context
         };
-        var resolution = gameEvent.Resolve();
+        var resolution = actionEvent.Resolve();
         EmitSignalResolution(resolution);
+        
+        var afterActionEvent = actionEvent with
+        {
+            Type = EventType.AfterAction,
+            Resolution = resolution
+        };
+        var afterResolution = afterActionEvent.Resolve();
+        EmitSignalResolution(afterResolution);
     } 
 }

@@ -7,4 +7,6 @@
 script = ExtResource("1_q2gd5")
 Label = "Credibility"
 Icon = ExtResource("1_jm5tq")
+Minimum = -10
+Maximum = 10
 metadata/_custom_type_script = "uid://bui75swsppjh6"

@@ -23,7 +23,7 @@ public struct GameEvent
     // Intermediary data
     public DiceRoll[] DiceRolls;
 
-    public IEnumerable<HostedTrigger> Triggers => [];
+    public IEnumerable<HostedTrigger> Triggers => Subjects.SelectMany(subject => subject.Triggers);
     public ISubject[] Subjects => new[]{
         Source, Target, Host, Space
     }.Where(subject => subject != null).ToArray();
