@@ -14,4 +14,12 @@ public abstract partial class Context : Node, IContext
     public abstract Judge[] Judges { get; }
     public abstract Team[] Teams { get; }
     public Team GetTeam(ISubject subject) => Teams.FirstOrDefault(team => team.Members.Contains(subject));
+    public Team GetOpposingTeam(ISubject subject) => Teams.FirstOrDefault(team => !team.Members.Contains(subject));
+
+    public ISubject[] AllSubjects =>
+        new ISubject[]{}
+            .Concat(Lawyers)
+            .Concat(Judges)
+            .Concat(Witnesses)
+            .ToArray();
 }

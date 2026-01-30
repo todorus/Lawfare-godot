@@ -12,6 +12,9 @@ public interface IContext
     public Judge[] Judges { get; }
     
     public Team[] Teams { get; }
+
+    public ISubject[] AllSubjects { get; }
     
     public Team GetTeam(ISubject subject);
+    public Team GetOpposingTeam(ISubject subject);
 }

@@ -1,11 +1,18 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
+using Lawfare.scripts.logic.keywords;
+using Lawfare.scripts.logic.triggers;
+using Lawfare.scripts.subject;
+using Lawfare.scripts.subject.quantities;
+using Lawfare.scripts.subject.relations;
 
 namespace Lawfare.scripts.characters;
 
 [GlobalClass]
-public partial class Team : Resource
+public partial class Team : Resource, ISubject
 {
     [Export]
     public Faction Faction;
@@ -24,4 +31,20 @@ public partial class Team : Resource
             return _members;
         } 
     }
+
+    private Quantities _quantities = new Quantities();
+    public Quantities Quantities => _quantities;
+    
+    private Relations _relations = new Relations();
+    public Relations Relations => _relations;
+    public HostedTrigger[] Triggers => [];
+    public KeywordBase[] Keywords => [];
+    public Allegiances Allegiances => new Allegiances(Faction != null ? new[] { Faction } : []);
+    public bool CanHaveFaction => true;
+    public IEnumerable<SkillPool> Pools => Members.SelectMany(m => m.Pools);
+    public bool IsExpired { get; set; } = false;
+    
+    public int Minimum(Property property) => property.Minimum;
+
+    public Vector3 DamagePosition { get; }
 }
