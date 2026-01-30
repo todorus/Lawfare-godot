@@ -5,5 +5,5 @@ namespace Lawfare.scripts.logic.modifiers;
 public struct IModification
 {
     private IModifier Modifier;
-    private IChange Change;
+    private IDiff Change;
 }

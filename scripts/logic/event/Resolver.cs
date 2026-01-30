@@ -22,7 +22,7 @@ public static class Resolver
         // TODO change this to outcome modification
         // var modified = staged.Select(change => change.Modify(gameEventData)).ToArray();
         // var actual = modified.Apply();
-        var changes = staged.SelectMany(changeGroup => changeGroup.Changes).ToArray();
+        var changes = staged.SelectMany(changeGroup => changeGroup.Diffs).ToArray();
         var actual = changes.Apply();
 
         return new Resolution
@@ -77,13 +77,13 @@ public static class Resolver
         return Math.Max(read - subject.Minimum(property), property.Minimum);
     }
 
-    public static IChange Modify(this IChange change, GameEvent gameEventData)
+    public static IDiff Modify(this IDiff change, GameEvent gameEventData)
     {
         // TODO: Implement modifiers based on eventData
         return change;
     }
 
-    public static IChange[] Apply(this IChange[] changes)
+    public static IDiff[] Apply(this IDiff[] changes)
     {
         return changes.Select(change => change.Apply()).ToArray();
     }

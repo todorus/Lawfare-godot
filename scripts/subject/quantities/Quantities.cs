@@ -50,6 +50,16 @@ public partial class Quantities : GodotObject, IAvailable
     {
         return _quantities.ContainsKey(property) ? _quantities[property] : 0;
     }
+    
+    public int StageAdd(Property property, int amount)
+    {
+        if (!_quantities.ContainsKey(property))
+        {
+            _quantities[property] = 0;
+        }
+        
+        return _quantities[property] + amount;
+    }
 
     public int Add(Property property, int amount)
     {
@@ -60,7 +70,7 @@ public partial class Quantities : GodotObject, IAvailable
         ;
         _quantities[property] = newAmount;
         OnChange?.Invoke(this);
-        return newAmount - oldAmount;
+        return newAmount;
     }
 
     public Quantities Clone()

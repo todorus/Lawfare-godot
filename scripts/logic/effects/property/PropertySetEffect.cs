@@ -1,6 +1,7 @@
 using Godot;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
+using Lawfare.scripts.subject.quantities;
 using AmountProvider = Lawfare.scripts.logic.effects.property.amounts.AmountProvider;
 
 namespace Lawfare.scripts.logic.effects.property;
@@ -10,19 +11,25 @@ public partial class PropertySetEffect : PropertyEffect
 {
     [Export] public AmountProvider AmountProvider;
 
-    protected override IChange[] StageInternal(GameEvent gameEvent, ISubject subject)
+    protected override IDiff[] StageInternal(GameEvent gameEvent, ISubject subject)
     {
-        var desiredAmount = AmountProvider.GetAmount(gameEvent, subject);
         var currentAmount = subject?.Quantities?.Get(Property) ?? 0;
-        var delta = desiredAmount - currentAmount;
+        var newAmount = AmountProvider.GetAmount(gameEvent, subject);
         return
         [
-            new PropertyAddEffect.PropertyAddChange
-            {
-                Property = Property,
-                Amount = delta,
-                Subject = subject
-            }
+            new PropertyAddEffect.PropertyAddDiff(
+                subject,
+                new Quantity
+                {
+                    Property = Property,
+                    Amount = currentAmount
+                },
+                new Quantity
+                {
+                    Property = Property,
+                    Amount = newAmount
+                }
+            )
         ];
     }
 }

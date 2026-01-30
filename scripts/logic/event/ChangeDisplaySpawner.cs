@@ -16,17 +16,17 @@ public partial class ChangeDisplaySpawner : Node3D
         DisplayChanges(resolution.Changes);
     }
 
-    public void DisplayChanges(IChange[] changes)
+    public void DisplayChanges(IDiff[] changes)
     {
-        var propertyChanges = changes.OfType<PropertyAddEffect.PropertyAddChange>();
+        var propertyChanges = changes.OfType<PropertyAddEffect.PropertyAddDiff>();
 
         var grouped = propertyChanges
-            .GroupBy(pc => new { pc.Subject, pc.Property })
+            .GroupBy(pc => new { pc.Subject, pc.Original.Property })
             .Select(g => new
             {
                 g.Key.Subject,
                 g.Key.Property,
-                Amount = g.Sum(pc => pc.Amount)
+                Amount = g.Sum(pc => pc.Updated.Amount - pc.Original.Amount)
             });
 
         foreach (var group in grouped)

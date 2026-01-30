@@ -25,7 +25,7 @@ public partial class SingleCostEffect : RootEffect
     {
         if (!Applies(gameEvent, root)) return [];
 
-        var costChanges = Costs.Select(cost => cost.Stage(gameEvent, root)).Cast<IChange>().ToArray();
+        var costChanges = Costs.Select(cost => cost.Stage(gameEvent, root)).Cast<IDiff>().ToArray();
 
         var targets = Targets.Select(gameEvent);
         var targetChanges = targets.SelectMany(target => StageTargetEffects(gameEvent, target)).ToArray();
@@ -35,7 +35,7 @@ public partial class SingleCostEffect : RootEffect
         return [changeGroup];
     }
 
-    private IChange[] StageTargetEffects(GameEvent gameEvent, ISubject target)
+    private IDiff[] StageTargetEffects(GameEvent gameEvent, ISubject target)
     {
         return Effects.SelectMany(effect => effect.Stage(gameEvent, target)).ToArray();
     }

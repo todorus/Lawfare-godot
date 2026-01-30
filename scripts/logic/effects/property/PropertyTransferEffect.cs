@@ -18,7 +18,7 @@ public partial class PropertyTransferEffect : Effect
 
     [Export] private Receiver Receiver = Receiver.Source;
 
-    protected override IChange[] StageInternal(GameEvent gameEvent, ISubject subject)
+    protected override IDiff[] StageInternal(GameEvent gameEvent, ISubject subject)
     {
         var amount = AmountProvider.GetAmount(gameEvent, subject);
         var recipient = Receiver switch
@@ -33,15 +33,23 @@ public partial class PropertyTransferEffect : Effect
         return [targetChange, sourceChange];
     }
 
-    private IChange Stage(ISubject source, int amount, bool canUseMarket)
+    private IDiff Stage(ISubject source, int amount, bool canUseMarket)
     {
-        return new PropertyAddEffect.PropertyAddChange
-        {
-            Property = Property,
-            Amount = amount,
-            Subject = source,
-            CanUseMarket = canUseMarket
-        };
+        var oldAmount = source.Quantities.Get(Property);
+        var newAmount = source.Quantities.StageAdd(Property, amount);
+        return new PropertyAddEffect.PropertyAddDiff(
+            source,
+            new Quantity
+            {
+                Property = Property,
+                Amount = oldAmount
+            },
+            new Quantity
+            {
+                Property = Property,
+                Amount = newAmount
+            }
+        );
     }
 }
 

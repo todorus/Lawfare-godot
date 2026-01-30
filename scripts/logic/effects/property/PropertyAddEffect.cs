@@ -13,62 +13,95 @@ public partial class PropertyAddEffect : PropertyEffect
 {
     [Export] public AmountProvider AmountProvider;
 
-    protected override IChange[] StageInternal(GameEvent gameEvent, ISubject subject)
+    protected override IDiff[] StageInternal(GameEvent gameEvent, ISubject subject)
     {
         var amount = AmountProvider.GetAmount(gameEvent, subject);
-        return
-        [
-            new PropertyAddChange
-            (
-                gameEvent.Space,
-                Property,
-                amount,
-                subject
-            )
-        ];
-    }
-
-    public struct PropertyAddChange : IChange
-    {
-        public ISubject Space { get; }
-
-        public Property Property;
-        public int Amount;
-        public ISubject Subject;
-        public bool CanUseMarket = true;
-
-        public PropertyAddChange(
-            ISubject space,
-            Property property,
-            int amount,
-            ISubject subject,
-            bool canUseMarket = true
-        )
+        if (subject?.Quantities == null)
         {
-            Space = space;
-            Property = property;
-            Amount = amount;
-            Subject = subject;
-            CanUseMarket = canUseMarket;
+            GD.PushWarning("PropertyAddChange.Apply: Subject or Subject.Quantities is null");
+            var zeroQuantity = new Quantity
+            {
+                Property = Property,
+                Amount = 0
+            };
+            return [new PropertyAddDiff(subject, zeroQuantity, zeroQuantity)];
         }
 
-        public IReadOnlyList<IModification> Modifications => new List<IModification>();
-
-        public IChange Apply()
+        var original = new Quantity
         {
-            if (Subject?.Quantities == null)
+            Property = Property,
+            Amount = subject.Quantities.Get(Property)
+        };
+            
+        int stagedValue = subject.Quantities.StageAdd(Property, amount);
+            
+        var updated = new Quantity
+        {
+            Property = Property,
+            Amount = stagedValue
+        };
+            
+        return [new PropertyAddDiff(subject, original, updated)];
+    }
+    
+    public readonly struct PropertyAddDiff(ISubject subject, Quantity original, Quantity updated) : IDiff<Quantity>
+    {
+        public ISubject Subject { get; } = subject;
+        public Quantity Original { get; } = original;
+        public Quantity Updated { get; } = updated;
+        
+        public bool CanMerge(IDiff other) => CanMerge((IDiff<Quantity>) other);
+        
+        public bool CanMerge(IDiff<Quantity> other)
+        {
+            if (other is not PropertyAddDiff otherDiff)
             {
-                GD.PushWarning("PropertyAddChange.Apply: Subject or Subject.Quantities is null");
+                return false;
+            }
+
+            return Subject == otherDiff.Subject && Original.Property == otherDiff.Original.Property;
+        }
+
+        public IDiff<Quantity> Merge(IDiff<Quantity> other) => (IDiff<Quantity>) Merge((IDiff) other);
+        
+        public IDiff Merge(IDiff other)
+        {
+            if (other is not PropertyAddDiff otherDiff)
+            {
+                GD.PushWarning("PropertyAddDiff.Merge: other is not PropertyAddDiff");
                 return this;
             }
 
-            var actualChange = Subject.Quantities.Add(Property, Amount);
-            return new PropertyAddChange
+            if (Subject != otherDiff.Subject || Original.Property != otherDiff.Original.Property)
             {
-                Property = Property,
-                Amount = actualChange,
-                Subject = Subject
+                GD.PushWarning("PropertyAddDiff.Merge: Subjects or Properties do not match");
+                return this;
+            }
+
+            var mergedUpdated = new Quantity
+            {
+                Property = Original.Property,
+                Amount = Updated.Amount + otherDiff.Updated.Amount - Original.Amount
             };
+
+            return new PropertyAddDiff(Subject, Original, mergedUpdated);
+        }
+        
+        public IDiff Apply()
+        {
+            if (Subject?.Quantities == null)
+            {
+                GD.PushWarning("PropertyAddDiff.Apply: Subject or Subject.Quantities is null");
+                return null;
+            }
+
+            var actualAmount = Subject.Quantities.Add(Original.Property, Updated.Amount);
+            var newUpdated = new Quantity
+            {
+                Property = Original.Property,
+                Amount = actualAmount
+            };
+            return new PropertyAddDiff(Subject, Original, newUpdated);
         }
     }
 }

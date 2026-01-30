@@ -5,5 +5,5 @@ namespace Lawfare.scripts.logic.effects;
 
 public interface IEffect
 {
-    public IChange[] Stage(GameEvent gameEvent, ISubject subject);
+    public IDiff[] Stage(GameEvent gameEvent, ISubject subject);
 }

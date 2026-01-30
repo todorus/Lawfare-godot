@@ -29,4 +29,6 @@ public struct GameEvent
     }.Where(subject => subject != null).ToArray();
 
     public Faction Faction;
+
+    public Resolution Resolution;
 }

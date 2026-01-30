@@ -35,7 +35,7 @@ public partial class TargetCostEffect : RootEffect
             if (!CostsPerTarget.All(cost => cost.CanMeet(gameEvent, gameEvent.Source, multiplier))) break;
 
             var target = targets.ElementAt(i);
-            var costChanges = CostsPerTarget.Select(cost => cost.Stage(gameEvent, gameEvent.Source)).Cast<IChange>()
+            var costChanges = CostsPerTarget.Select(cost => cost.Stage(gameEvent, gameEvent.Source)).Cast<IDiff>()
                 .ToArray();
             var targetChanges = StageTargetEffects(gameEvent, target);
             var changeGroup = targetChanges.Concat(costChanges).ToArray().ToChangeGroup();
@@ -45,7 +45,7 @@ public partial class TargetCostEffect : RootEffect
         return changeGroups.ToArray();
     }
 
-    private IChange[] StageTargetEffects(GameEvent gameEvent, ISubject subject)
+    private IDiff[] StageTargetEffects(GameEvent gameEvent, ISubject subject)
     {
         return Effects.SelectMany(effect => effect.Stage(gameEvent, subject)).ToArray();
     }
