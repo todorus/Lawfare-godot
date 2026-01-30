@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Trigger" load_steps=4 format=3 uid="uid://cxmk1wsrr6w7d"]
+
+[ext_resource type="Script" uid="uid://cbu2v23q2ci0p" path="res://scripts/logic/effects/root/None.cs" id="1_nwgyr"]
+[ext_resource type="Script" uid="uid://binuvquyum7to" path="res://scripts/logic/triggers/Trigger.cs" id="2_nb13e"]
+
+[sub_resource type="Resource" id="Resource_wmq6w"]
+script = ExtResource("1_nwgyr")
+
+[resource]
+script = ExtResource("2_nb13e")
+metadata/_custom_type_script = "uid://binuvquyum7to"
