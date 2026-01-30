@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Property" load_steps=3 format=3 uid="uid://careqb4lcckol"]
+
+[ext_resource type="Texture2D" uid="uid://1ch4onburefq" path="res://data/properties/Alpha.png" id="1_hle3v"]
+[ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_kxys4"]
+
+[resource]
+script = ExtResource("1_kxys4")
+Label = "Alpha"
+Icon = ExtResource("1_hle3v")
+metadata/_custom_type_script = "uid://bui75swsppjh6"

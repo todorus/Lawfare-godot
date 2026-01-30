@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Property" load_steps=3 format=3 uid="uid://gxs87ubgegi0"]
+
+[ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_sjo2v"]
+[ext_resource type="Texture2D" uid="uid://1ncjhnj2rqij" path="res://data/properties/Focus.png" id="1_tvavf"]
+
+[resource]
+script = ExtResource("1_sjo2v")
+Label = "Focus"
+Icon = ExtResource("1_tvavf")
+metadata/_custom_type_script = "uid://bui75swsppjh6"
