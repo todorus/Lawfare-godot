@@ -5,6 +5,7 @@ using Lawfare.scripts.subject.quantities;
 
 namespace Lawfare.scripts.logic.conditions.quantity.amount;
 
+[GlobalClass]
 public abstract partial class QuantityAmountCondition : QuantityCondition
 {
     [Export]
