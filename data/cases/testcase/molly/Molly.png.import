@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dowwy4chuep8b"
-path="res://.godot/imported/Molly.png-c2f1e85fd6c4e89f1887aa4f93247271.ctex"
+path="res://.godot/imported/Molly.png-359624b44bb8df0d46927056f7ca848d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/cases/testcase/witnesses/Molly.png"
-dest_files=["res://.godot/imported/Molly.png-c2f1e85fd6c4e89f1887aa4f93247271.ctex"]
+source_file="res://data/cases/testcase/molly/Molly.png"
+dest_files=["res://.godot/imported/Molly.png-359624b44bb8df0d46927056f7ca848d.ctex"]
 
 [params]
 

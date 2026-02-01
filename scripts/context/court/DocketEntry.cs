@@ -1,5 +1,6 @@
 using System.Linq;
 using Godot;
+using Lawfare.scripts.@case;
 using Lawfare.scripts.characters;
 
 namespace Lawfare.scripts.context.court;
@@ -7,6 +8,9 @@ namespace Lawfare.scripts.context.court;
 [GlobalClass]
 public partial class DocketEntry : Resource
 {
+    [Export]
+    public Case Case;
+    
     [Export]
     public JudgeDef[] JudgesDef = [];
     

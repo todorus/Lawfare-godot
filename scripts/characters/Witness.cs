@@ -14,19 +14,21 @@ namespace Lawfare.scripts.characters;
 [GlobalClass]
 public partial class Witness(WitnessDef definition) : GodotObject, ISubject, ICharacter
 {
-    public Quantities Quantities { get; } = new Quantities();
-    public Relations Relations { get; } = new Relations();
+    public readonly WitnessDef Definition = definition;
+    
+    public Quantities Quantities { get; } = new();
+    public Relations Relations { get; } = new();
     
     public HostedTrigger[] Triggers => [];
     public KeywordBase[] Keywords => [];
-    public Allegiances Allegiances => new Allegiances();
+    public Allegiances Allegiances => new();
     public bool CanHaveFaction => false;
     public IEnumerable<SkillPool> Pools => [];
     public bool IsExpired { get; set; }
     public int Minimum(Property property) => property.Minimum;
 
     public Vector3 DamagePosition => Vector3.Zero;
-    public string Label => definition.Label;
-    public Texture2D Image => definition.Image;
+    public string Label => Definition.Label;
+    public Texture2D Image => Definition.Image;
     public Action[] Actions => [];
 }

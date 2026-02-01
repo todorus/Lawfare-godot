@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Lawfare.scripts.board.factions;
+using Lawfare.scripts.@case;
 using Lawfare.scripts.characters;
 
 namespace Lawfare.scripts.context.court;
@@ -16,6 +17,8 @@ public partial class Hearing : Context
     public delegate void DefenseChangedEventHandler(Team defense);
     [Signal]
     public delegate void JudgesChangedEventHandler(Judge[] judges);
+    [Signal]
+    public delegate void TestimonyChangedEventHandler(Testimony[] testimony);
     
     [Export]
     private DocketEntry _docketEntry;
@@ -28,6 +31,18 @@ public partial class Hearing : Context
             EmitSignalProsecutionChanged(value.Prosecution);
             EmitSignalDefenseChanged(value.Defense);
             EmitSignalJudgesChanged(value.Judges);
+            CurrentFaction = _docketEntry.Case.ProsecutorCaseFile.Faction;
+        }
+    }
+
+    private Faction _currentFaction;
+    public Faction CurrentFaction
+    {
+        get => _currentFaction;
+        set
+        {
+            _currentFaction = value;
+            UpdateTestimonies();
         }
     }
     
@@ -61,6 +76,7 @@ public partial class Hearing : Context
         {
             _currentWitness = value;
             EmitSignalWitnessesChanged([CurrentWitness]);
+            UpdateTestimonies();
         }
     }
 
@@ -68,5 +84,12 @@ public partial class Hearing : Context
     {
         base._Ready();
         DocketEntry = _docketEntry;
+    }
+    
+    private void UpdateTestimonies()
+    {
+        var testimonies = DocketEntry.Case
+            .GetTestimoniesByWitnessAndFaction(CurrentWitness.Definition, CurrentFaction);
+        EmitSignalTestimonyChanged(testimonies);
     }
 }

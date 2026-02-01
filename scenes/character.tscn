@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://rtdumsb4nhvl"]
 
-[ext_resource type="Texture2D" uid="uid://pd4yhcj3vqta" path="res://data/lawyers/lawyer1.png" id="1_agfs1"]
 [ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_rkhd4"]
+[ext_resource type="Texture2D" uid="uid://dowwy4chuep8b" path="res://data/cases/testcase/molly/Molly.png" id="2_2cgup"]
 [ext_resource type="Script" uid="uid://5e8whvir25un" path="res://scripts/ui/Clickable.cs" id="3_lrhn5"]
 [ext_resource type="Script" uid="uid://bpsgy63nxrko8" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="4_dp8ca"]
 [ext_resource type="PackedScene" uid="uid://5e8dlwob8q77" path="res://scenes/stat.tscn" id="5_0lw5n"]
@@ -14,17 +14,24 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 274.0
 offset_bottom = 304.0
+size_flags_vertical = 3
 script = ExtResource("1_rkhd4")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 40.0
-offset_right = 237.28804
-offset_bottom = 304.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -273.83795
+offset_right = 90.0
 grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_agfs1")
+grow_vertical = 0
+texture = ExtResource("2_2cgup")
 expand_mode = 3
+stretch_mode = 4
 script = ExtResource("3_lrhn5")
 
 [node name="Stats" type="VBoxContainer" parent="."]

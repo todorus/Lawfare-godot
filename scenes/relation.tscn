@@ -17,11 +17,13 @@ text = "10"
 layout_mode = 2
 texture = ExtResource("2_cl2em")
 expand_mode = 3
+stretch_mode = 5
 
 [node name="Faction" type="TextureRect" parent="."]
 layout_mode = 2
 texture = ExtResource("2_cl2em")
 expand_mode = 3
+stretch_mode = 5
 
 [connection signal="AmountChanged" from="." to="Amount" method="set_text" flags=3]
 [connection signal="FactionChanged" from="." to="Faction" method="set_texture" flags=3]

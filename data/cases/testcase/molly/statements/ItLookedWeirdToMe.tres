@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Statement" load_steps=2 format=3 uid="uid://bdedp7070se8s"]
+
+[ext_resource type="Script" uid="uid://bf5f8qtkqa430" path="res://scripts/case/Statement.cs" id="1_mjr0r"]
+
+[resource]
+script = ExtResource("1_mjr0r")
+Text = "It always looked weird to me..."
+metadata/_custom_type_script = "uid://bf5f8qtkqa430"

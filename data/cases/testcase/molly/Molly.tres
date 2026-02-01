@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="WitnessDef" load_steps=3 format=3 uid="uid://cvv80drdpkbax"]
 
-[ext_resource type="Texture2D" uid="uid://dowwy4chuep8b" path="res://data/cases/testcase/witnesses/Molly.png" id="1_6x12n"]
+[ext_resource type="Texture2D" uid="uid://dowwy4chuep8b" path="res://data/cases/testcase/molly/Molly.png" id="1_6x12n"]
 [ext_resource type="Script" uid="uid://dv7yb4pkde6ag" path="res://scripts/characters/WitnessDef.cs" id="1_21kqy"]
 
 [resource]

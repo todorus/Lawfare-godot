@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="Case" load_steps=13 format=3 uid="uid://diwh2kys4hwci"]
+
+[ext_resource type="Resource" uid="uid://d2lxbo3stp4qg" path="res://data/factions/Corpos.tres" id="1_sr2vw"]
+[ext_resource type="Script" uid="uid://b45b71worgcl3" path="res://scripts/case/Case.cs" id="1_v07bd"]
+[ext_resource type="Resource" uid="uid://bdedp7070se8s" path="res://data/cases/testcase/molly/statements/ItLookedWeirdToMe.tres" id="2_vkgmp"]
+[ext_resource type="Resource" uid="uid://cvv80drdpkbax" path="res://data/cases/testcase/molly/Molly.tres" id="3_um1bq"]
+[ext_resource type="Script" uid="uid://dgu4lwooyv8ca" path="res://scripts/case/Testimony.cs" id="3_vkgmp"]
+[ext_resource type="Script" uid="uid://b85372pvo16ix" path="res://scripts/case/CaseFile.cs" id="4_um1bq"]
+[ext_resource type="Resource" uid="uid://cvuhvwqt47jr7" path="res://data/factions/Government.tres" id="5_ghwkq"]
+[ext_resource type="Resource" uid="uid://b7c1th53plfc6" path="res://data/cases/testcase/molly/statements/ThatWasNoneOfHisBusiness.tres" id="5_qni7t"]
+
+[sub_resource type="Resource" id="Resource_k56g0"]
+script = ExtResource("4_um1bq")
+Faction = ExtResource("1_sr2vw")
+metadata/_custom_type_script = "uid://b85372pvo16ix"
+
+[sub_resource type="Resource" id="Resource_vkgmp"]
+script = ExtResource("3_vkgmp")
+Witness = ExtResource("3_um1bq")
+Statement = ExtResource("2_vkgmp")
+metadata/_custom_type_script = "uid://dgu4lwooyv8ca"
+
+[sub_resource type="Resource" id="Resource_um1bq"]
+script = ExtResource("3_vkgmp")
+Witness = ExtResource("3_um1bq")
+Statement = ExtResource("5_qni7t")
+metadata/_custom_type_script = "uid://dgu4lwooyv8ca"
+
+[sub_resource type="Resource" id="Resource_y1kfk"]
+script = ExtResource("4_um1bq")
+Faction = ExtResource("5_ghwkq")
+Testimonies = [SubResource("Resource_vkgmp"), SubResource("Resource_um1bq")]
+metadata/_custom_type_script = "uid://b85372pvo16ix"
+
+[resource]
+script = ExtResource("1_v07bd")
+ProsecutorCaseFile = SubResource("Resource_y1kfk")
+DefenseCaseFile = SubResource("Resource_k56g0")
+metadata/_custom_type_script = "uid://b45b71worgcl3"

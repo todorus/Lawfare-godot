@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Statement" load_steps=2 format=3 uid="uid://b7c1th53plfc6"]
+
+[ext_resource type="Script" uid="uid://bf5f8qtkqa430" path="res://scripts/case/Statement.cs" id="1_i0c3o"]
+
+[resource]
+script = ExtResource("1_i0c3o")
+Text = "None of his business1"
+metadata/_custom_type_script = "uid://bf5f8qtkqa430"
