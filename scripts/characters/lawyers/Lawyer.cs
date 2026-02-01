@@ -4,13 +4,14 @@ using Godot;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.logic.cards;
+using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.logic.triggers;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
 using Lawfare.scripts.subject.relations;
 
-namespace Lawfare.scripts.characters;
+namespace Lawfare.scripts.characters.lawyers;
 
 [GlobalClass]
 public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, ICharacter
@@ -20,7 +21,10 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
     
     public Action[] Actions => definition.Actions;
     
-    public Quantities Quantities { get; } = new(definition.StartingQuantities as Quantity[]);
+    public ElicitStatement[] ElicitStatementRequirements =>
+        definition.Goal.ElicitStatementRequirements;
+    
+    public Quantities Quantities { get; } = new(definition.Quantities);
     public Relations Relations { get; } = new Relations();
 
     public HostedTrigger[] Triggers =>
@@ -37,4 +41,9 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
     public int Minimum(Property property) => property.Minimum;
 
     public Vector3 DamagePosition { get; }
+
+    public bool CanElicitStatements(GameEvent gameEvent, Witness witness)
+    {
+        return ElicitStatementRequirements.Any(requirement => requirement.Evaluate(gameEvent, this, witness));
+    }
 }

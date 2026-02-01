@@ -1,15 +1,23 @@
-[gd_resource type="Resource" script_class="LawyerDef" load_steps=5 format=3 uid="uid://b6xs3if2fxonr"]
+[gd_resource type="Resource" script_class="LawyerDef" load_steps=8 format=3 uid="uid://b6xs3if2fxonr"]
 
 [ext_resource type="Resource" uid="uid://chypiquc6ve56" path="res://data/actions/Charm.tres" id="1_1qsth"]
-[ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/LawyerDef.cs" id="1_c4onf"]
 [ext_resource type="Texture2D" uid="uid://cucymd5t1bikd" path="res://data/lawyers/lawyer4.png" id="1_o40us"]
 [ext_resource type="Resource" uid="uid://6wesnofhtwsj" path="res://data/actions/Diminish.tres" id="2_0jb1g"]
+[ext_resource type="Resource" uid="uid://careqb4lcckol" path="res://data/properties/Alpha.tres" id="4_pu8yf"]
+[ext_resource type="Script" uid="uid://bf75xqw6x8sck" path="res://scripts/subject/quantities/Quantity.cs" id="5_80kmi"]
+[ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/lawyers/LawyerDef.cs" id="6_lw4e7"]
+
+[sub_resource type="Resource" id="Resource_lw4e7"]
+script = ExtResource("5_80kmi")
+Property = ExtResource("4_pu8yf")
+Amount = 4
+metadata/_custom_type_script = "uid://bf75xqw6x8sck"
 
 [resource]
-script = ExtResource("1_c4onf")
+script = ExtResource("6_lw4e7")
 Image = ExtResource("1_o40us")
 Actions = Array[Object]([ExtResource("1_1qsth"), ExtResource("2_0jb1g")])
-StartingQuantities = null
+Quantities = Array[Object]([SubResource("Resource_lw4e7")])
 Skills = null
 Keywords = Array[Object]([])
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

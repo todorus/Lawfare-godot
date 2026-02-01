@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://rtdumsb4nhvl" path="res://scenes/character.tscn" id="2_ogvvj"]
 [ext_resource type="Resource" uid="uid://diwh2kys4hwci" path="res://data/cases/testcase/TestCase.tres" id="2_revm4"]
 [ext_resource type="Resource" uid="uid://cd2egwxvsclnr" path="res://data/judges/Elizabeth.tres" id="3_2768l"]
-[ext_resource type="Script" uid="uid://p2w0mheipgfs" path="res://scripts/characters/Team.cs" id="3_c6ra0"]
+[ext_resource type="Script" uid="uid://p2w0mheipgfs" path="res://scripts/characters/lawyers/Team.cs" id="3_c6ra0"]
 [ext_resource type="Resource" uid="uid://cvv80drdpkbax" path="res://data/cases/testcase/molly/Molly.tres" id="3_c7axm"]
 [ext_resource type="Resource" uid="uid://bq8kmrasa7whw" path="res://data/lawyers/Lawyer1.tres" id="3_tqw82"]
 [ext_resource type="Resource" uid="uid://yxt08dahyxdv" path="res://data/lawyers/Lawyer3.tres" id="4_revm4"]

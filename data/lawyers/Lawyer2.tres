@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://bdtlhlybp3ouk" path="res://data/actions/Belidger.tres" id="1_37nqn"]
 [ext_resource type="Texture2D" uid="uid://dltuk38xvfupd" path="res://data/lawyers/lawyer2.png" id="1_h8a00"]
-[ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/LawyerDef.cs" id="1_hstcw"]
+[ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/lawyers/LawyerDef.cs" id="1_hstcw"]
 [ext_resource type="Resource" uid="uid://6wesnofhtwsj" path="res://data/actions/Diminish.tres" id="2_l5b1a"]
 [ext_resource type="Resource" uid="uid://dm25638f8xarv" path="res://data/keywords/Arrogant.tres" id="4_l5b1a"]
 

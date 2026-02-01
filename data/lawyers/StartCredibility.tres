@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Quantity" load_steps=3 format=3 uid="uid://kpkh2hwl0lv4"]
+
+[ext_resource type="Script" uid="uid://bf75xqw6x8sck" path="res://scripts/subject/quantities/Quantity.cs" id="1_kyjl3"]
+[ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="1_rdigv"]
+
+[resource]
+script = ExtResource("1_kyjl3")
+Property = ExtResource("1_rdigv")
+Amount = 10
+metadata/_custom_type_script = "uid://bf75xqw6x8sck"

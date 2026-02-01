@@ -1,16 +1,25 @@
-[gd_resource type="Resource" script_class="LawyerDef" load_steps=5 format=3 uid="uid://bq8kmrasa7whw"]
+[gd_resource type="Resource" script_class="LawyerDef" load_steps=9 format=3 uid="uid://bq8kmrasa7whw"]
 
-[ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/LawyerDef.cs" id="1_5x042"]
 [ext_resource type="Resource" uid="uid://chypiquc6ve56" path="res://data/actions/Charm.tres" id="1_b1p8y"]
 [ext_resource type="Texture2D" uid="uid://pd4yhcj3vqta" path="res://data/lawyers/lawyer1.png" id="1_wjcu5"]
 [ext_resource type="Resource" uid="uid://c7yjjeyb8t3i3" path="res://data/actions/Expose.tres" id="2_waia8"]
+[ext_resource type="Resource" uid="uid://kpkh2hwl0lv4" path="res://data/lawyers/StartCredibility.tres" id="4_waia8"]
+[ext_resource type="Resource" uid="uid://careqb4lcckol" path="res://data/properties/Alpha.tres" id="5_sf0wt"]
+[ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/lawyers/LawyerDef.cs" id="6_hwboe"]
+[ext_resource type="Script" uid="uid://bf75xqw6x8sck" path="res://scripts/subject/quantities/Quantity.cs" id="6_npt1p"]
+
+[sub_resource type="Resource" id="Resource_2hitl"]
+script = ExtResource("6_npt1p")
+Property = ExtResource("5_sf0wt")
+Amount = 3
+metadata/_custom_type_script = "uid://bf75xqw6x8sck"
 
 [resource]
-script = ExtResource("1_5x042")
+script = ExtResource("6_hwboe")
 Label = "Larry"
 Image = ExtResource("1_wjcu5")
 Actions = Array[Object]([ExtResource("1_b1p8y"), ExtResource("2_waia8")])
-StartingQuantities = null
+Quantities = Array[Object]([ExtResource("4_waia8"), SubResource("Resource_2hitl")])
 Skills = null
 Keywords = null
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

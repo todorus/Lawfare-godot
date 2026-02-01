@@ -9,7 +9,7 @@ using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
 using Lawfare.scripts.subject.relations;
 
-namespace Lawfare.scripts.characters;
+namespace Lawfare.scripts.characters.lawyers;
 
 [GlobalClass]
 public partial class Team : Resource, ISubject
@@ -17,15 +17,15 @@ public partial class Team : Resource, ISubject
     [Export]
     public Faction Faction;
     
-    [Export] private LawyerDef[] _lawyerDefs = [];
+    [Export] private lawyers.LawyerDef[] _lawyerDefs = [];
 
-    private Lawyer[] _members;
-    public Lawyer[] Members { 
+    private lawyers.Lawyer[] _members;
+    public lawyers.Lawyer[] Members { 
         get {
             if (_members == null) 
             {
                 _members = _lawyerDefs
-                    .Select(def => new Lawyer(def))
+                    .Select(def => new lawyers.Lawyer(def))
                     .ToArray();
             }
             return _members;

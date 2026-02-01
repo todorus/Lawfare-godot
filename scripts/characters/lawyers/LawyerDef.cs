@@ -4,7 +4,7 @@ using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.subject.quantities;
 
-namespace Lawfare.scripts.characters;
+namespace Lawfare.scripts.characters.lawyers;
 
 [GlobalClass]
 public partial class LawyerDef : Resource
@@ -24,11 +24,14 @@ public partial class LawyerDef : Resource
     public Action[] Actions { get; private set; } = [];
     
     [Export]
-    public Quantity[] StartingQuantities { get; private set; } = [];
+    public Quantity[] Quantities { get; private set; } = [];
     
     [Export]
     public SkillQuantity[] Skills { get; private set; } = [];
     
     [Export]
     public Keyword[] Keywords { get; private set; } = [];
+
+    [Export] 
+    public Goal Goal { get; private set; }
 }

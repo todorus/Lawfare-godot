@@ -1,6 +1,8 @@
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.subject;
+using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
+using Team = Lawfare.scripts.characters.lawyers.Team;
 
 namespace Lawfare.scripts.context;
 

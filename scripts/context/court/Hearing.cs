@@ -4,6 +4,8 @@ using Godot;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.@case;
 using Lawfare.scripts.characters;
+using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
+using Team = Lawfare.scripts.characters.lawyers.Team;
 
 namespace Lawfare.scripts.context.court;
 

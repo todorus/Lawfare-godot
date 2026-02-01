@@ -2,6 +2,7 @@ using System.Linq;
 using Godot;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.cards;
+using Team = Lawfare.scripts.characters.lawyers.Team;
 
 namespace Lawfare.scripts.ui.character;
 

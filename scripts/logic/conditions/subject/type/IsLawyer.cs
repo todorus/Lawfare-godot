@@ -2,6 +2,7 @@ using Godot;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
+using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
 
 namespace Lawfare.scripts.logic.conditions.subject.type;
 

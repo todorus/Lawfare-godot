@@ -3,6 +3,7 @@ using Lawfare.scripts.characters;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
+using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
 
 namespace Lawfare.scripts.interaction;
 
