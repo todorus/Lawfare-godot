@@ -95,7 +95,8 @@ public partial class PropertyAddEffect : PropertyEffect
                 return null;
             }
 
-            var actualAmount = Subject.Quantities.Add(Original.Property, Updated.Amount);
+            var difference = Updated.Amount - Original.Amount;
+            var actualAmount = Subject.Quantities.Add(Original.Property, difference);
             var newUpdated = new Quantity
             {
                 Property = Original.Property,
