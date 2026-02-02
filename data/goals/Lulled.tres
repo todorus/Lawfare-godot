@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://catb83eyng8bh" path="res://scripts/logic/conditions/subject/property/GreaterThan.cs" id="3_14pxl"]
 [ext_resource type="Script" uid="uid://dtu0sqn4b3ukw" path="res://scripts/logic/conditions/subject/property/SmallerThan.cs" id="3_hm2r8"]
 [ext_resource type="Script" uid="uid://dgtr5mryaelyx" path="res://scripts/characters/lawyers/ElicitStatement.cs" id="4_14pxl"]
-[ext_resource type="Script" uid="uid://dqs8qbcrpcolp" path="res://scripts/logic/keywords/Goal.cs" id="5_bxy5g"]
+[ext_resource type="Script" uid="uid://dqs8qbcrpcolp" path="res://scripts/elicit/Goal.cs" id="5_bxy5g"]
 
 [sub_resource type="Resource" id="Resource_bxy5g"]
 script = ExtResource("1_m5f2r")

@@ -3,6 +3,7 @@ using Lawfare.scripts.board.factions;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.subject.quantities;
+using Goal = Lawfare.scripts.elicit.Goal;
 
 namespace Lawfare.scripts.characters.lawyers;
 

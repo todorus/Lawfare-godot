@@ -9,7 +9,9 @@ public enum EventType
     AfterAction,
     StartTurn,
     EndTurn,
-    Assignment
+    Assignment,
+    Select,
+    UltSync
 }
 
 public static class EventTypeExtensions
@@ -19,6 +21,8 @@ public static class EventTypeExtensions
         return gameEvent.Type switch
         {
             EventType.Action => false,
+            EventType.Select => false,
+            EventType.UltSync => false,
             _ => true
         };
     }

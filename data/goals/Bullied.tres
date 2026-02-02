@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="Goal" load_steps=9 format=3 uid="uid://cw1ibjc8slthm"]
+
+[ext_resource type="Script" uid="uid://dqs8qbcrpcolp" path="res://scripts/elicit/Goal.cs" id="1_22x2h"]
+[ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_wcid4"]
+[ext_resource type="Resource" uid="uid://cnm3jrueqy1xy" path="res://data/properties/Stress.tres" id="2_afwuy"]
+[ext_resource type="Script" uid="uid://catb83eyng8bh" path="res://scripts/logic/conditions/subject/property/GreaterThan.cs" id="3_ofey0"]
+[ext_resource type="Script" uid="uid://dgtr5mryaelyx" path="res://scripts/characters/lawyers/ElicitStatement.cs" id="4_j06ge"]
+
+[sub_resource type="Resource" id="Resource_ahpap"]
+script = ExtResource("1_wcid4")
+Amount = 5
+metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+
+[sub_resource type="Resource" id="Resource_q35vd"]
+script = ExtResource("3_ofey0")
+AmountProvider = SubResource("Resource_ahpap")
+Property = ExtResource("2_afwuy")
+metadata/_custom_type_script = "uid://catb83eyng8bh"
+
+[sub_resource type="Resource" id="Resource_ejwo1"]
+script = ExtResource("4_j06ge")
+WitnessConditions = Array[Object]([SubResource("Resource_q35vd")])
+LawyerConditions = null
+metadata/_custom_type_script = "uid://dgtr5mryaelyx"
+
+[resource]
+script = ExtResource("1_22x2h")
+ElicitStatementRequirements = Array[Object]([SubResource("Resource_ejwo1")])
+Label = "Bully"
+metadata/_custom_type_script = "uid://dqs8qbcrpcolp"

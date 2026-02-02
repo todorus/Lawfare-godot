@@ -17,6 +17,12 @@ public partial class Selection : Node
     [Signal]
     public delegate void ResolutionEventHandler(Resolution resolution);
     
+    [Signal]
+    public delegate void ActionResolvedEventHandler();
+    
+    [Signal]
+    public delegate void CanElicitChangedEventHandler(Witness[] witnesses);
+    
     [Export]
     private Context _context;
 
@@ -38,9 +44,29 @@ public partial class Selection : Node
         get => _source;
         set
         {
+            if (_source is Lawyer previousLawyer)
+            {
+                previousLawyer.CanElicitChanged -= OnCanElicitChanged;   
+            }
             _source = value;
             EmitSignalSourceChanged(value as GodotObject);
+            if (value is Lawyer lawyer)
+            {
+                lawyer.CanElicitChanged += OnCanElicitChanged;
+            }
+            OnCanElicitChanged();
         }
+    }
+
+    private void OnCanElicitChanged()
+    {
+        if(_source is not Lawyer lawyer)
+        {
+            EmitSignalCanElicitChanged([]);
+            return;
+        }
+        
+        EmitSignalCanElicitChanged(lawyer.CanElicit);
     }
 
     public void Secondary()
@@ -120,5 +146,6 @@ public partial class Selection : Node
         };
         var afterResolution = afterActionEvent.Resolve();
         EmitSignalResolution(afterResolution);
+        EmitSignalActionResolved();
     } 
 }

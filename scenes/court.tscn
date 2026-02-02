@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cbwxvmo6277pw"]
+[gd_scene load_steps=26 format=3 uid="uid://cbwxvmo6277pw"]
 
 [ext_resource type="Script" uid="uid://cu8fsnn8ylvnj" path="res://scripts/interaction/Selection.cs" id="1_15585"]
 [ext_resource type="Script" uid="uid://mxuq1pto8vy4" path="res://scripts/ui/character/TeamDisplay.cs" id="1_i1kge"]
@@ -20,6 +20,7 @@
 [ext_resource type="Resource" uid="uid://d2lxbo3stp4qg" path="res://data/factions/Corpos.tres" id="7_cn0p0"]
 [ext_resource type="Script" uid="uid://ciidppm6330xl" path="res://scripts/ui/action/HandDisplay.cs" id="7_qyj8n"]
 [ext_resource type="PackedScene" uid="uid://bck6hda2qxaix" path="res://scenes/card.tscn" id="8_15585"]
+[ext_resource type="Script" uid="uid://5n2yro748nin" path="res://scripts/elicit/UltSync.cs" id="15_b3dk5"]
 [ext_resource type="Script" uid="uid://csf0rd405loid" path="res://scripts/ui/testimony/TestimonialsDisplay.cs" id="17_cn0p0"]
 
 [sub_resource type="Resource" id="Resource_revm4"]
@@ -50,6 +51,10 @@ _docketEntry = SubResource("Resource_lc033")
 [node name="Interaction" type="Node" parent="." node_paths=PackedStringArray("_context")]
 script = ExtResource("1_15585")
 _context = NodePath("..")
+
+[node name="Ult" type="Node" parent="Interaction" node_paths=PackedStringArray("_context")]
+script = ExtResource("15_b3dk5")
+_context = NodePath("../..")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -136,11 +141,14 @@ alignment = 1
 script = ExtResource("7_qyj8n")
 _cardScene = ExtResource("8_15585")
 
+[connection signal="AnyChanged" from="." to="Interaction/Ult" method="Sync" flags=3]
 [connection signal="DefenseChanged" from="." to="UI/Defense" method="SetTeam" flags=3]
 [connection signal="JudgesChanged" from="." to="UI/JudgeBench" method="SetJudges" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution" method="SetTeam" flags=3]
 [connection signal="TestimonyChanged" from="." to="UI/HBoxContainer/Testimony" method="SetTestimonies" flags=3]
 [connection signal="WitnessesChanged" from="." to="UI/HBoxContainer/WitnessStand" method="SetWitnesses" flags=3]
+[connection signal="ActionResolved" from="Interaction" to="Interaction/Ult" method="Sync" flags=3]
+[connection signal="CanElicitChanged" from="Interaction" to="UI/HBoxContainer/Testimony" method="SetCanElicit" flags=3]
 [connection signal="CharacterClicked" from="UI/JudgeBench" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/HBoxContainer/WitnessStand" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/Prosecution" to="Interaction" method="Primary" flags=3]
