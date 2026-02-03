@@ -3,7 +3,7 @@ using Lawfare.scripts.logic.cards;
 
 namespace Lawfare.scripts.ui.action;
 
-public partial class CardDisplay : Button
+public partial class CardDisplay : Control
 {
     [Signal]
     public delegate void LabelChangedEventHandler(string label);
