@@ -15,9 +15,6 @@ namespace Lawfare.scripts.characters.lawyers;
 [GlobalClass]
 public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, ICharacter
 {
-    [Signal]
-    public delegate void CanElicitChangedEventHandler();
-    
     public string Label => definition.Label;
     public Texture2D Image => definition.Image;
     
@@ -43,16 +40,6 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
     public int Minimum(Property property) => property.Minimum;
 
     public Vector3 DamagePosition { get; }
-    
-    private Witness[] _canElicit = [];
 
-    public Witness[] CanElicit
-    {
-        get => _canElicit;
-        set
-        {
-            _canElicit = value;
-            EmitSignalCanElicitChanged();
-        }
-    }
+    public Ult Ult { get; } = new Ult();
 }

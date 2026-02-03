@@ -1,4 +1,5 @@
 using Godot;
+using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.info;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.subject.quantities;
@@ -15,4 +16,6 @@ public interface ICharacter : IInfo
     public Quantities Quantities { get; }
     
     public Relations Relations { get;  }
+    
+    public Ult Ult { get;  }
 }

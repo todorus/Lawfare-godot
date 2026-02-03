@@ -1,12 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://rtdumsb4nhvl"]
+[gd_scene load_steps=11 format=3 uid="uid://rtdumsb4nhvl"]
 
 [ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_rkhd4"]
 [ext_resource type="Texture2D" uid="uid://dowwy4chuep8b" path="res://data/cases/testcase/molly/Molly.png" id="2_2cgup"]
 [ext_resource type="Script" uid="uid://5e8whvir25un" path="res://scripts/ui/Clickable.cs" id="3_lrhn5"]
 [ext_resource type="Script" uid="uid://bpsgy63nxrko8" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="4_dp8ca"]
+[ext_resource type="Script" uid="uid://bb8ya73qwcytc" path="res://scripts/ui/toggles/VisibilityToggle.cs" id="5_0dpix"]
 [ext_resource type="PackedScene" uid="uid://5e8dlwob8q77" path="res://scenes/stat.tscn" id="5_0lw5n"]
 [ext_resource type="Script" uid="uid://cn5a8uepq262k" path="res://scripts/ui/relations/RelationsObserver.cs" id="6_0lw5n"]
+[ext_resource type="Script" uid="uid://o3v6utjaskc1" path="res://scripts/ui/character/UltObserver.cs" id="6_2hyy3"]
 [ext_resource type="PackedScene" uid="uid://wvnkkx5gkjbr" path="res://scenes/relation.tscn" id="7_2cgup"]
+[ext_resource type="Material" uid="uid://cfs3ia1qgvmee" path="res://scripts/ui/character/ultMaterial.tres" id="8_a5ia6"]
 
 [node name="Character" type="Control"]
 custom_minimum_size = Vector2(200, 304)
@@ -34,6 +37,23 @@ expand_mode = 3
 stretch_mode = 4
 script = ExtResource("3_lrhn5")
 
+[node name="UltParticles" type="ColorRect" parent="TextureRect"]
+visible = false
+material = ExtResource("8_a5ia6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="VisibilityToggle" type="Node" parent="TextureRect/UltParticles"]
+script = ExtResource("5_0dpix")
+
+[node name="UltObserver" type="Node" parent="TextureRect/UltParticles"]
+script = ExtResource("6_2hyy3")
+
 [node name="Stats" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_right = 73.0
@@ -58,4 +78,6 @@ _relationScene = ExtResource("7_2cgup")
 [connection signal="MirrorChanged" from="." to="TextureRect" method="set_flip_h"]
 [connection signal="QuantitiesChanged" from="." to="Stats" method="SetQuantities" flags=3]
 [connection signal="RelationsChanged" from="." to="Relations" method="SetRelations" flags=3]
+[connection signal="UltChanged" from="." to="TextureRect/UltParticles/UltObserver" method="SetUlt" flags=3]
 [connection signal="Clicked" from="TextureRect" to="." method="OnClicked" flags=3]
+[connection signal="UltActive" from="TextureRect/UltParticles/UltObserver" to="TextureRect/UltParticles/VisibilityToggle" method="SetVisible" flags=3]

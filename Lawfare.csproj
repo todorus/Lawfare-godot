@@ -23,5 +23,8 @@
     <Content Include="scripts\subject\quantities\Skill.cs.uid" />
     <Content Include="scripts\subject\quantities\SkillQuantity.cs.uid" />
     <Content Include="scripts\subject\relations\Relation.cs.uid" />
+    <Content Include="scripts\ui\toggles\AnimationLoopToggle.cs.uid" />
+    <Content Include="scripts\ui\toggles\SpriteModulationToggle.cs.uid" />
+    <Content Include="scripts\ui\toggles\VisibilityToggle.cs.uid" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cfs3ia1qgvmee"]
+
+[ext_resource type="Shader" uid="uid://bo2wocaytsb04" path="res://scripts/ui/character/ultShader2.gdshader" id="1_5nhjn"]
+
+[resource]
+shader = ExtResource("1_5nhjn")
+shader_parameter/particle_color = Color(0.35, 0.85, 1, 1)
+shader_parameter/intensity = 2.2170001053075
+shader_parameter/density = 0.9
+shader_parameter/speed = -1.8399999449
+shader_parameter/drift = 1.1990000569525
+shader_parameter/size = 0.0400000019
+shader_parameter/softness = 6.1890002702275
+shader_parameter/twinkle = 1.3810000655975
+shader_parameter/cell_count = 23.811000751022497

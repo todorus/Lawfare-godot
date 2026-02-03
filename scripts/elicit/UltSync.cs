@@ -27,7 +27,7 @@ public partial class UltSync : Node
 
         foreach (var lawyer in _context.Lawyers)
         {
-            lawyer.CanElicit = _context.Witnesses
+            lawyer.Ult.CanElicit = _context.Witnesses
                 .Where(witness => CanElicitStatements(lawyer, witness))
                 .ToArray();
         }

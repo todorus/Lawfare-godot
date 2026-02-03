@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Godot;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
+using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.logic.triggers;
@@ -31,4 +32,6 @@ public partial class Witness(WitnessDef definition) : GodotObject, ISubject, ICh
     public string Label => Definition.Label;
     public Texture2D Image => Definition.Image;
     public Action[] Actions => [];
+    
+    public Ult Ult { get; } = null;
 }

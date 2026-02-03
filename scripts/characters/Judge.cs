@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Godot;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
+using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.logic.triggers;
@@ -29,4 +30,6 @@ public partial class Judge(JudgeDef definition) : GodotObject, ISubject, ICharac
     public string Label => definition.Label;
     public Texture2D Image => definition.Image;
     public Action[] Actions => [];
+
+    public Ult Ult { get; } = null;
 }

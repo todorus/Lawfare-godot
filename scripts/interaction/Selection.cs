@@ -1,5 +1,6 @@
 using Godot;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
@@ -46,27 +47,31 @@ public partial class Selection : Node
         {
             if (_source is Lawyer previousLawyer)
             {
-                previousLawyer.CanElicitChanged -= OnCanElicitChanged;   
+                previousLawyer.Ult.OnChange -= OnCanElicitChanged;   
             }
             _source = value;
             EmitSignalSourceChanged(value as GodotObject);
             if (value is Lawyer lawyer)
             {
-                lawyer.CanElicitChanged += OnCanElicitChanged;
+                lawyer.Ult.OnChange += OnCanElicitChanged;
+                OnCanElicitChanged(lawyer.Ult);
             }
-            OnCanElicitChanged();
+            else
+            {
+                OnCanElicitChanged(null);
+            }
         }
     }
 
-    private void OnCanElicitChanged()
+    private void OnCanElicitChanged(Ult ult)
     {
-        if(_source is not Lawyer lawyer)
+        if(ult == null)
         {
             EmitSignalCanElicitChanged([]);
             return;
         }
         
-        EmitSignalCanElicitChanged(lawyer.CanElicit);
+        EmitSignalCanElicitChanged(ult.CanElicit);
     }
 
     public void Secondary()
