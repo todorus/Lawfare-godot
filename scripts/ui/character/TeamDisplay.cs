@@ -11,9 +11,6 @@ public partial class TeamDisplay : Container
     [Signal]
     public delegate void CharacterClickedEventHandler(GodotObject character);
     
-    [Signal]
-    public delegate void HandChangedEventHandler(Card[] cards);
-    
     [Export]
     PackedScene _characterScene;
     
@@ -38,7 +35,6 @@ public partial class TeamDisplay : Container
                 characterObserver.Character = member;
                 characterObserver.Mirror = _mirror;
                 characterObserver.CharacterClicked += OnCharacterClicked;
-                characterObserver.HandChanged += OnHandChanged;
                 AddChild(characterObserver);
             }
         }
@@ -47,10 +43,5 @@ public partial class TeamDisplay : Container
     public void OnCharacterClicked(GodotObject character)
     {
         EmitSignalCharacterClicked(character);
-    }
-    
-    public void OnHandChanged(Card[] cards)
-    {
-        EmitSignalHandChanged(cards);
     }
 }

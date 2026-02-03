@@ -28,9 +28,6 @@ public partial class CharacterObserver : Node
     public delegate void CharacterClickedEventHandler(GodotObject character);
     
     [Signal]
-    public delegate void HandChangedEventHandler(Card[] cards);
-    
-    [Signal]
     public delegate void UltChangedEventHandler(Ult ult);
 
     public bool Mirror
@@ -59,6 +56,5 @@ public partial class CharacterObserver : Node
     public void OnClicked()
     {
         EmitSignalCharacterClicked(_character as GodotObject);
-        EmitSignalHandChanged(_character.Actions.Select(action => new Card(action)).ToArray());
     }
 }

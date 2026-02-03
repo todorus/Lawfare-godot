@@ -1,7 +1,9 @@
+using System.Linq;
 using Godot;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.context;
+using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
@@ -23,6 +25,9 @@ public partial class Selection : Node
     
     [Signal]
     public delegate void CanElicitChangedEventHandler(Witness[] witnesses);
+    
+    [Signal]
+    public delegate void HandChangedEventHandler(Card[] hand);
     
     [Export]
     private Context _context;
@@ -55,6 +60,7 @@ public partial class Selection : Node
             {
                 lawyer.Ult.OnChange += OnCanElicitChanged;
                 OnCanElicitChanged(lawyer.Ult);
+                EmitSignalHandChanged(lawyer.Actions.Select(action => new Card(action)).ToArray());
             }
             else
             {
