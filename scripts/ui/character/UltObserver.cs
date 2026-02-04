@@ -5,6 +5,9 @@ namespace Lawfare.scripts.ui.character;
 
 public partial class UltObserver : Node
 {
+    [Signal]
+    public delegate void UltVisibleEventHandler(bool visible);
+    
     [Signal] 
     public delegate void UltActiveEventHandler(bool active);
     
@@ -30,18 +33,16 @@ public partial class UltObserver : Node
             if (_ult != null)
             {
                 _ult.OnChange += OnUltChanged;
-                OnUltChanged(_ult);
             }
-            else 
-            {
-                EmitSignalUltActive(false);
-            }
+            
+            OnUltChanged(_ult);
         }
     }
 
     private void OnUltChanged(Ult ult)
     {
-        EmitSignalUltActive(ult.Active);
-        EmitSignalUltProgress(ult.Progress);
+        EmitSignalUltVisible(ult != null);
+        EmitSignalUltActive(ult?.Active == true);
+        EmitSignalUltProgress(ult?.Progress ?? 0f);
     }
 }
