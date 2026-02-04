@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
+using Lawfare.scripts.characters.ult;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.logic.triggers;
@@ -19,9 +20,6 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
     public Texture2D Image => definition.Image;
     
     public Action[] Actions => definition.Actions;
-    
-    public ElicitStatement[] ElicitStatementRequirements =>
-        definition?.Goal?.ElicitStatementRequirements ?? [];
     
     public Quantities Quantities { get; } = new(definition.Quantities);
     public Relations Relations { get; } = new Relations();
@@ -41,5 +39,5 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
 
     public Vector3 DamagePosition { get; }
 
-    public Ult Ult { get; } = new Ult();
+    public Ult Ult => definition.Ult;
 }

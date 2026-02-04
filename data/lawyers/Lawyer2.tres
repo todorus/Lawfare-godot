@@ -1,11 +1,36 @@
-[gd_resource type="Resource" script_class="LawyerDef" load_steps=7 format=3 uid="uid://dxamvp3krvewl"]
+[gd_resource type="Resource" script_class="LawyerDef" load_steps=15 format=3 uid="uid://dxamvp3krvewl"]
 
 [ext_resource type="Resource" uid="uid://bdtlhlybp3ouk" path="res://data/actions/Belidger.tres" id="1_37nqn"]
 [ext_resource type="Texture2D" uid="uid://dltuk38xvfupd" path="res://data/lawyers/lawyer2.png" id="1_h8a00"]
 [ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/lawyers/LawyerDef.cs" id="1_hstcw"]
 [ext_resource type="Resource" uid="uid://6wesnofhtwsj" path="res://data/actions/Diminish.tres" id="2_l5b1a"]
-[ext_resource type="Resource" uid="uid://cw1ibjc8slthm" path="res://data/goals/Bullied.tres" id="3_5hgf8"]
 [ext_resource type="Resource" uid="uid://dm25638f8xarv" path="res://data/keywords/Arrogant.tres" id="4_l5b1a"]
+[ext_resource type="Script" uid="uid://rds4w4cn6dk0" path="res://scripts/logic/conditions/subject/type/IsWitness.cs" id="5_agr46"]
+[ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="6_62jpw"]
+[ext_resource type="Resource" uid="uid://cnm3jrueqy1xy" path="res://data/properties/Stress.tres" id="7_rdrp0"]
+[ext_resource type="Script" uid="uid://dteu2ouowsmvp" path="res://scripts/characters/ult/counters/ProgressCounter.cs" id="8_crk74"]
+[ext_resource type="Script" uid="uid://ci3163oppl466" path="res://scripts/characters/ult/ConditionalUlt.cs" id="9_57sfw"]
+
+[sub_resource type="Resource" id="Resource_p7fen"]
+script = ExtResource("5_agr46")
+metadata/_custom_type_script = "uid://rds4w4cn6dk0"
+
+[sub_resource type="Resource" id="Resource_lpdvw"]
+script = ExtResource("6_62jpw")
+Amount = 6
+metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+
+[sub_resource type="Resource" id="Resource_xj8ti"]
+script = ExtResource("8_crk74")
+_goal = SubResource("Resource_lpdvw")
+_property = ExtResource("7_rdrp0")
+SubjectConditions = Array[Object]([SubResource("Resource_p7fen")])
+metadata/_custom_type_script = "uid://dteu2ouowsmvp"
+
+[sub_resource type="Resource" id="Resource_j2h3g"]
+script = ExtResource("9_57sfw")
+_counters = [SubResource("Resource_xj8ti")]
+metadata/_custom_type_script = "uid://ci3163oppl466"
 
 [resource]
 script = ExtResource("1_hstcw")
@@ -14,5 +39,5 @@ Actions = Array[Object]([ExtResource("1_37nqn"), ExtResource("2_l5b1a")])
 Quantities = null
 Skills = null
 Keywords = Array[Object]([ExtResource("4_l5b1a")])
-Goal = ExtResource("3_5hgf8")
+Ult = SubResource("Resource_j2h3g")
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

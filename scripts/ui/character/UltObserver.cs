@@ -1,5 +1,5 @@
 using Godot;
-using Lawfare.scripts.characters.lawyers;
+using Ult = Lawfare.scripts.characters.ult.Ult;
 
 namespace Lawfare.scripts.ui.character;
 
@@ -7,6 +7,9 @@ public partial class UltObserver : Node
 {
     [Signal] 
     public delegate void UltActiveEventHandler(bool active);
+    
+    [Signal]
+    public delegate void UltProgressEventHandler(float progress);
     
     public void SetUlt(Ult ult)
     {
@@ -38,6 +41,7 @@ public partial class UltObserver : Node
 
     private void OnUltChanged(Ult ult)
     {
-        EmitSignalUltActive(ult.CanElicit.Length > 0);
+        EmitSignalUltActive(ult.Active);
+        EmitSignalUltProgress(ult.Progress);
     }
 }

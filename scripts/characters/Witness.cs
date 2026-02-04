@@ -9,6 +9,7 @@ using Lawfare.scripts.logic.triggers;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
 using Lawfare.scripts.subject.relations;
+using Ult = Lawfare.scripts.characters.ult.Ult;
 
 namespace Lawfare.scripts.characters;
 

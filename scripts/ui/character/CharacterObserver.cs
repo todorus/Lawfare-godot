@@ -5,6 +5,7 @@ using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.subject.quantities;
 using Lawfare.scripts.subject.relations;
+using Ult = Lawfare.scripts.characters.ult.Ult;
 
 namespace Lawfare.scripts.ui.character;
 

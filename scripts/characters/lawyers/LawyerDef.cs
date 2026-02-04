@@ -1,5 +1,6 @@
 using Godot;
 using Lawfare.scripts.board.factions;
+using Lawfare.scripts.characters.ult;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.subject.quantities;
@@ -33,6 +34,5 @@ public partial class LawyerDef : Resource
     [Export]
     public Keyword[] Keywords { get; private set; } = [];
 
-    [Export] 
-    public Goal Goal { get; private set; }
+    [Export] public Ult Ult { get; private set; } = new DummyUlt();
 }

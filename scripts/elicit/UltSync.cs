@@ -27,22 +27,7 @@ public partial class UltSync : Node
 
         foreach (var lawyer in _context.Lawyers)
         {
-            lawyer.Ult.CanElicit = _context.Witnesses
-                .Where(witness => CanElicitStatements(lawyer, witness))
-                .ToArray();
+            lawyer.Ult?.Update(lawyer, _context);
         }
-    }
-    
-    private bool CanElicitStatements(Lawyer lawyer, Witness witness)
-    {
-        var gameEvent = new GameEvent
-        {
-            Context = _context,
-            Source = lawyer,
-            Target = witness,
-            Type = EventType.UltSync
-        };
-        return lawyer.ElicitStatementRequirements
-            .Any(requirement => requirement.Evaluate(gameEvent, lawyer, witness));
     }
 }

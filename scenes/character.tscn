@@ -20,6 +20,9 @@ offset_bottom = 304.0
 size_flags_vertical = 3
 script = ExtResource("1_rkhd4")
 
+[node name="UltObserver" type="Node" parent="."]
+script = ExtResource("6_2hyy3")
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -51,9 +54,6 @@ mouse_filter = 1
 [node name="VisibilityToggle" type="Node" parent="TextureRect/UltParticles"]
 script = ExtResource("5_0dpix")
 
-[node name="UltObserver" type="Node" parent="TextureRect/UltParticles"]
-script = ExtResource("6_2hyy3")
-
 [node name="Stats" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_right = 73.0
@@ -74,10 +74,23 @@ mouse_filter = 2
 script = ExtResource("6_0lw5n")
 _relationScene = ExtResource("7_2cgup")
 
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 1.0
+show_percentage = false
+
 [connection signal="ImageChange" from="." to="TextureRect" method="set_texture"]
 [connection signal="MirrorChanged" from="." to="TextureRect" method="set_flip_h"]
 [connection signal="QuantitiesChanged" from="." to="Stats" method="SetQuantities" flags=3]
 [connection signal="RelationsChanged" from="." to="Relations" method="SetRelations" flags=3]
-[connection signal="UltChanged" from="." to="TextureRect/UltParticles/UltObserver" method="SetUlt" flags=3]
+[connection signal="UltChanged" from="." to="UltObserver" method="SetUlt" flags=3]
+[connection signal="UltActive" from="UltObserver" to="TextureRect/UltParticles/VisibilityToggle" method="SetVisible" flags=3]
+[connection signal="UltProgress" from="UltObserver" to="ProgressBar" method="set_as_ratio" flags=3]
 [connection signal="Clicked" from="TextureRect" to="." method="OnClicked" flags=3]
-[connection signal="UltActive" from="TextureRect/UltParticles/UltObserver" to="TextureRect/UltParticles/VisibilityToggle" method="SetVisible" flags=3]

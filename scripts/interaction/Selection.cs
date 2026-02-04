@@ -7,6 +7,7 @@ using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
+using Ult = Lawfare.scripts.characters.ult.Ult;
 
 namespace Lawfare.scripts.interaction;
 
@@ -24,10 +25,10 @@ public partial class Selection : Node
     public delegate void ActionResolvedEventHandler();
     
     [Signal]
-    public delegate void CanElicitChangedEventHandler(Witness[] witnesses);
+    public delegate void HandChangedEventHandler(Card[] hand);
     
     [Signal]
-    public delegate void HandChangedEventHandler(Card[] hand);
+    public delegate void UltChangedEventHandler(Ult ult);
     
     [Export]
     private Context _context;
@@ -50,34 +51,18 @@ public partial class Selection : Node
         get => _source;
         set
         {
-            if (_source is Lawyer previousLawyer)
-            {
-                previousLawyer.Ult.OnChange -= OnCanElicitChanged;   
-            }
             _source = value;
             EmitSignalSourceChanged(value as GodotObject);
             if (value is Lawyer lawyer)
             {
-                lawyer.Ult.OnChange += OnCanElicitChanged;
-                OnCanElicitChanged(lawyer.Ult);
+                EmitSignalUltChanged(lawyer.Ult);
                 EmitSignalHandChanged(lawyer.Actions.Select(action => new Card(action)).ToArray());
             }
             else
             {
-                OnCanElicitChanged(null);
+                EmitSignalUltChanged(null);
             }
         }
-    }
-
-    private void OnCanElicitChanged(Ult ult)
-    {
-        if(ult == null)
-        {
-            EmitSignalCanElicitChanged([]);
-            return;
-        }
-        
-        EmitSignalCanElicitChanged(ult.CanElicit);
     }
 
     public void Secondary()

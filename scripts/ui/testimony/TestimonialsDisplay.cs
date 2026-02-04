@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using Lawfare.scripts.@case;
-using Lawfare.scripts.characters;
+using Lawfare.scripts.characters.ult;
 
 namespace Lawfare.scripts.ui.testimony; 
 
@@ -14,13 +13,30 @@ public partial class TestimonialsDisplay : Container
     {
         Testimonies = testimonies;
     }
-    
-    private List<Witness> _canElicit;
 
-    public void SetCanElicit(Witness[] witnesses)
+    private void SetUlt(Ult ult)
     {
-        _canElicit = witnesses.ToList();
-        UpdateEnabled();
+        Ult = ult;
+    }
+
+    private Ult _ult;
+
+    public Ult Ult
+    {
+        get => _ult;
+        set
+        {
+            if (_ult != null)
+            {
+                _ult.OnChange -= UpdateEnabled;   
+            }
+            _ult = value;
+            if (_ult != null)
+            {
+                _ult.OnChange += UpdateEnabled;
+            }
+            UpdateEnabled(_ult);
+        }
     }
     
     private Testimony[] Testimonies
@@ -36,16 +52,16 @@ public partial class TestimonialsDisplay : Container
                 _testimonyDisplays.Add(testimonyDisplay);
                 AddChild(testimonyDisplay);
             }
-            UpdateEnabled();
+            UpdateEnabled(Ult);
         }
     }
 
-    private void UpdateEnabled()
+    private void UpdateEnabled(Ult ult)
     {
-        var defs = _canElicit?.Select(witness => witness.Definition).ToArray() ?? [];
+        var enabled = ult != null && ult.Active;
         foreach (var testimonyDisplay in _testimonyDisplays)
         {
-            testimonyDisplay.Disabled = !defs.Contains(testimonyDisplay.Testimony.Witness);
+            testimonyDisplay.Disabled = !enabled;
         }
     }
 }
