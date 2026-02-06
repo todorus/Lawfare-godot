@@ -1,0 +1,58 @@
+[gd_resource type="Resource" script_class="Action" load_steps=17 format=3 uid="uid://dkjh417e6bb1i"]
+
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_5c7ca"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="1_hh03v"]
+[ext_resource type="Script" uid="uid://duenc3ccpf85n" path="res://scripts/logic/effects/property/amounts/property/PropertyAmount.cs" id="2_2mt4m"]
+[ext_resource type="Script" uid="uid://do2itakrdwe3" path="res://scripts/logic/conditions/subject/type/IsLawyer.cs" id="3_2mt4m"]
+[ext_resource type="Script" uid="uid://dpv3u22mleltq" path="res://scripts/logic/effects/property/PropertyTransferEffect.cs" id="3_bbiax"]
+[ext_resource type="Script" uid="uid://cfvu1bn22txif" path="res://scripts/logic/conditions/subject/role/IsNotSource.cs" id="4_uw7v0"]
+[ext_resource type="Script" uid="uid://5ntnwgkkef8g" path="res://scripts/logic/conditions/subject/team/BelongsToSourceTeam.cs" id="6_bbiax"]
+[ext_resource type="Script" uid="uid://b2u2rn01b0l0o" path="res://scripts/logic/effects/root/BasicEffect.cs" id="7_uw7v0"]
+
+[sub_resource type="Resource" id="Resource_a5wq2"]
+script = ExtResource("2_2mt4m")
+Property = ExtResource("1_hh03v")
+Multiplier = 0.5
+metadata/_custom_type_script = "uid://duenc3ccpf85n"
+
+[sub_resource type="Resource" id="Resource_n88ov"]
+script = ExtResource("3_2mt4m")
+metadata/_custom_type_script = "uid://do2itakrdwe3"
+
+[sub_resource type="Resource" id="Resource_68wmy"]
+script = ExtResource("4_uw7v0")
+metadata/_custom_type_script = "uid://cfvu1bn22txif"
+
+[sub_resource type="Resource" id="Resource_olvjs"]
+script = ExtResource("3_bbiax")
+AmountProvider = SubResource("Resource_a5wq2")
+Property = ExtResource("1_hh03v")
+SubjectConditions = [SubResource("Resource_n88ov"), SubResource("Resource_68wmy")]
+metadata/_custom_type_script = "uid://dpv3u22mleltq"
+
+[sub_resource type="Resource" id="Resource_uukth"]
+script = ExtResource("3_2mt4m")
+metadata/_custom_type_script = "uid://do2itakrdwe3"
+
+[sub_resource type="Resource" id="Resource_5gljf"]
+script = ExtResource("6_bbiax")
+metadata/_custom_type_script = "uid://5ntnwgkkef8g"
+
+[sub_resource type="Resource" id="Resource_8ex2i"]
+script = ExtResource("4_uw7v0")
+metadata/_custom_type_script = "uid://cfvu1bn22txif"
+
+[sub_resource type="Resource" id="Resource_4a4h7"]
+script = ExtResource("7_uw7v0")
+SourceConditions = null
+TargetConditions = Array[Object]([SubResource("Resource_uukth"), SubResource("Resource_5gljf"), SubResource("Resource_8ex2i")])
+SpaceConditions = null
+Effects = [SubResource("Resource_olvjs")]
+metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
+
+[resource]
+script = ExtResource("1_5c7ca")
+Label = "Stepping In"
+DicePools = null
+Effect = SubResource("Resource_4a4h7")
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"
