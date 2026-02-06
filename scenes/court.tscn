@@ -63,13 +63,14 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="JudgeBench" type="HBoxContainer" parent="UI"]
+[node name="JudgeBench" type="HBoxContainer" parent="UI" node_paths=PackedStringArray("_context")]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 1
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("2_5mv5b")
 _characterScene = ExtResource("2_ogvvj")
+_context = NodePath("../..")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI"]
 layout_mode = 1
@@ -86,14 +87,15 @@ layout_mode = 2
 script = ExtResource("17_cn0p0")
 _propertyConfig = ExtResource("2_b3dk5")
 
-[node name="WitnessStand" type="HBoxContainer" parent="UI/HBoxContainer"]
+[node name="WitnessStand" type="HBoxContainer" parent="UI/HBoxContainer" node_paths=PackedStringArray("_context")]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 script = ExtResource("2_h0b8m")
 _characterScene = ExtResource("2_ogvvj")
 _mirror = true
+_context = NodePath("../../..")
 
-[node name="Prosecution" type="HBoxContainer" parent="UI"]
+[node name="Prosecution" type="HBoxContainer" parent="UI" node_paths=PackedStringArray("_context")]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 1
 anchors_preset = 2
@@ -105,8 +107,9 @@ grow_vertical = 0
 theme_override_constants/separation = 20
 script = ExtResource("1_i1kge")
 _characterScene = ExtResource("2_ogvvj")
+_context = NodePath("../..")
 
-[node name="Defense" type="HBoxContainer" parent="UI"]
+[node name="Defense" type="HBoxContainer" parent="UI" node_paths=PackedStringArray("_context")]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 1
 anchors_preset = 3
@@ -122,6 +125,7 @@ theme_override_constants/separation = 20
 script = ExtResource("1_i1kge")
 _characterScene = ExtResource("2_ogvvj")
 _mirror = true
+_context = NodePath("../..")
 
 [node name="Hand" type="HBoxContainer" parent="UI"]
 layout_mode = 1
@@ -144,6 +148,10 @@ _cardScene = ExtResource("8_15585")
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution" method="SetTeam" flags=3]
 [connection signal="TestimonyChanged" from="." to="UI/HBoxContainer/Testimony" method="SetTestimonies" flags=3]
 [connection signal="WitnessesChanged" from="." to="UI/HBoxContainer/WitnessStand" method="SetWitnesses" flags=3]
+[connection signal="ActionChanged" from="Interaction" to="UI/JudgeBench" method="SetActiveAction" flags=3]
+[connection signal="ActionChanged" from="Interaction" to="UI/HBoxContainer/WitnessStand" method="SetActiveAction" flags=3]
+[connection signal="ActionChanged" from="Interaction" to="UI/Prosecution" method="SetActiveAction" flags=3]
+[connection signal="ActionChanged" from="Interaction" to="UI/Defense" method="SetActiveAction" flags=3]
 [connection signal="HandChanged" from="Interaction" to="UI/Hand" method="SetCards" flags=3]
 [connection signal="QuantitiesChanged" from="Interaction" to="UI/HBoxContainer/Testimony" method="SetQuantities" flags=3]
 [connection signal="CharacterClicked" from="UI/JudgeBench" to="Interaction" method="Primary" flags=3]

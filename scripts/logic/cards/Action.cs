@@ -1,5 +1,6 @@
 using System.Linq;
 using Godot;
+using Lawfare.scripts.context;
 using Lawfare.scripts.logic.conditions.subject;
 using Lawfare.scripts.logic.effects;
 using Lawfare.scripts.logic.effects.root;
@@ -38,9 +39,9 @@ public partial class Action : Resource, IAction
             && SourceConditions.All(condition => condition.Evaluate(gameEvent, source));
     }
     
-    public bool CanTarget(ISubject target)
+    public bool CanTarget(Context context, ISubject target)
     {
-        var gameEvent = new GameEvent { Target = target };
+        var gameEvent = new GameEvent { Context = context, Target = target };
         return TargetConditions.All(condition => condition.Evaluate(gameEvent, target));
     }
 

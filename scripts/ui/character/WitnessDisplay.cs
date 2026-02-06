@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.context;
+using Lawfare.scripts.logic.cards;
 
 namespace Lawfare.scripts.ui.character;
 
@@ -15,6 +18,18 @@ public partial class WitnessDisplay : Container
     [Export]
     private bool _mirror = false;
     
+    [Export]
+    private Context _context;
+    
+    private List<CharacterObserver> _characterObservers = new();
+    public void SetActiveAction(Card action)
+    {
+        foreach (var characterObserver in _characterObservers)
+        {
+            characterObserver.UpdateCanTarget(action, _context);
+        }
+    }
+    
     public void SetWitnesses(Witness[] witnesses)
     {
         Witnesses = witnesses;
@@ -25,6 +40,7 @@ public partial class WitnessDisplay : Container
         set
         {
             this.ClearChildren();
+            _characterObservers.Clear();
             if (value == null) return;
             
             foreach (var witness in value)
@@ -34,6 +50,7 @@ public partial class WitnessDisplay : Container
                 characterObserver.Mirror = _mirror;
                 characterObserver.CharacterClicked += EmitSignalCharacterClicked;
                 AddChild(characterObserver);
+                _characterObservers.Add(characterObserver);
             }
         }
     }

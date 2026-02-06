@@ -1,5 +1,9 @@
 using Godot;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.context;
+using Lawfare.scripts.logic.cards;
+using Lawfare.scripts.logic.@event;
+using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
 using Lawfare.scripts.subject.relations;
 
@@ -23,6 +27,9 @@ public partial class CharacterObserver : Node
     
     [Signal]
     public delegate void CharacterClickedEventHandler(GodotObject character);
+    
+    [Signal]
+    public delegate void TargetableChangedEventHandler(bool targetable);
 
     public bool Mirror
     {
@@ -49,5 +56,11 @@ public partial class CharacterObserver : Node
     public void OnClicked()
     {
         EmitSignalCharacterClicked(_character as GodotObject);
+    }
+
+    public void UpdateCanTarget(Card action, Context context)
+    {
+        var canTarget = action?.CanTarget(context, _character as ISubject) ?? true;
+        EmitSignalTargetableChanged(canTarget);
     }
 }

@@ -23,6 +23,7 @@
     <Content Include="scripts\subject\quantities\Skill.cs.uid" />
     <Content Include="scripts\subject\quantities\SkillQuantity.cs.uid" />
     <Content Include="scripts\subject\relations\Relation.cs.uid" />
+    <Content Include="scripts\ui\character\grayscale.gdshader" />
     <Content Include="scripts\ui\toggles\AnimationLoopToggle.cs.uid" />
     <Content Include="scripts\ui\toggles\SpriteModulationToggle.cs.uid" />
     <Content Include="scripts\ui\toggles\VisibilityToggle.cs.uid" />

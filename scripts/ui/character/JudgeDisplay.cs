@@ -1,6 +1,8 @@
-using System.Linq;
+using System.Collections.Generic;
 using Godot;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.context;
+using Lawfare.scripts.logic.cards;
 
 namespace Lawfare.scripts.ui.character;
 
@@ -11,6 +13,19 @@ public partial class JudgeDisplay : Container
     
     [Export]
     PackedScene _characterScene;
+    
+    [Export]
+    private Context _context;
+    
+    
+    private List<CharacterObserver> _characterObservers = new();
+    public void SetActiveAction(Card action)
+    {
+        foreach (var characterObserver in _characterObservers)
+        {
+            characterObserver.UpdateCanTarget(action, _context);
+        }
+    }
     
     public void SetJudges(Judge[] judges)
     {
@@ -25,6 +40,7 @@ public partial class JudgeDisplay : Container
         set
         {
             this.ClearChildren();
+            _characterObservers.Clear();
             if (value == null) return;
             
             foreach (var witness in value)
@@ -34,6 +50,7 @@ public partial class JudgeDisplay : Container
                 characterObserver.Mirror = _mirror;
                 characterObserver.CharacterClicked += EmitSignalCharacterClicked;
                 AddChild(characterObserver);
+                _characterObservers.Add(characterObserver);
             }
         }
     }

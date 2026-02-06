@@ -12,7 +12,7 @@ namespace Lawfare.scripts.interaction;
 public partial class Selection : Node
 {
     [Signal]
-    public delegate void ActionChangedEventHandler(GodotObject action);
+    public delegate void ActionChangedEventHandler(Card card);
     [Signal]
     public delegate void SourceChangedEventHandler(GodotObject source);
     
@@ -31,15 +31,15 @@ public partial class Selection : Node
     [Export]
     private Context _context;
 
-    private IAction _action;
+    private Card _action;
 
-    private IAction Action
+    private Card Action
     {
         get => _action;
         set
         {
             _action = value;
-            EmitSignalActionChanged(value as GodotObject);
+            EmitSignalActionChanged(value);
         }
     }
     
@@ -71,7 +71,7 @@ public partial class Selection : Node
 
     public void Primary(GodotObject godotObject)
     {
-        if (godotObject is IAction action)
+        if (godotObject is Card action)
         {
             Action = action;
             return;
