@@ -27,7 +27,7 @@ public partial class Quantities : GodotObject, IAvailable
 
     public int Available(Property property)
     {
-        return Get(property);
+        return GetValue(property);
     }
 
     public event Action<Quantities> OnChange;
@@ -46,9 +46,19 @@ public partial class Quantities : GodotObject, IAvailable
         OnChange?.Invoke(this);
     }
 
-    public int Get(Property property)
+    public int GetValue(Property property)
     {
-        return _quantities.ContainsKey(property) ? _quantities[property] : 0;
+        return Has(property) ? _quantities[property] : 0;
+    }
+    
+    public Quantity Get(Property property)
+    {
+        return new Quantity { Property = property, Amount = GetValue(property) };
+    }
+    
+    public bool Has(Property property)
+    {
+        return _quantities.ContainsKey(property);
     }
     
     public int StageAdd(Property property, int amount)

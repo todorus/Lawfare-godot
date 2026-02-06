@@ -35,7 +35,7 @@ public partial class PropertyTransferEffect : Effect
 
     private IDiff Stage(ISubject source, int amount, bool canUseMarket)
     {
-        var oldAmount = source.Quantities.Get(Property);
+        var oldAmount = source.Quantities.GetValue(Property);
         var newAmount = source.Quantities.StageAdd(Property, amount);
         return new PropertyAddEffect.PropertyDiff(
             source,

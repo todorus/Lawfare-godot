@@ -68,7 +68,7 @@ public static class Resolver
     public static int Read(this ISubject subject, Property property, GameEvent gameEventData)
     {
         // TODO: Implement modifiers based on eventData
-        return subject.Quantities.Get(property);
+        return subject.Quantities.GetValue(property);
     }
 
     public static int Available(this ISubject subject, Property property, GameEvent gameEventData)

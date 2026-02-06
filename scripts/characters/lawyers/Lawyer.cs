@@ -3,7 +3,6 @@ using System.Linq;
 using Godot;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
-using Lawfare.scripts.characters.ult;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.logic.triggers;
@@ -38,6 +37,4 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
     public int Minimum(Property property) => property.Minimum;
 
     public Vector3 DamagePosition { get; }
-
-    public Ult Ult => definition.Ult;
 }

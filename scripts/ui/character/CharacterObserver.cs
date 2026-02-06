@@ -1,11 +1,7 @@
-using System.Linq;
 using Godot;
 using Lawfare.scripts.characters;
-using Lawfare.scripts.characters.lawyers;
-using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.subject.quantities;
 using Lawfare.scripts.subject.relations;
-using Ult = Lawfare.scripts.characters.ult.Ult;
 
 namespace Lawfare.scripts.ui.character;
 
@@ -27,9 +23,6 @@ public partial class CharacterObserver : Node
     
     [Signal]
     public delegate void CharacterClickedEventHandler(GodotObject character);
-    
-    [Signal]
-    public delegate void UltChangedEventHandler(Ult ult);
 
     public bool Mirror
     {
@@ -50,7 +43,6 @@ public partial class CharacterObserver : Node
             EmitSignalLabelChanged(value?.Label);
             EmitSignalQuantitiesChanged(value?.Quantities);
             EmitSignalRelationsChanged(value?.Relations);
-            EmitSignalUltChanged(value?.Ult);
         }
     }
     

@@ -1,10 +1,8 @@
 using Godot;
 using Lawfare.scripts.board.factions;
-using Lawfare.scripts.characters.ult;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.subject.quantities;
-using Goal = Lawfare.scripts.elicit.Goal;
 
 namespace Lawfare.scripts.characters.lawyers;
 
@@ -33,6 +31,4 @@ public partial class LawyerDef : Resource
     
     [Export]
     public Keyword[] Keywords { get; private set; } = [];
-
-    [Export] public Ult Ult { get; private set; } = new DummyUlt();
 }

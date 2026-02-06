@@ -13,7 +13,7 @@ public partial class PropertySetEffect : PropertyEffect
 
     protected override IDiff[] StageInternal(GameEvent gameEvent, ISubject subject)
     {
-        var currentAmount = subject?.Quantities?.Get(Property) ?? 0;
+        var currentAmount = subject?.Quantities?.GetValue(Property) ?? 0;
         var newAmount = AmountProvider.GetAmount(gameEvent, subject);
         return
         [

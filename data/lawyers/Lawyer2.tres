@@ -8,8 +8,6 @@
 [ext_resource type="Script" uid="uid://rds4w4cn6dk0" path="res://scripts/logic/conditions/subject/type/IsWitness.cs" id="5_agr46"]
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="6_62jpw"]
 [ext_resource type="Resource" uid="uid://cnm3jrueqy1xy" path="res://data/properties/Stress.tres" id="7_rdrp0"]
-[ext_resource type="Script" uid="uid://dteu2ouowsmvp" path="res://scripts/characters/ult/counters/ProgressCounter.cs" id="8_crk74"]
-[ext_resource type="Script" uid="uid://ci3163oppl466" path="res://scripts/characters/ult/ConditionalUlt.cs" id="9_57sfw"]
 
 [sub_resource type="Resource" id="Resource_p7fen"]
 script = ExtResource("5_agr46")
@@ -20,18 +18,6 @@ script = ExtResource("6_62jpw")
 Amount = 6
 metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
 
-[sub_resource type="Resource" id="Resource_xj8ti"]
-script = ExtResource("8_crk74")
-_goal = SubResource("Resource_lpdvw")
-_property = ExtResource("7_rdrp0")
-SubjectConditions = Array[Object]([SubResource("Resource_p7fen")])
-metadata/_custom_type_script = "uid://dteu2ouowsmvp"
-
-[sub_resource type="Resource" id="Resource_j2h3g"]
-script = ExtResource("9_57sfw")
-_counters = [SubResource("Resource_xj8ti")]
-metadata/_custom_type_script = "uid://ci3163oppl466"
-
 [resource]
 script = ExtResource("1_hstcw")
 Image = ExtResource("1_h8a00")
@@ -39,5 +25,4 @@ Actions = Array[Object]([ExtResource("1_37nqn"), ExtResource("2_l5b1a")])
 Quantities = null
 Skills = null
 Keywords = Array[Object]([ExtResource("4_l5b1a")])
-Ult = SubResource("Resource_j2h3g")
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

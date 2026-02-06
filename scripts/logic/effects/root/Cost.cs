@@ -24,7 +24,7 @@ public partial class Cost : Resource
     public PropertyAddEffect.PropertyDiff Stage(GameEvent gameEvent, ISubject subject)
     {
         var amount = AmountProvider.GetAmount(gameEvent, subject);
-        var oldAmount = subject.Quantities.Get(Property);
+        var oldAmount = subject.Quantities.GetValue(Property);
         var newAmount = subject.Quantities.StageAdd(Property, amount);
         return new PropertyAddEffect.PropertyDiff(
             subject,

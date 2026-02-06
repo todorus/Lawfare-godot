@@ -30,7 +30,7 @@ public partial class PropertyAddEffect : PropertyEffect
         var original = new Quantity
         {
             Property = Property,
-            Amount = subject.Quantities.Get(Property)
+            Amount = subject.Quantities.GetValue(Property)
         };
             
         int stagedValue = subject.Quantities.StageAdd(Property, amount);

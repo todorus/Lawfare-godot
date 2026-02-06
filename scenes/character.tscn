@@ -1,13 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://rtdumsb4nhvl"]
+[gd_scene load_steps=12 format=3 uid="uid://rtdumsb4nhvl"]
 
 [ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_rkhd4"]
 [ext_resource type="Texture2D" uid="uid://dowwy4chuep8b" path="res://data/cases/testcase/molly/Molly.png" id="2_2cgup"]
+[ext_resource type="Script" uid="uid://c3ra1t4m0gxg1" path="res://scripts/ui/character/PropertyObserver.cs" id="2_irmqu"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="3_7eonc"]
 [ext_resource type="Script" uid="uid://5e8whvir25un" path="res://scripts/ui/Clickable.cs" id="3_lrhn5"]
 [ext_resource type="Script" uid="uid://bpsgy63nxrko8" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="4_dp8ca"]
 [ext_resource type="Script" uid="uid://bb8ya73qwcytc" path="res://scripts/ui/toggles/VisibilityToggle.cs" id="5_0dpix"]
 [ext_resource type="PackedScene" uid="uid://5e8dlwob8q77" path="res://scenes/stat.tscn" id="5_0lw5n"]
 [ext_resource type="Script" uid="uid://cn5a8uepq262k" path="res://scripts/ui/relations/RelationsObserver.cs" id="6_0lw5n"]
-[ext_resource type="Script" uid="uid://o3v6utjaskc1" path="res://scripts/ui/character/UltObserver.cs" id="6_2hyy3"]
 [ext_resource type="PackedScene" uid="uid://wvnkkx5gkjbr" path="res://scenes/relation.tscn" id="7_2cgup"]
 [ext_resource type="Material" uid="uid://cfs3ia1qgvmee" path="res://scripts/ui/character/ultMaterial.tres" id="8_a5ia6"]
 
@@ -21,7 +22,8 @@ size_flags_vertical = 3
 script = ExtResource("1_rkhd4")
 
 [node name="UltObserver" type="Node" parent="."]
-script = ExtResource("6_2hyy3")
+script = ExtResource("2_irmqu")
+_property = ExtResource("3_7eonc")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -93,8 +95,7 @@ script = ExtResource("5_0dpix")
 [connection signal="MirrorChanged" from="." to="TextureRect" method="set_flip_h"]
 [connection signal="QuantitiesChanged" from="." to="Stats" method="SetQuantities" flags=3]
 [connection signal="RelationsChanged" from="." to="Relations" method="SetRelations" flags=3]
-[connection signal="UltChanged" from="." to="UltObserver" method="SetUlt" flags=3]
-[connection signal="UltActive" from="UltObserver" to="TextureRect/UltParticles/VisibilityToggle" method="SetVisible" flags=3]
-[connection signal="UltProgress" from="UltObserver" to="ProgressBar" method="set_as_ratio" flags=3]
-[connection signal="UltVisible" from="UltObserver" to="ProgressBar/UltVisbilityToggle" method="SetVisible" flags=3]
+[connection signal="MeterFull" from="UltObserver" to="TextureRect/UltParticles/VisibilityToggle" method="SetVisible" flags=3]
+[connection signal="MeterProgress" from="UltObserver" to="ProgressBar" method="set_as_ratio" flags=3]
+[connection signal="MeterVisible" from="UltObserver" to="ProgressBar/UltVisbilityToggle" method="SetVisible" flags=3]
 [connection signal="Clicked" from="TextureRect" to="." method="OnClicked" flags=3]

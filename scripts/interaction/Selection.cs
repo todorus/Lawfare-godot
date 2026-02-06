@@ -1,13 +1,11 @@
 using System.Linq;
 using Godot;
-using Lawfare.scripts.characters;
-using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
+using Lawfare.scripts.subject.quantities;
 using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
-using Ult = Lawfare.scripts.characters.ult.Ult;
 
 namespace Lawfare.scripts.interaction;
 
@@ -28,7 +26,7 @@ public partial class Selection : Node
     public delegate void HandChangedEventHandler(Card[] hand);
     
     [Signal]
-    public delegate void UltChangedEventHandler(Ult ult);
+    public delegate void QuantitiesChangedEventHandler(Quantities quantities);
     
     [Export]
     private Context _context;
@@ -55,12 +53,13 @@ public partial class Selection : Node
             EmitSignalSourceChanged(value as GodotObject);
             if (value is Lawyer lawyer)
             {
-                EmitSignalUltChanged(lawyer.Ult);
+                EmitSignalQuantitiesChanged(lawyer.Quantities);
                 EmitSignalHandChanged(lawyer.Actions.Select(action => new Card(action)).ToArray());
             }
             else
             {
-                EmitSignalUltChanged(null);
+                EmitSignalQuantitiesChanged(null);
+                EmitSignalHandChanged([]);
             }
         }
     }

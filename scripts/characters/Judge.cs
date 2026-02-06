@@ -2,14 +2,12 @@ using System.Collections.Generic;
 using Godot;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
-using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.keywords;
 using Lawfare.scripts.logic.triggers;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
 using Lawfare.scripts.subject.relations;
-using Ult = Lawfare.scripts.characters.ult.Ult;
 
 namespace Lawfare.scripts.characters;
 
@@ -31,6 +29,4 @@ public partial class Judge(JudgeDef definition) : GodotObject, ISubject, ICharac
     public string Label => definition.Label;
     public Texture2D Image => definition.Image;
     public Action[] Actions => [];
-
-    public Ult Ult { get; } = null;
 }

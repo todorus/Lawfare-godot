@@ -26,7 +26,7 @@ public partial class DifferenceAmount : AmountProvider
         if (Selector == null) return 0;
         var total = Selector
             .Select(gameEvent)
-            .Sum(subject => subject?.Quantities?.Get(Property) ?? 0);
+            .Sum(subject => subject?.Quantities?.GetValue(Property) ?? 0);
 
         var difference = Amount - total;
         return Math.Clamp(difference, Min, Max);

@@ -26,6 +26,9 @@ public partial class Quantity : Resource, IQuantity
             Amount = amount
         };
     }
+
+    public bool IsMax => Amount >= Property.Maximum;
+    public float Progress => (float) Amount / Property.Maximum;
 }
 
 public interface IQuantity

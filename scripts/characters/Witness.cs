@@ -9,7 +9,6 @@ using Lawfare.scripts.logic.triggers;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
 using Lawfare.scripts.subject.relations;
-using Ult = Lawfare.scripts.characters.ult.Ult;
 
 namespace Lawfare.scripts.characters;
 
@@ -33,6 +32,4 @@ public partial class Witness(WitnessDef definition) : GodotObject, ISubject, ICh
     public string Label => Definition.Label;
     public Texture2D Image => Definition.Image;
     public Action[] Actions => [];
-    
-    public Ult Ult { get; } = null;
 }

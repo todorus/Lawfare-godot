@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using Godot;
 using Lawfare.scripts.@case;
-using Lawfare.scripts.characters.ult;
+using Lawfare.scripts.subject.quantities;
 
 namespace Lawfare.scripts.ui.testimony; 
 
 public partial class TestimonialsDisplay : Container
 {
+    [Export] 
+    private Property _chargeProperty;
+    
     private List<TestimonyDisplay> _testimonyDisplays = new();
 
     public void SetTestimonies(Testimony[] testimonies)
@@ -14,28 +17,28 @@ public partial class TestimonialsDisplay : Container
         Testimonies = testimonies;
     }
 
-    private void SetUlt(Ult ult)
+    private void SetQuantities(Quantities quantities)
     {
-        Ult = ult;
+        Quantities = quantities;
     }
 
-    private Ult _ult;
+    private Quantities _quantities;
 
-    public Ult Ult
+    public Quantities Quantities
     {
-        get => _ult;
+        get => _quantities;
         set
         {
-            if (_ult != null)
+            if (_quantities != null)
             {
-                _ult.OnChange -= UpdateEnabled;   
+                _quantities.OnChange -= UpdateEnabled;   
             }
-            _ult = value;
-            if (_ult != null)
+            _quantities = value;
+            if (_quantities != null)
             {
-                _ult.OnChange += UpdateEnabled;
+                _quantities.OnChange += UpdateEnabled;
             }
-            UpdateEnabled(_ult);
+            UpdateEnabled(_quantities);
         }
     }
     
@@ -52,13 +55,13 @@ public partial class TestimonialsDisplay : Container
                 _testimonyDisplays.Add(testimonyDisplay);
                 AddChild(testimonyDisplay);
             }
-            UpdateEnabled(Ult);
+            UpdateEnabled(Quantities);
         }
     }
 
-    private void UpdateEnabled(Ult ult)
+    private void UpdateEnabled(Quantities quantities)
     {
-        var enabled = ult != null && ult.Active;
+        var enabled = quantities != null && quantities.Get(_chargeProperty).IsMax;
         foreach (var testimonyDisplay in _testimonyDisplays)
         {
             testimonyDisplay.Disabled = !enabled;
