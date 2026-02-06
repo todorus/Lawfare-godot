@@ -13,7 +13,7 @@ public interface IAction
     
     public bool CanPerform(ISubject source);
     
-    public bool CanTarget(Context context, ISubject target);
+    public bool CanTarget(GameEvent gameEvent, ISubject target);
 
     public ChangeGroup[] Stage(GameEvent gameEvent);
 }

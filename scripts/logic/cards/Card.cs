@@ -15,7 +15,7 @@ public partial class Card(Action action) : GodotObject, IAction
     
     public bool CanPerform(ISubject source) => action.CanPerform(source);
 
-    public bool CanTarget(Context context, ISubject target) => action.CanTarget(context, target);
+    public bool CanTarget(GameEvent gameEvent, ISubject target) => action.CanTarget(gameEvent, target);
 
     public bool Applies(GameEvent gameEvent)
         => action.Applies(gameEvent);

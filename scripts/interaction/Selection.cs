@@ -12,7 +12,7 @@ namespace Lawfare.scripts.interaction;
 public partial class Selection : Node
 {
     [Signal]
-    public delegate void ActionChangedEventHandler(Card card);
+    public delegate void TargetEventChangedEventHandler(GameEventDto gameEvent);
     [Signal]
     public delegate void SourceChangedEventHandler(GodotObject source);
     
@@ -39,7 +39,8 @@ public partial class Selection : Node
         set
         {
             _action = value;
-            EmitSignalActionChanged(value);
+            var gameEvent = ToActionEvent(_source, null, value);
+            EmitSignalTargetEventChanged(new GameEventDto(gameEvent));
         }
     }
     

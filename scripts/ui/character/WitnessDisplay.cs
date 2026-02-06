@@ -4,6 +4,7 @@ using Godot;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.cards;
+using Lawfare.scripts.logic.@event;
 
 namespace Lawfare.scripts.ui.character;
 
@@ -18,15 +19,12 @@ public partial class WitnessDisplay : Container
     [Export]
     private bool _mirror = false;
     
-    [Export]
-    private Context _context;
-    
     private List<CharacterObserver> _characterObservers = new();
-    public void SetActiveAction(Card action)
+    public void SetActiveAction(GameEventDto dto)
     {
         foreach (var characterObserver in _characterObservers)
         {
-            characterObserver.UpdateCanTarget(action, _context);
+            characterObserver.UpdateCanTarget(dto.GameEvent);
         }
     }
     

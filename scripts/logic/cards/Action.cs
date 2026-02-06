@@ -39,9 +39,8 @@ public partial class Action : Resource, IAction
             && SourceConditions.All(condition => condition.Evaluate(gameEvent, source));
     }
     
-    public bool CanTarget(Context context, ISubject target)
+    public bool CanTarget(GameEvent gameEvent, ISubject target)
     {
-        var gameEvent = new GameEvent { Context = context, Target = target };
         return TargetConditions.All(condition => condition.Evaluate(gameEvent, target));
     }
 

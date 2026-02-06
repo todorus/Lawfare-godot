@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.context;
@@ -8,7 +9,7 @@ using Lawfare.scripts.subject;
 
 namespace Lawfare.scripts.logic.@event;
 
-public struct GameEvent
+public partial struct GameEvent
 {
     public EventType Type;
     public IAction Action;

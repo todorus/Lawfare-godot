@@ -58,9 +58,9 @@ public partial class CharacterObserver : Node
         EmitSignalCharacterClicked(_character as GodotObject);
     }
 
-    public void UpdateCanTarget(Card action, Context context)
+    public void UpdateCanTarget(GameEvent gameEvent)
     {
-        var canTarget = action?.CanTarget(context, _character as ISubject) ?? true;
+        var canTarget = gameEvent.Action?.CanTarget(gameEvent, _character as ISubject) ?? true;
         EmitSignalTargetableChanged(canTarget);
     }
 }
