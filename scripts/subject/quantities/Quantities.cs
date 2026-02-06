@@ -63,7 +63,7 @@ public partial class Quantities : GodotObject, IAvailable
     
     public int StageAdd(Property property, int amount)
     {
-        if (!_quantities.ContainsKey(property))
+        if (!Has(property))
         {
             _quantities[property] = 0;
         }
@@ -76,7 +76,7 @@ public partial class Quantities : GodotObject, IAvailable
         if (!_quantities.ContainsKey(property)) _quantities[property] = 0;
 
         var oldAmount = _quantities[property];
-        var newAmount = Math.Max(_quantities[property] + amount, property.Minimum);
+        var newAmount = Math.Clamp(oldAmount + amount, property.Minimum, property.Maximum);
         ;
         _quantities[property] = newAmount;
         OnChange?.Invoke(this);

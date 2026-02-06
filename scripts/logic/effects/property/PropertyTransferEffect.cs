@@ -28,12 +28,12 @@ public partial class PropertyTransferEffect : Effect
             Receiver.Space => gameEvent.Space,
             _ => throw new ArgumentOutOfRangeException()
         };
-        var targetChange = Stage(subject, -amount, ProviderCanUseMarket);
-        var sourceChange = Stage(recipient, amount, false);
+        var targetChange = Stage(subject, -amount);
+        var sourceChange = Stage(recipient, amount);
         return [targetChange, sourceChange];
     }
 
-    private IDiff Stage(ISubject source, int amount, bool canUseMarket)
+    private IDiff Stage(ISubject source, int amount)
     {
         var oldAmount = source.Quantities.GetValue(Property);
         var newAmount = source.Quantities.StageAdd(Property, amount);
