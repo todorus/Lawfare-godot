@@ -4,6 +4,7 @@ using Godot;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.@case;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.subject.quantities;
 using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
 using Team = Lawfare.scripts.characters.lawyers.Team;
 
@@ -25,6 +26,9 @@ public partial class Hearing : Context
     public delegate void AnyChangedEventHandler();
     
     [Export]
+    private PropertyConfig _propertyConfig;
+    
+    [Export]
     private DocketEntry _docketEntry;
     public DocketEntry DocketEntry
     {
@@ -32,6 +36,11 @@ public partial class Hearing : Context
         set
         {
             CurrentWitness = value.Witnesses[0];
+            foreach (var lawyer in Lawyers)
+            {
+                lawyer.Quantities.Set(_propertyConfig.Charge, 0);
+            }
+            
             EmitSignalProsecutionChanged(value.Prosecution);
             EmitSignalDefenseChanged(value.Defense);
             EmitSignalJudgesChanged(value.Judges);

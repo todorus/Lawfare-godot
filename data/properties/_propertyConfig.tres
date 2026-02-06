@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PropertyConfig" load_steps=3 format=3 uid="uid://bf51k45dirbaj"]
+
+[ext_resource type="Script" uid="uid://cvyhbvaftosfp" path="res://scripts/subject/quantities/PropertyConfig.cs" id="1_ew525"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="1_n23ro"]
+
+[resource]
+script = ExtResource("1_ew525")
+Charge = ExtResource("1_n23ro")
+metadata/_custom_type_script = "uid://cvyhbvaftosfp"

@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://cbwxvmo6277pw"]
+[gd_scene load_steps=26 format=3 uid="uid://cbwxvmo6277pw"]
 
 [ext_resource type="Script" uid="uid://cu8fsnn8ylvnj" path="res://scripts/interaction/Selection.cs" id="1_15585"]
 [ext_resource type="Script" uid="uid://mxuq1pto8vy4" path="res://scripts/ui/character/TeamDisplay.cs" id="1_i1kge"]
 [ext_resource type="Script" uid="uid://dakbd7iyjfg5u" path="res://scripts/context/court/Hearing.cs" id="1_rnrgf"]
 [ext_resource type="Script" uid="uid://fykgxeo6cpvd" path="res://scripts/ui/character/JudgeDisplay.cs" id="2_5mv5b"]
+[ext_resource type="Resource" uid="uid://bf51k45dirbaj" path="res://data/properties/_propertyConfig.tres" id="2_b3dk5"]
 [ext_resource type="Script" uid="uid://b8ahrbftbgx62" path="res://scripts/ui/character/WitnessDisplay.cs" id="2_h0b8m"]
 [ext_resource type="Resource" uid="uid://cvuhvwqt47jr7" path="res://data/factions/Government.tres" id="2_lc033"]
 [ext_resource type="PackedScene" uid="uid://rtdumsb4nhvl" path="res://scenes/character.tscn" id="2_ogvvj"]
@@ -45,6 +46,7 @@ metadata/_custom_type_script = "uid://dkj1ucewrg5v4"
 
 [node name="Court" type="Node3D"]
 script = ExtResource("1_rnrgf")
+_propertyConfig = ExtResource("2_b3dk5")
 _docketEntry = SubResource("Resource_lc033")
 
 [node name="Interaction" type="Node" parent="." node_paths=PackedStringArray("_context")]

@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 
 namespace Lawfare.scripts.subject.quantities;
@@ -35,4 +36,18 @@ public interface IQuantity
 {
     public Property Property { get; }
     public int Amount { get; set; }
+}
+
+public static class QuantityExtensions
+{
+    public static Quantity[] EnsureProperty(this Quantity[] quantities, Property property)
+    {
+        var quantity = quantities.FirstOrDefault(q => q.Property == property);
+        if (quantity == null)
+        {
+            quantity = new Quantity { Property = property, Amount = 0 };
+            quantities = quantities.Append(quantity).ToArray();
+        }
+        return quantities;
+    }
 }
