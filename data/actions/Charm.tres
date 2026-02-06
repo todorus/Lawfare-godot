@@ -24,21 +24,21 @@ FactionProvider = SubResource("Resource_uodju")
 Property = ExtResource("3_uxfgl")
 metadata/_custom_type_script = "uid://dlfwebu7jm0xp"
 
-[sub_resource type="Resource" id="Resource_uxfgl"]
-script = ExtResource("5_ffvgk")
-metadata/_custom_type_script = "uid://b3p2noi6tp34d"
-
 [sub_resource type="Resource" id="Resource_o35ty"]
 script = ExtResource("1_feejd")
-SourceConditions = null
-TargetConditions = Array[Object]([SubResource("Resource_uxfgl")])
-SpaceConditions = null
 Effects = [SubResource("Resource_faitn")]
 metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
+
+[sub_resource type="Resource" id="Resource_ffvgk"]
+script = ExtResource("5_ffvgk")
+metadata/_custom_type_script = "uid://b3p2noi6tp34d"
 
 [resource]
 script = ExtResource("1_7i75q")
 Label = "Charm"
 DicePools = Array[Object]([])
+Costs = null
+SourceConditions = null
+TargetConditions = Array[Object]([SubResource("Resource_ffvgk")])
 Effect = SubResource("Resource_o35ty")
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

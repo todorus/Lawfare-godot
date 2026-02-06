@@ -30,29 +30,29 @@ Property = ExtResource("1_hh03v")
 SubjectConditions = [SubResource("Resource_n88ov"), SubResource("Resource_68wmy")]
 metadata/_custom_type_script = "uid://dpv3u22mleltq"
 
-[sub_resource type="Resource" id="Resource_uukth"]
+[sub_resource type="Resource" id="Resource_4a4h7"]
+script = ExtResource("7_uw7v0")
+Effects = [SubResource("Resource_olvjs")]
+metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
+
+[sub_resource type="Resource" id="Resource_2mt4m"]
 script = ExtResource("3_2mt4m")
 metadata/_custom_type_script = "uid://do2itakrdwe3"
 
-[sub_resource type="Resource" id="Resource_5gljf"]
+[sub_resource type="Resource" id="Resource_bbiax"]
 script = ExtResource("6_bbiax")
 metadata/_custom_type_script = "uid://5ntnwgkkef8g"
 
-[sub_resource type="Resource" id="Resource_8ex2i"]
+[sub_resource type="Resource" id="Resource_uw7v0"]
 script = ExtResource("4_uw7v0")
 metadata/_custom_type_script = "uid://cfvu1bn22txif"
-
-[sub_resource type="Resource" id="Resource_4a4h7"]
-script = ExtResource("7_uw7v0")
-SourceConditions = null
-TargetConditions = Array[Object]([SubResource("Resource_uukth"), SubResource("Resource_5gljf"), SubResource("Resource_8ex2i")])
-SpaceConditions = null
-Effects = [SubResource("Resource_olvjs")]
-metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
 
 [resource]
 script = ExtResource("1_5c7ca")
 Label = "Stepping In"
 DicePools = null
+Costs = null
+SourceConditions = null
+TargetConditions = Array[Object]([SubResource("Resource_2mt4m"), SubResource("Resource_bbiax"), SubResource("Resource_uw7v0")])
 Effect = SubResource("Resource_4a4h7")
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

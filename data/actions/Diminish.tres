@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Action" load_steps=11 format=3 uid="uid://6wesnofhtwsj"]
+[gd_resource type="Resource" script_class="Action" load_steps=13 format=3 uid="uid://6wesnofhtwsj"]
 
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_iy503"]
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_klcrj"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dsxkqn0fvmpgl" path="res://scripts/logic/effects/property/PropertyAddEffect.cs" id="3_rr6pm"]
 [ext_resource type="Script" uid="uid://do2itakrdwe3" path="res://scripts/logic/conditions/subject/type/IsLawyer.cs" id="4_brfgr"]
 [ext_resource type="Script" uid="uid://b2u2rn01b0l0o" path="res://scripts/logic/effects/root/BasicEffect.cs" id="5_3xgf8"]
+[ext_resource type="Script" uid="uid://c6evptfljjytx" path="res://scripts/logic/conditions/subject/team/BelongsToTeamOpposingSource.cs" id="6_8tr6p"]
 
 [sub_resource type="Resource" id="Resource_k8iul"]
 script = ExtResource("1_klcrj")
@@ -18,21 +19,25 @@ AmountProvider = SubResource("Resource_k8iul")
 Property = ExtResource("2_8tr6p")
 metadata/_custom_type_script = "uid://dsxkqn0fvmpgl"
 
-[sub_resource type="Resource" id="Resource_o4eww"]
+[sub_resource type="Resource" id="Resource_edu0w"]
+script = ExtResource("5_3xgf8")
+Effects = [SubResource("Resource_p8itt")]
+metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
+
+[sub_resource type="Resource" id="Resource_rr6pm"]
 script = ExtResource("4_brfgr")
 metadata/_custom_type_script = "uid://do2itakrdwe3"
 
-[sub_resource type="Resource" id="Resource_edu0w"]
-script = ExtResource("5_3xgf8")
-SourceConditions = Array[Object]([])
-TargetConditions = Array[Object]([SubResource("Resource_o4eww")])
-SpaceConditions = null
-Effects = [SubResource("Resource_p8itt")]
-metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
+[sub_resource type="Resource" id="Resource_brfgr"]
+script = ExtResource("6_8tr6p")
+metadata/_custom_type_script = "uid://c6evptfljjytx"
 
 [resource]
 script = ExtResource("1_iy503")
 Label = "Diminish"
 DicePools = null
+Costs = null
+SourceConditions = null
+TargetConditions = Array[Object]([SubResource("Resource_rr6pm"), SubResource("Resource_brfgr")])
 Effect = SubResource("Resource_edu0w")
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

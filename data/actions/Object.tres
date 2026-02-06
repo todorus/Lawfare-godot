@@ -1,12 +1,10 @@
-[gd_resource type="Resource" script_class="Action" load_steps=25 format=3 uid="uid://bqk366drvqyud"]
+[gd_resource type="Resource" script_class="Action" load_steps=21 format=3 uid="uid://bqk366drvqyud"]
 
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_5njbj"]
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_h4fy5"]
 [ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="2_gls82"]
 [ext_resource type="Script" uid="uid://dsxkqn0fvmpgl" path="res://scripts/logic/effects/property/PropertyAddEffect.cs" id="3_flom0"]
-[ext_resource type="Script" uid="uid://do2itakrdwe3" path="res://scripts/logic/conditions/subject/type/IsLawyer.cs" id="4_ek6ga"]
 [ext_resource type="Script" uid="uid://b2u2rn01b0l0o" path="res://scripts/logic/effects/root/BasicEffect.cs" id="4_nlo17"]
-[ext_resource type="Script" uid="uid://b3p2noi6tp34d" path="res://scripts/logic/conditions/subject/team/BelongsNotToSourceTeam.cs" id="5_1p8h8"]
 [ext_resource type="Script" uid="uid://cjuspvcpekfge" path="res://scripts/logic/effects/relation/faction/SourceTeamFactionProvider.cs" id="7_cjnh3"]
 [ext_resource type="Resource" uid="uid://beq04cnqn0ieg" path="res://data/relations/Suspicion.tres" id="8_scmc2"]
 [ext_resource type="Script" uid="uid://dlfwebu7jm0xp" path="res://scripts/logic/effects/relation/RelationAddEffect.cs" id="9_qjqp4"]
@@ -25,19 +23,8 @@ AmountProvider = SubResource("Resource_fm13e")
 Property = ExtResource("2_gls82")
 metadata/_custom_type_script = "uid://dsxkqn0fvmpgl"
 
-[sub_resource type="Resource" id="Resource_vpj8g"]
-script = ExtResource("4_ek6ga")
-metadata/_custom_type_script = "uid://do2itakrdwe3"
-
-[sub_resource type="Resource" id="Resource_oxr7i"]
-script = ExtResource("5_1p8h8")
-metadata/_custom_type_script = "uid://b3p2noi6tp34d"
-
 [sub_resource type="Resource" id="Resource_r5b45"]
 script = ExtResource("4_nlo17")
-SourceConditions = null
-TargetConditions = Array[Object]([SubResource("Resource_vpj8g"), SubResource("Resource_oxr7i")])
-SpaceConditions = null
 Effects = [SubResource("Resource_2x0sg")]
 metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
 
@@ -79,5 +66,8 @@ metadata/_custom_type_script = "uid://blba6n07exhaq"
 script = ExtResource("1_5njbj")
 Label = "Object"
 DicePools = null
+Costs = null
+SourceConditions = null
+TargetConditions = null
 Effect = SubResource("Resource_yhs1e")
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

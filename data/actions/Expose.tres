@@ -6,4 +6,7 @@
 script = ExtResource("1_1esrq")
 Label = "Expose"
 DicePools = null
+Costs = null
+SourceConditions = null
+TargetConditions = null
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

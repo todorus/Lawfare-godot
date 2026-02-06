@@ -10,7 +10,7 @@ public partial class BelongsToTeamOpposingSource : SubjectCondition
     public override bool Evaluate(GameEvent gameEventData, ISubject subject)
     {
         var context = gameEventData.Context;
-        var opposingSourceTeam = context.GetTeam(gameEventData.Source);
+        var opposingSourceTeam = context.GetOpposingTeam(gameEventData.Source);
         var subjectTeam = context.GetTeam(subject);
         return opposingSourceTeam == subjectTeam;
     }

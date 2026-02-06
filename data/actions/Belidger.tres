@@ -18,21 +18,21 @@ AmountProvider = SubResource("Resource_82uxy")
 Property = ExtResource("2_4yvxn")
 metadata/_custom_type_script = "uid://dsxkqn0fvmpgl"
 
-[sub_resource type="Resource" id="Resource_y6dyf"]
-script = ExtResource("4_j685u")
-metadata/_custom_type_script = "uid://rds4w4cn6dk0"
-
 [sub_resource type="Resource" id="Resource_v67mk"]
 script = ExtResource("5_5a2c6")
-SourceConditions = null
-TargetConditions = Array[Object]([SubResource("Resource_y6dyf")])
-SpaceConditions = null
 Effects = [SubResource("Resource_xqqpd")]
 metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
+
+[sub_resource type="Resource" id="Resource_gldme"]
+script = ExtResource("4_j685u")
+metadata/_custom_type_script = "uid://rds4w4cn6dk0"
 
 [resource]
 script = ExtResource("1_nlu0a")
 Label = "Belidger"
 DicePools = null
+Costs = null
+SourceConditions = null
+TargetConditions = Array[Object]([SubResource("Resource_gldme")])
 Effect = SubResource("Resource_v67mk")
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"
