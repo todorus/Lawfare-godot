@@ -84,6 +84,7 @@ grow_horizontal = 0
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 script = ExtResource("17_cn0p0")
+_propertyConfig = ExtResource("2_b3dk5")
 
 [node name="WitnessStand" type="HBoxContainer" parent="UI/HBoxContainer"]
 custom_minimum_size = Vector2(300, 100)
@@ -144,6 +145,7 @@ _cardScene = ExtResource("8_15585")
 [connection signal="TestimonyChanged" from="." to="UI/HBoxContainer/Testimony" method="SetTestimonies" flags=3]
 [connection signal="WitnessesChanged" from="." to="UI/HBoxContainer/WitnessStand" method="SetWitnesses" flags=3]
 [connection signal="HandChanged" from="Interaction" to="UI/Hand" method="SetCards" flags=3]
+[connection signal="QuantitiesChanged" from="Interaction" to="UI/HBoxContainer/Testimony" method="SetQuantities" flags=3]
 [connection signal="CharacterClicked" from="UI/JudgeBench" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/HBoxContainer/WitnessStand" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/Prosecution" to="Interaction" method="Primary" flags=3]

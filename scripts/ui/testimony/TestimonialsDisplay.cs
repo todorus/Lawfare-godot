@@ -8,7 +8,7 @@ namespace Lawfare.scripts.ui.testimony;
 public partial class TestimonialsDisplay : Container
 {
     [Export] 
-    private Property _chargeProperty;
+    private PropertyConfig _propertyConfig;
     
     private List<TestimonyDisplay> _testimonyDisplays = new();
 
@@ -61,7 +61,7 @@ public partial class TestimonialsDisplay : Container
 
     private void UpdateEnabled(Quantities quantities)
     {
-        var enabled = quantities != null && quantities.Get(_chargeProperty).IsMax;
+        var enabled = quantities != null && quantities.Get(_propertyConfig.Charge).IsMax;
         foreach (var testimonyDisplay in _testimonyDisplays)
         {
             testimonyDisplay.Disabled = !enabled;
