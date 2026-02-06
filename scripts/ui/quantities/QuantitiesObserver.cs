@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using Lawfare.scripts.subject.quantities;
 
@@ -7,6 +8,9 @@ public partial class QuantitiesObserver : Container
 {
     [Export]
     private PackedScene _quantityScene;
+    
+    [Export]
+    private Property[] _blacklist = [];
 
     public void SetQuantities(Quantities quantities) => Quantities = quantities;
     
@@ -34,7 +38,7 @@ public partial class QuantitiesObserver : Container
         this.ClearChildren();
         if (value == null) return;
 
-        foreach (var quantity in value.All)
+        foreach (var quantity in value.All.Where(quantity => !_blacklist.Contains(quantity.Property)))
         {
             var quantityDisplay = _quantityScene.Instantiate<QuantityObserver>();
             quantityDisplay.Quantity = quantity;

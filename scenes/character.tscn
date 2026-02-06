@@ -63,6 +63,7 @@ offset_bottom = 304.0
 mouse_filter = 2
 script = ExtResource("4_dp8ca")
 _quantityScene = ExtResource("5_0lw5n")
+_blacklist = [ExtResource("3_7eonc")]
 
 [node name="Relations" type="VBoxContainer" parent="."]
 layout_mode = 1
