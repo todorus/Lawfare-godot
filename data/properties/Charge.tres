@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_hygqj")
 Label = "Charge"
+Maximum = 20
 metadata/_custom_type_script = "uid://bui75swsppjh6"

@@ -93,6 +93,7 @@ script = ExtResource("5_0dpix")
 
 [connection signal="ImageChange" from="." to="TextureRect" method="set_texture"]
 [connection signal="MirrorChanged" from="." to="TextureRect" method="set_flip_h"]
+[connection signal="QuantitiesChanged" from="." to="UltObserver" method="SetQuantities" flags=3]
 [connection signal="QuantitiesChanged" from="." to="Stats" method="SetQuantities" flags=3]
 [connection signal="RelationsChanged" from="." to="Relations" method="SetRelations" flags=3]
 [connection signal="MeterFull" from="UltObserver" to="TextureRect/UltParticles/VisibilityToggle" method="SetVisible" flags=3]

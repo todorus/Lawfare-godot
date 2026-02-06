@@ -6,7 +6,7 @@ using Lawfare.scripts.logic.effects.property;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject.quantities;
 
-namespace Lawfare.scripts.logic.conditions.diff;
+namespace Lawfare.scripts.logic.conditions.diff.quantity;
 
 [GlobalClass]
 public partial class IsHostQuantityDiff : DiffCondition

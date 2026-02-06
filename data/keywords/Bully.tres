@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="Keyword" load_steps=19 format=3 uid="uid://csjw1jp2l0fhf"]
+
+[ext_resource type="Script" uid="uid://d1yojxyksi7ub" path="res://scripts/logic/keywords/Keyword.cs" id="1_ntktv"]
+[ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_ygb0b"]
+[ext_resource type="Script" uid="uid://cdjefy7xew7c3" path="res://scripts/logic/conditions/quantity/amount/IsGreaterThan.cs" id="2_ahjxj"]
+[ext_resource type="Resource" uid="uid://cnm3jrueqy1xy" path="res://data/properties/Stress.tres" id="3_bf3md"]
+[ext_resource type="Script" uid="uid://7g6cf5xvltrl" path="res://scripts/logic/conditions/event/diff/property/HasWitnessQuantityDiff.cs" id="4_8736n"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="5_u1i6e"]
+[ext_resource type="Script" uid="uid://dsxkqn0fvmpgl" path="res://scripts/logic/effects/property/PropertyAddEffect.cs" id="6_07c36"]
+[ext_resource type="Script" uid="uid://d30fxqo2jwojw" path="res://scripts/logic/effects/targets/role/HostProvider.cs" id="7_woflx"]
+[ext_resource type="Script" uid="uid://drxu3481eg66a" path="res://scripts/logic/effects/root/TargetedEffect.cs" id="8_d7lgq"]
+[ext_resource type="Script" uid="uid://binuvquyum7to" path="res://scripts/logic/triggers/Trigger.cs" id="9_ps76t"]
+
+[sub_resource type="Resource" id="Resource_oetvc"]
+script = ExtResource("1_ygb0b")
+metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+
+[sub_resource type="Resource" id="Resource_f87nx"]
+script = ExtResource("2_ahjxj")
+_amountProvider = SubResource("Resource_oetvc")
+metadata/_custom_type_script = "uid://cdjefy7xew7c3"
+
+[sub_resource type="Resource" id="Resource_vlj8f"]
+script = ExtResource("4_8736n")
+_property = ExtResource("3_bf3md")
+_amountCondition = SubResource("Resource_f87nx")
+metadata/_custom_type_script = "uid://7g6cf5xvltrl"
+
+[sub_resource type="Resource" id="Resource_155is"]
+script = ExtResource("1_ygb0b")
+Amount = 1
+metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+
+[sub_resource type="Resource" id="Resource_cusj4"]
+script = ExtResource("6_07c36")
+AmountProvider = SubResource("Resource_155is")
+Property = ExtResource("5_u1i6e")
+metadata/_custom_type_script = "uid://dsxkqn0fvmpgl"
+
+[sub_resource type="Resource" id="Resource_owa8o"]
+script = ExtResource("7_woflx")
+metadata/_custom_type_script = "uid://d30fxqo2jwojw"
+
+[sub_resource type="Resource" id="Resource_r2bn8"]
+script = ExtResource("8_d7lgq")
+TargetProvider = SubResource("Resource_owa8o")
+SourceConditions = null
+TargetConditions = null
+SpaceConditions = null
+Effects = [SubResource("Resource_cusj4")]
+metadata/_custom_type_script = "uid://drxu3481eg66a"
+
+[sub_resource type="Resource" id="Resource_3c0fp"]
+script = ExtResource("9_ps76t")
+EventConditions = [SubResource("Resource_vlj8f")]
+RootEffect = SubResource("Resource_r2bn8")
+Type = 4
+metadata/_custom_type_script = "uid://binuvquyum7to"
+
+[resource]
+script = ExtResource("1_ntktv")
+Triggers = Array[Object]([SubResource("Resource_3c0fp")])
+Quantities = null
+metadata/_custom_type_script = "uid://d1yojxyksi7ub"
