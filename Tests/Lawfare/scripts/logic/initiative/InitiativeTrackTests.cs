@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lawfare.scripts.logic.initiative;
@@ -1379,5 +1380,262 @@ Scenario: StageAnchor on an empty track does not emit Tick and does not emit OnC
         Assert.Empty(track.Slots);
         Assert.Equal(0, ticked);
         Assert.Equal(0, changed);
+    }
+    
+    // ---------------------------------------------------------------------------
+    // Seed(entries)
+    // ---------------------------------------------------------------------------
+
+    /*
+    Scenario: Seeding an empty list does nothing
+      Given an empty initiative track
+      When I seed with no entries
+      Then the track remains empty
+      And the current entity is null
+      And the next entity is null
+      And the delay to next is MAX_INT
+    */
+    [Fact]
+    public void Seed_EmptyList_DoesNothing()
+    {
+        var track = CreateTrack();
+
+        track.Seed(Array.Empty<(IHasInitiative entity, int delay)>());
+
+        Assert.Empty(track.Slots);
+        Assert.Null(track.Current);
+        Assert.Null(track.Next);
+        Assert.Equal(int.MaxValue, track.DelayToNext);
+    }
+
+    /*
+    Scenario: Seeding determines Current from the lowest initial delay and reanchors to 0
+      Given an empty initiative track
+      When I seed:
+        | entity | delay |
+        | A      | 2     |
+        | B      | 5     |
+        | C      | 5     |
+      Then the current entity is A
+      And the slots are:
+        | delay | row |
+        | 0     | A   |
+        | 3     | B,C |
+      And the next entity is B
+      And the delay to next is 3
+    */
+    [Fact]
+    public void Seed_ReanchorsToMinimumDelay_Example_2_5_5()
+    {
+        var track = CreateTrack();
+        var A = new TestEntity("A");
+        var B = new TestEntity("B");
+        var C = new TestEntity("C");
+
+        track.Seed(new (IHasInitiative entity, int delay)[]
+        {
+            (A, 2),
+            (B, 5),
+            (C, 5),
+        });
+
+        Assert.Same(A, track.Current);
+        AssertSlots(track,
+            (0, new IHasInitiative[] { A }),
+            (3, new IHasInitiative[] { B, C })
+        );
+        Assert.Same(B, track.Next);
+        Assert.Equal(3, track.DelayToNext);
+    }
+
+    /*
+    Scenario: Seeding with a tie for lowest delay picks Current by input order
+      Given an empty initiative track
+      When I seed:
+        | entity | delay |
+        | B      | 1     |
+        | A      | 1     |
+        | C      | 2     |
+      Then the current entity is B
+      And the slot with delay 0 row order is B,A
+      And the next entity is A
+      And the delay to next is 0
+      And the slot with delay 1 row order is C
+    */
+    [Fact]
+    public void Seed_TiedMinimum_PicksCurrentByInputOrder()
+    {
+        var track = CreateTrack();
+        var A = new TestEntity("A");
+        var B = new TestEntity("B");
+        var C = new TestEntity("C");
+
+        track.Seed(new (IHasInitiative entity, int delay)[]
+        {
+            (B, 1),
+            (A, 1),
+            (C, 2),
+        });
+
+        Assert.Same(B, track.Current);
+        AssertSlotRow(track, 0, B, A);
+        Assert.Same(A, track.Next);
+        Assert.Equal(0, track.DelayToNext);
+        AssertSlotRow(track, 1, C);
+    }
+
+    /*
+    Scenario: Seeding preserves row order within the same resulting delay by input order
+      Given an empty initiative track
+      When I seed:
+        | entity | delay |
+        | A      | 10    |
+        | B      | 12    |
+        | C      | 12    |
+        | D      | 12    |
+      Then the current entity is A
+      And the slot with delay 2 row order is B,C,D
+    */
+    [Fact]
+    public void Seed_PreservesRowOrder_OnCollision_ByInputOrder()
+    {
+        var track = CreateTrack();
+        var A = new TestEntity("A");
+        var B = new TestEntity("B");
+        var C = new TestEntity("C");
+        var D = new TestEntity("D");
+
+        track.Seed(new (IHasInitiative entity, int delay)[]
+        {
+            (A, 10),
+            (B, 12),
+            (C, 12),
+            (D, 12),
+        });
+
+        Assert.Same(A, track.Current);
+        AssertSlotRow(track, 2, B, C, D);
+    }
+
+    /*
+    Scenario: Seeding supports negative delays and reanchors so minimum becomes 0
+      Given an empty initiative track
+      When I seed:
+        | entity | delay |
+        | A      | -3    |
+        | B      | 0     |
+        | C      | -1    |
+      Then the current entity is A
+      And the slots are:
+        | delay | row |
+        | 0     | A   |
+        | 2     | C   |
+        | 3     | B   |
+      And the next entity is C
+      And the delay to next is 2
+    */
+    [Fact]
+    public void Seed_AllowsNegativeDelays_ReanchorsSoMinimumIsZero()
+    {
+        var track = CreateTrack();
+        var A = new TestEntity("A");
+        var B = new TestEntity("B");
+        var C = new TestEntity("C");
+
+        track.Seed(new (IHasInitiative entity, int delay)[]
+        {
+            (A, -3),
+            (B, 0),
+            (C, -1),
+        });
+
+        Assert.Same(A, track.Current);
+        AssertSlots(track,
+            (0, new IHasInitiative[] { A }),
+            (2, new IHasInitiative[] { C }),
+            (3, new IHasInitiative[] { B })
+        );
+        Assert.Same(C, track.Next);
+        Assert.Equal(2, track.DelayToNext);
+    }
+
+    /*
+    Scenario: Seeding replaces existing track state
+      Given an initiative track with entity X at delay 0
+      When I seed:
+        | entity | delay |
+        | A      | 1     |
+        | B      | 4     |
+      Then the current entity is A
+      And the slots are:
+        | delay | row |
+        | 0     | A   |
+        | 3     | B   |
+      And entity X is not on the track
+    */
+    [Fact]
+    public void Seed_ReplacesExistingState()
+    {
+        var track = CreateTrack();
+        var X = new TestEntity("X");
+        var A = new TestEntity("A");
+        var B = new TestEntity("B");
+
+        track.Add(X, 0);
+
+        track.Seed(new (IHasInitiative entity, int delay)[]
+        {
+            (A, 1),
+            (B, 4),
+        });
+
+        Assert.Same(A, track.Current);
+        AssertSlots(track,
+            (0, new IHasInitiative[] { A }),
+            (3, new IHasInitiative[] { B })
+        );
+
+        Assert.False(track.Remove(X)); // if X isn't present, Remove should return false
+    }
+
+    /*
+    Scenario: Seeding emits non-tick change events but not Tick
+      Given an empty initiative track
+      When I seed:
+        | entity | delay |
+        | A      | 2     |
+        | B      | 5     |
+      Then Tick is not emitted
+      And OnChange is emitted at least once
+      And SlotsChanged is emitted at least once
+      And CurrentChanged is emitted at least once
+    */
+    [Fact]
+    public void Seed_EmitsChangeEvents_ButNotTick()
+    {
+        var track = CreateTrack();
+        var A = new TestEntity("A");
+        var B = new TestEntity("B");
+
+        var ticked = 0;
+        var changed = 0;
+        var slotsChanged = 0;
+        var currentChanged = 0;
+
+        track.Tick += _ => ticked++;
+        track.OnChange += () => changed++;
+        track.SlotsChanged += _ => slotsChanged++;
+        track.CurrentChanged += _ => currentChanged++;
+
+        track.Seed(new (IHasInitiative entity, int delay)[]
+        {
+            (A, 2),
+            (B, 5),
+        });
+
+        Assert.Equal(0, ticked);
+        Assert.True(changed >= 1);
+        Assert.True(slotsChanged >= 1);
+        Assert.True(currentChanged >= 1);
     }
 }

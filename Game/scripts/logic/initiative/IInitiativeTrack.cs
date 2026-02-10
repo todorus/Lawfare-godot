@@ -6,6 +6,15 @@ namespace Lawfare.scripts.logic.initiative;
 
 public interface IInitiativeTrack
 {
+    /// <summary>
+    /// Seeds the track with multiple entities and their initial delays in one atomic operation.
+    /// The entity with the lowest delay becomes Current and is anchored to delay 0.
+    /// All other delays are shifted by subtracting the minimum delay.
+    /// Ties for lowest delay are resolved by input order (first wins Current).
+    /// Collision order within the same slot is input order, except that Current is always slot0[0].
+    /// </summary>
+    void Seed(IEnumerable<(IHasInitiative entity, int delay)> entries);
+
     // ---- Mutations ----
     void Add(IHasInitiative entity, int delay = 0);
     bool Remove(IHasInitiative entity);

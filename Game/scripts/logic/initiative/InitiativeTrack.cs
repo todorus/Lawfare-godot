@@ -43,6 +43,58 @@ namespace Lawfare.scripts.logic.initiative
         public IHasInitiative? Next => _next;
         public int DelayToNext => _delayToNext;
         public bool IsStaging => _isStaging;
+        
+        public void Seed(IEnumerable<(IHasInitiative entity, int delay)> entries)
+        {
+            if (entries == null) throw new ArgumentNullException(nameof(entries));
+
+            var list = entries.ToList();
+            if (list.Count == 0) return;
+
+            foreach (var (entity, _) in list)
+                if (entity == null) throw new ArgumentNullException(nameof(entries), "Seed() contains a null entity.");
+
+            // Replace semantics: seeding defines the full starting state.
+            _slots.Clear();
+            _current = null;
+
+            // Determine minimum delay and winner (tie -> first in input order)
+            int minDelay = list.Min(e => e.delay);
+            int winnerIndex = list.FindIndex(e => e.delay == minDelay);
+            var winner = list[winnerIndex].entity;
+
+            // Winner is Current at delay 0
+            _slots[0] = new List<IHasInitiative> { winner };
+            _current = winner;
+
+            // Add everyone else, shifted by -minDelay, preserving input order
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (i == winnerIndex) continue;
+
+                var (entity, delay) = list[i];
+                int shifted = delay - minDelay; // >= 0
+
+                if (!_slots.TryGetValue(shifted, out var row))
+                {
+                    row = new List<IHasInitiative>();
+                    _slots[shifted] = row;
+                }
+
+                // If shifted == 0, append behind Current (slot0 index >= 1)
+                row.Add(entity);
+            }
+
+            // Update all derived views
+            RecomputeDerived();
+
+            // Unconditional event emission (Seed is an initialization/reset operation)
+            SlotsChanged?.Invoke(_slotsView);
+            CurrentChanged?.Invoke(_current);
+            NextChanged?.Invoke(_next);
+            DelayToNextChanged?.Invoke(_delayToNext);
+            OnChange?.Invoke();
+        }
 
         // ---------------------------------------------------------------------
         // Mutations
