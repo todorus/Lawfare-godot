@@ -31,5 +31,6 @@ public partial class Witness(WitnessDef definition) : GodotObject, ISubject, ICh
     public Vector3 DamagePosition => Vector3.Zero;
     public string Label => Definition.Label;
     public Texture2D Image => Definition.Image;
+    public Texture2D Portrait => Definition.Image;
     public Action[] Actions => [];
 }

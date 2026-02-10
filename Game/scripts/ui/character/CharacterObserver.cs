@@ -14,6 +14,9 @@ public partial class CharacterObserver : Node
     [Signal]
     public delegate void ImageChangeEventHandler(Texture2D texture);
     [Signal]
+    public delegate void PortraitChangeEventHandler(Texture2D texture);
+    
+    [Signal]
     public delegate void LabelChangedEventHandler(string label);
     
     [Signal]
@@ -47,6 +50,7 @@ public partial class CharacterObserver : Node
         {
             _character = value;
             EmitSignalImageChange(value?.Image);
+            EmitSignalPortraitChange(value?.Portrait);
             EmitSignalLabelChanged(value?.Label);
             EmitSignalQuantitiesChanged(value?.Quantities);
             EmitSignalRelationsChanged(value?.Relations);

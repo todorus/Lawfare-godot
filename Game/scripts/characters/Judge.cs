@@ -28,5 +28,6 @@ public partial class Judge(JudgeDef definition) : GodotObject, ISubject, ICharac
     public Vector3 DamagePosition => Vector3.Zero;
     public string Label => definition.Label;
     public Texture2D Image => definition.Image;
+    public Texture2D Portrait => definition.Image;
     public Action[] Actions => [];
 }

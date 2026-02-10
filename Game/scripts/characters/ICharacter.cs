@@ -10,6 +10,8 @@ namespace Lawfare.scripts.characters;
 public interface ICharacter : IInfo
 {
     public Texture2D Image { get; }
+    
+    public Texture2D Portrait { get; }
 
     public Action[] Actions { get; }
     

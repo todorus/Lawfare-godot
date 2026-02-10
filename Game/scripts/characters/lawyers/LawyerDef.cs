@@ -16,9 +16,15 @@ public partial class LawyerDef : Resource
     [Export]
     public Texture2D Image { get; private set; }
     
+    [Export]
+    public Texture2D Portrait { get; private set; }
+    
     [ExportCategory("Gameplay")]
     [Export] 
     public Faction Faction { get; private set; }
+    
+    [Export]
+    public int Initiative { get; private set; }
     
     [Export]
     public Action[] Actions { get; private set; } = [];

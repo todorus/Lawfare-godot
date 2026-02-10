@@ -5,6 +5,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="scripts\ui\initiative\" />
+    <Content Include="scripts\ui\character\portrait\circle.gdshader" />
+    <Content Include="scripts\ui\character\portrait\portraitMaterial.tres" />
   </ItemGroup>
 </Project>

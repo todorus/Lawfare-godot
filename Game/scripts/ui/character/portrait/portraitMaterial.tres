@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://chgsrhrl07g0c"]
+
+[ext_resource type="Shader" uid="uid://daaxyvs7q3wjj" path="res://scripts/ui/character/portrait/circle.gdshader" id="1_hui1q"]
+
+[resource]
+shader = ExtResource("1_hui1q")
+shader_parameter/radius = 0.45
+shader_parameter/smoothing = 0.004
+shader_parameter/background_color = Color(0.9147423, 0.6753919, 0.3037247, 1)
+shader_parameter/outline_thickness = 0.025
+shader_parameter/outline_color = Color(0.24132901, 0.16098174, 0.027864119, 1)

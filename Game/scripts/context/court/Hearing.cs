@@ -22,6 +22,10 @@ public partial class Hearing : Context
     public delegate void JudgesChangedEventHandler(Judge[] judges);
     [Signal]
     public delegate void TestimonyChangedEventHandler(Testimony[] testimony);
+    
+    [Signal]
+    public delegate void InitializedEventHandler(Context context);
+    
     [Signal]
     public delegate void AnyChangedEventHandler();
     
@@ -45,6 +49,7 @@ public partial class Hearing : Context
             EmitSignalDefenseChanged(value.Defense);
             EmitSignalJudgesChanged(value.Judges);
             CurrentFaction = _docketEntry.Case.ProsecutorCaseFile.Faction;
+            EmitSignalInitialized(this);
             EmitSignalAnyChanged();
         }
     }
