@@ -12,8 +12,6 @@ namespace Lawfare.scripts.ui.initiative;
 
 public partial class InitiativeTrackDisplay : Control
 {
-
-    private IInitiativeTrack _track = new InitiativeTrack();
     
     [Signal]
     public delegate void OnCurrentChangedEventHandler(Lawyer current);
@@ -29,29 +27,22 @@ public partial class InitiativeTrackDisplay : Control
     private float _stackDistance = 20f;
     
     private Dictionary<ICharacter, PortraitDisplay> _portraitInstances = new();
+    
+    public void Move(Move move)
+    {
+        // _track.Move(move.Lawyer, move.Initiative);
+    }
 
     public override void _Ready()
     {
         base._Ready();
-        _track.CurrentChanged += OnCurrent;
-        _track.SlotsChanged += OnSlotsChanged;
+        // _track.CurrentChanged += OnCurrent;
+        // _track.SlotsChanged += OnSlotsChanged;
     }
 
     public void SeedFromContext(Context context)
     {
         _portraitInstances.Clear();
-        foreach (var lawyer in context.Lawyers)
-        {
-            var instance = _portraitScene.Instantiate<PortraitDisplay>();
-            instance.CharacterObserver.Character = lawyer;
-            _portraitInstances[lawyer] = instance;
-            AddChild(instance);
-        }
-        
-        IEnumerable<(IHasInitiative entity, int delay)> seed = context.Lawyers.Select(lawyer =>
-            (entity: lawyer as IHasInitiative, delay: lawyer.Initiative)
-        );
-        _track.Seed(seed);
     }
     
     private void OnSlotsChanged(IReadOnlyList<InitiativeSlot> slots)

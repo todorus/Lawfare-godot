@@ -1,5 +1,6 @@
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.logic.initiative.state;
 using Lawfare.scripts.subject;
 using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
 using Team = Lawfare.scripts.characters.lawyers.Team;
@@ -12,6 +13,8 @@ public interface IContext
     public Lawyer[] Lawyers { get; }
     public Witness[] Witnesses { get; }
     public Judge[] Judges { get; }
+    
+    public InitiativeTrackState InitiativeTrack { get; }
     
     public Team[] Teams { get; }
 

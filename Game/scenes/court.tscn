@@ -159,7 +159,6 @@ _slotDistance = 150.0
 _stackDistance = 60.0
 
 [connection signal="DefenseChanged" from="." to="UI/Defense" method="SetTeam" flags=3]
-[connection signal="Initialized" from="." to="UI/Initiative" method="SeedFromContext" flags=3]
 [connection signal="JudgesChanged" from="." to="UI/JudgeBench" method="SetJudges" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution" method="SetTeam" flags=3]
 [connection signal="TestimonyChanged" from="." to="UI/Witness/Testimony" method="SetTestimonies" flags=3]

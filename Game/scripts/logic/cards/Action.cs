@@ -3,6 +3,7 @@ using Godot;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.conditions.subject;
 using Lawfare.scripts.logic.effects;
+using Lawfare.scripts.logic.effects.property.amounts;
 using Lawfare.scripts.logic.effects.root;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
@@ -15,12 +16,15 @@ public partial class Action : Resource, IAction
 {
     [Export]
     public string Label { get; private set; }
-    
-    [Export]
-    public Skill[] DicePools { get; private set; } = [];
+
+    [ExportGroup("Costs")] 
+    [Export] 
+    public int Initiative { get; private set; } = 1;
     
     [Export]
     public Cost[] Costs { get; private set; } = [];
+    
+    public Skill[] DicePools => [];
     
     [ExportGroup("Conditions")]
     [Export]

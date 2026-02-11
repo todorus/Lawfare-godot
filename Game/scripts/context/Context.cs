@@ -2,6 +2,7 @@ using System.Linq;
 using Godot;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.logic.initiative.state;
 using Lawfare.scripts.subject;
 using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
 using Team = Lawfare.scripts.characters.lawyers.Team;
@@ -17,6 +18,8 @@ public abstract partial class Context : Node, IContext
     public abstract Team[] Teams { get; }
     public Team GetTeam(ISubject subject) => Teams.FirstOrDefault(team => team.Members.Contains(subject));
     public Team GetOpposingTeam(ISubject subject) => Teams.FirstOrDefault(team => !team.Members.Contains(subject));
+
+    public InitiativeTrackState InitiativeTrack { get; }
 
     public ISubject[] AllSubjects =>
         new ISubject[]{}
