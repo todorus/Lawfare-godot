@@ -68,27 +68,31 @@ size_flags_vertical = 3
 [node name="JudgeBench" type="HBoxContainer" parent="UI"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 1
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -3.0
+offset_top = 129.0
+offset_right = 297.0
+offset_bottom = 229.0
 script = ExtResource("2_5mv5b")
 _characterScene = ExtResource("2_ogvvj")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+[node name="Witness" type="HBoxContainer" parent="UI"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -304.0
-offset_bottom = 100.0
+offset_left = -607.0
+offset_top = 129.0
+offset_right = -3.0
+offset_bottom = 229.0
 grow_horizontal = 0
 
-[node name="Testimony" type="VBoxContainer" parent="UI/HBoxContainer"]
+[node name="Testimony" type="VBoxContainer" parent="UI/Witness"]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 script = ExtResource("17_cn0p0")
 _propertyConfig = ExtResource("2_b3dk5")
 
-[node name="WitnessStand" type="HBoxContainer" parent="UI/HBoxContainer"]
+[node name="WitnessStand" type="HBoxContainer" parent="UI/Witness"]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 script = ExtResource("2_h0b8m")
@@ -147,7 +151,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_left = 333.0
 offset_right = -295.0
-offset_bottom = 172.0
+offset_bottom = 100.0
 grow_horizontal = 2
 script = ExtResource("23_g8kxy")
 _portraitScene = ExtResource("24_t2k2p")
@@ -158,16 +162,16 @@ _stackDistance = 60.0
 [connection signal="Initialized" from="." to="UI/Initiative" method="SeedFromContext" flags=3]
 [connection signal="JudgesChanged" from="." to="UI/JudgeBench" method="SetJudges" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution" method="SetTeam" flags=3]
-[connection signal="TestimonyChanged" from="." to="UI/HBoxContainer/Testimony" method="SetTestimonies" flags=3]
-[connection signal="WitnessesChanged" from="." to="UI/HBoxContainer/WitnessStand" method="SetWitnesses" flags=3]
+[connection signal="TestimonyChanged" from="." to="UI/Witness/Testimony" method="SetTestimonies" flags=3]
+[connection signal="WitnessesChanged" from="." to="UI/Witness/WitnessStand" method="SetWitnesses" flags=3]
 [connection signal="HandChanged" from="Interaction" to="UI/Hand" method="SetCards" flags=3]
-[connection signal="QuantitiesChanged" from="Interaction" to="UI/HBoxContainer/Testimony" method="SetQuantities" flags=3]
+[connection signal="QuantitiesChanged" from="Interaction" to="UI/Witness/Testimony" method="SetQuantities" flags=3]
 [connection signal="TargetEventChanged" from="Interaction" to="UI/JudgeBench" method="SetActiveAction" flags=3]
-[connection signal="TargetEventChanged" from="Interaction" to="UI/HBoxContainer/WitnessStand" method="SetActiveAction" flags=3]
+[connection signal="TargetEventChanged" from="Interaction" to="UI/Witness/WitnessStand" method="SetActiveAction" flags=3]
 [connection signal="TargetEventChanged" from="Interaction" to="UI/Prosecution" method="SetActiveAction" flags=3]
 [connection signal="TargetEventChanged" from="Interaction" to="UI/Defense" method="SetActiveAction" flags=3]
 [connection signal="CharacterClicked" from="UI/JudgeBench" to="Interaction" method="Primary" flags=3]
-[connection signal="CharacterClicked" from="UI/HBoxContainer/WitnessStand" to="Interaction" method="Primary" flags=3]
+[connection signal="CharacterClicked" from="UI/Witness/WitnessStand" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/Prosecution" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/Defense" to="Interaction" method="Primary" flags=3]
 [connection signal="CardSelected" from="UI/Hand" to="Interaction" method="Primary" flags=3]

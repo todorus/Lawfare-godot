@@ -70,8 +70,9 @@ public partial class InitiativeTrackDisplay : Control
                 var entity = slot.Row[j];
                 if(_portraitInstances.TryGetValue(entity as ICharacter, out var portrait))
                 {
-                    // Position the portrait based on the slot index and stack index
-                    portrait.Position = new Vector2(i * _slotDistance + j * _stackDistance, 0);
+                    // Position the portrait based on the slot index and stack 
+                    var x = Size.X - (i * _slotDistance + j * _stackDistance) - portrait.Size.X;
+                    portrait.Position = new Vector2(x, 0);
                 }
             }
         }
