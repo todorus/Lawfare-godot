@@ -65,7 +65,7 @@ metadata/_custom_type_script = "uid://blba6n07exhaq"
 [resource]
 script = ExtResource("1_5njbj")
 Label = "Object"
-DicePools = null
+InitiativeCost = 2
 Costs = null
 SourceConditions = null
 TargetConditions = null

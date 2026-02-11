@@ -3,6 +3,7 @@ using Godot;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.@event;
+using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
 using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
@@ -20,7 +21,10 @@ public partial class Selection : Node
     public delegate void ResolutionEventHandler(Resolution resolution);
     
     [Signal]
-    public delegate void ActionResolvedEventHandler();
+    public delegate void ActionResolvedEventHandler(Context context);
+    
+    [Signal]
+    public delegate void TickResolvedEventHandler(Context context);
     
     [Signal]
     public delegate void HandChangedEventHandler(Card[] hand);
@@ -142,6 +146,18 @@ public partial class Selection : Node
         };
         var afterResolution = afterActionEvent.Resolve();
         EmitSignalResolution(afterResolution);
-        EmitSignalActionResolved();
+        EmitSignalActionResolved(_context);
+        
+        while (Initiative.GetCurrent(_context.InitiativeTrack) == null)
+        {
+            var tickEvent = actionEvent with
+            {
+                Type = EventType.Tick,
+                Action = null,
+            };
+
+            tickEvent.Resolve();
+        }
+        EmitSignalTickResolved(_context);
     } 
 }

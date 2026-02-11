@@ -38,6 +38,11 @@ public partial class InitiativeTrackDisplay : Control
             AddChild(instance);
         }
 
+        UpdateFromContext(context);
+    }
+    
+    public void UpdateFromContext(Context context)
+    {
         var slots = Initiative.ReadSlots(context.InitiativeTrack);
         OnSlotsChanged(slots);
     }

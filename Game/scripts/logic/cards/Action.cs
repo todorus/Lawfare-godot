@@ -3,9 +3,11 @@ using Godot;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.conditions.subject;
 using Lawfare.scripts.logic.effects;
+using Lawfare.scripts.logic.effects.initiative;
 using Lawfare.scripts.logic.effects.property.amounts;
 using Lawfare.scripts.logic.effects.root;
 using Lawfare.scripts.logic.@event;
+using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
 
@@ -19,7 +21,7 @@ public partial class Action : Resource, IAction
 
     [ExportGroup("Costs")] 
     [Export] 
-    public int Initiative { get; private set; } = 1;
+    public int InitiativeCost { get; private set; } = 1;
     
     [Export]
     public Cost[] Costs { get; private set; } = [];
@@ -59,7 +61,22 @@ public partial class Action : Resource, IAction
         var costChangegroup = Costs
             .Select(cost => cost.Stage(gameEvent, gameEvent.Source))
             .Cast<IDiff>().ToArray().ToChangeGroup();
+        var initiativeChangeGroup = StageInitiative(gameEvent);
         var effectDiffs = Effect?.Stage(gameEvent, gameEvent.Source) ?? [];
-        return new[]{costChangegroup}.Concat(effectDiffs).ToArray();
+        return new[]{costChangegroup}
+            .Concat(effectDiffs)
+            .Concat(initiativeChangeGroup)
+            .ToArray();
+    }
+    
+    private ChangeGroup[] StageInitiative(GameEvent gameEvent)
+    {
+        // Advance initiative track by 1 tick.
+        var original = gameEvent.Context.InitiativeTrack.Clone();
+        var updated = Initiative.MoveEntity(gameEvent.Context.InitiativeTrack, gameEvent.Source as IHasInitiative, InitiativeCost);
+
+        IDiff diff = new InitiativeDiff(gameEvent.Context, original, updated);
+
+        return [new ChangeGroup([diff])];
     }
 }

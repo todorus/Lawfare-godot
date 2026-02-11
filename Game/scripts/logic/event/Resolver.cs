@@ -3,6 +3,8 @@ using System.Linq;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.dice;
 using Lawfare.scripts.logic.effects;
+using Lawfare.scripts.logic.effects.initiative;
+using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
 
@@ -17,7 +19,11 @@ public static class Resolver
 
         var triggered = gameEventData.StageTriggers();
         var actioned = gameEventData.StageAction();
-        var staged = triggered.Concat(actioned).ToArray();
+        var ticked = gameEventData.StageTick();
+        var staged = triggered
+            .Concat(actioned)
+            .Concat(ticked)
+            .ToArray();
 
         // TODO change this to outcome modification
         // var modified = staged.Select(change => change.Modify(gameEventData)).ToArray();
@@ -63,6 +69,19 @@ public static class Resolver
 
         if (gameEventData.Action == null || !gameEventData.Action.Applies(gameEventData)) return [];
         return gameEventData.Action.Stage(gameEventData with { Faction = gameEventData.Source?.Allegiances?.Primary });
+    }
+
+    private static ChangeGroup[] StageTick(this GameEvent gameEventData)
+    {
+        if (!gameEventData.ShouldTick()) return [];
+
+        // Advance initiative track by 1 tick.
+        var original = gameEventData.Context.InitiativeTrack.Clone();
+        var updated = Initiative.Tick(original);
+
+        IDiff diff = new InitiativeDiff(gameEventData.Context, original, updated);
+
+        return [new ChangeGroup([diff])];
     }
 
     public static int Read(this ISubject subject, Property property, GameEvent gameEventData)

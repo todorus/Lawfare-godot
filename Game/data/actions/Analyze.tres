@@ -5,5 +5,8 @@
 [resource]
 script = ExtResource("1_bir8d")
 Label = "Analyze"
-DicePools = null
+InitiativeCost = 2
+Costs = null
+SourceConditions = null
+TargetConditions = null
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

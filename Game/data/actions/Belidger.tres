@@ -30,7 +30,7 @@ metadata/_custom_type_script = "uid://rds4w4cn6dk0"
 [resource]
 script = ExtResource("1_nlu0a")
 Label = "Belidger"
-DicePools = null
+InitiativeCost = 3
 Costs = null
 SourceConditions = null
 TargetConditions = Array[Object]([SubResource("Resource_gldme")])

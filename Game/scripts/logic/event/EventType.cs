@@ -11,7 +11,8 @@ public enum EventType
     EndTurn,
     Assignment,
     Select,
-    UltSync
+    UltSync,
+    Tick
 }
 
 public static class EventTypeExtensions
@@ -41,6 +42,15 @@ public static class EventTypeExtensions
         return gameEvent.Type switch
         {
             EventType.Action => true,
+            _ => false
+        };
+    }
+    
+    public static bool ShouldTick(this GameEvent gameEvent)
+    {
+        return gameEvent.Type switch
+        {
+            EventType.Tick => true,
             _ => false
         };
     }

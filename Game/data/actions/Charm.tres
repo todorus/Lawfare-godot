@@ -36,7 +36,7 @@ metadata/_custom_type_script = "uid://b3p2noi6tp34d"
 [resource]
 script = ExtResource("1_7i75q")
 Label = "Charm"
-DicePools = Array[Object]([])
+InitiativeCost = 4
 Costs = null
 SourceConditions = null
 TargetConditions = Array[Object]([SubResource("Resource_ffvgk")])
