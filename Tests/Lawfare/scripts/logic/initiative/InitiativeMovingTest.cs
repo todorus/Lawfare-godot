@@ -1,7 +1,8 @@
+using System;
 using System.Linq;
+using Xunit;
 using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.logic.initiative.state;
-using Lawfare.scripts.subject;
 
 namespace Tests.Lawfare.scripts.logic.initiative;
 
@@ -13,7 +14,7 @@ public sealed class InitiativeMovingTest
         public string Name { get; }
         public override string ToString() => Name;
     }
-    
+
     private static IHasInitiative S(string name) => new TestEntity(name);
 
     private static InitiativeTrackState State(params (int delay, IHasInitiative[] row)[] slots)
@@ -28,14 +29,14 @@ public sealed class InitiativeMovingTest
         InitiativeTrackState state,
         params (int delay, IHasInitiative[] row)[] expected)
     {
-        var actual = Initiative.ReadSlots(state);
+        var actual = Initiative.ReadSlots(state); // IReadOnlyList<InitiativeSlotDTO>
 
         Assert.Equal(expected.Length, actual.Count);
 
         for (int i = 0; i < expected.Length; i++)
         {
             Assert.Equal(expected[i].delay, actual[i].Delay);
-            Assert.Equal(expected[i].row.Length, actual[i].Row.Count);
+            Assert.Equal(expected[i].row.Length, actual[i].Row.Length);
 
             for (int j = 0; j < expected[i].row.Length; j++)
                 Assert.Same(expected[i].row[j], actual[i].Row[j]);

@@ -52,14 +52,19 @@ public static class Initiative
     /// UI reader: returns slots as (delay, row) in ascending delay.
     /// No mutation; safe for ControlNodes.
     /// </summary>
-    public static IReadOnlyList<(int Delay, IReadOnlyList<IHasInitiative> Row)> ReadSlots(InitiativeTrackState state)
+    public static IReadOnlyList<InitiativeSlotState> ReadSlots(InitiativeTrackState state)
     {
-        if (state?.Slots == null) return Array.Empty<(int, IReadOnlyList<IHasInitiative>)>();
+        if (state?.Slots == null) return Array.Empty<InitiativeSlotState>();
+
         return state.Slots
             .OrderBy(s => s.Delay)
-            .Select(s => (s.Delay, (IReadOnlyList<IHasInitiative>)s.Row))
+            .Select(s => new InitiativeSlotState {
+                Delay = s.Delay,
+                Row = s.Row
+            })
             .ToArray();
     }
+
 
     /// <summary>
     /// Advances time by exactly 1 tick:

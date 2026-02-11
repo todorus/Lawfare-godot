@@ -19,7 +19,7 @@ public abstract partial class Context : Node, IContext
     public Team GetTeam(ISubject subject) => Teams.FirstOrDefault(team => team.Members.Contains(subject));
     public Team GetOpposingTeam(ISubject subject) => Teams.FirstOrDefault(team => !team.Members.Contains(subject));
 
-    public InitiativeTrackState InitiativeTrack { get; }
+    public InitiativeTrackState InitiativeTrack { get; set; }
 
     public ISubject[] AllSubjects =>
         new ISubject[]{}

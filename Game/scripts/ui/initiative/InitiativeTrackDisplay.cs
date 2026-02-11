@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.characters.lawyers;
@@ -27,36 +26,28 @@ public partial class InitiativeTrackDisplay : Control
     private float _stackDistance = 20f;
     
     private Dictionary<ICharacter, PortraitDisplay> _portraitInstances = new();
-    
-    public void Move(Move move)
-    {
-        // _track.Move(move.Lawyer, move.Initiative);
-    }
-
-    public override void _Ready()
-    {
-        base._Ready();
-        // _track.CurrentChanged += OnCurrent;
-        // _track.SlotsChanged += OnSlotsChanged;
-    }
 
     public void SeedFromContext(Context context)
     {
         _portraitInstances.Clear();
+        foreach (var lawyer in context.Lawyers)
+        {
+            var instance = _portraitScene.Instantiate<PortraitDisplay>();
+            instance.CharacterObserver.Character = lawyer;
+            _portraitInstances[lawyer] = instance;
+            AddChild(instance);
+        }
+
+        var slots = Initiative.ReadSlots(context.InitiativeTrack);
+        OnSlotsChanged(slots);
     }
     
-    private void OnSlotsChanged(IReadOnlyList<InitiativeSlot> slots)
+    private void OnSlotsChanged(IReadOnlyList<InitiativeSlotState> slots)
     {
-        // TODO update the UI to reflect the new slots
-        // Loop through the slots and display the entities and their delays
-        // Slots have a set distance from each other
-        // When multiple entities they are stacked on top of each other in the same slot, with the current entity on top
-        // so they would have a smaller distance between them to show they are in the same slot
-
         for(int i = 0; i < slots.Count; i++)
         {
             var slot = slots[i];
-            for(int j = 0; j < slot.Row.Count; j++)
+            for(int j = 0; j < slot.Row.Length; j++)
             {
                 var entity = slot.Row[j];
                 if(_portraitInstances.TryGetValue(entity as ICharacter, out var portrait))

@@ -14,7 +14,7 @@ public interface IContext
     public Witness[] Witnesses { get; }
     public Judge[] Judges { get; }
     
-    public InitiativeTrackState InitiativeTrack { get; }
+    public InitiativeTrackState InitiativeTrack { get; set; }
     
     public Team[] Teams { get; }
 

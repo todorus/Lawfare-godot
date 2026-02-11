@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Lawfare.scripts.logic.initiative.dto;
+namespace Lawfare.scripts.ui.initiative.dto;
 
 [GlobalClass]
 public partial class InitiativeSlotDto : GodotObject

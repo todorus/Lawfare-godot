@@ -4,6 +4,7 @@ using Godot;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.@case;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.subject.quantities;
 using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
 using Team = Lawfare.scripts.characters.lawyers.Team;
@@ -49,6 +50,10 @@ public partial class Hearing : Context
             EmitSignalDefenseChanged(value.Defense);
             EmitSignalJudgesChanged(value.Judges);
             CurrentFaction = _docketEntry.Case.ProsecutorCaseFile.Faction;
+            
+            var lawyersWithInitiative = Lawyers.Select(lawyer => (lawyer as IHasInitiative, lawyer.Initiative)).ToArray();
+            InitiativeTrack = Initiative.Seed(lawyersWithInitiative);
+            
             EmitSignalInitialized(this);
             EmitSignalAnyChanged();
         }

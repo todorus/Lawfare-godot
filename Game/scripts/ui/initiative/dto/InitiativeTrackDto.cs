@@ -11,5 +11,5 @@ public partial class InitiativeTrackDto : GodotObject
     public GodotObject? Current;
     public GodotObject? Next;
 
-    public Godot.Collections.Array<InitiativeSlotDto> Slots = new();
+    public Godot.Collections.Array<ui.initiative.dto.InitiativeSlotDto> Slots = new();
 }
