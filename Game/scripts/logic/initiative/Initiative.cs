@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lawfare.scripts.context;
+using Lawfare.scripts.logic.effects.initiative;
 using Lawfare.scripts.logic.initiative.state;
+using Lawfare.scripts.subject;
 
 namespace Lawfare.scripts.logic.initiative;
 
@@ -67,61 +70,129 @@ public static class Initiative
 
 
     /// <summary>
-    /// Advances time by exactly 1 tick:
+    /// Advances time by exactly 1 tick by staging per-entity delay diffs:
     /// - Delays > 0 decrement by 1.
     /// - Delay 0 remains 0.
-    /// - Ordering inside each slot is preserved.
+    /// - Ordering inside each slot is preserved (enforced by SetDelay collision rule + no-op optimization).
+    ///
+    /// Returns one diff per entity (including no-op diffs for delay 0).
     /// </summary>
-    public static InitiativeTrackState Tick(InitiativeTrackState state)
+    public static InitiativeDiff[] Tick(IContext context)
     {
-        if (state == null) throw new ArgumentNullException(nameof(state));
-        if (state.Slots.Length == 0) return state;
+        if (context == null) throw new ArgumentNullException(nameof(context));
+        var state = context.InitiativeTrack;
+        if (state?.Slots == null || state.Slots.Length == 0) return [];
 
-        var map = new Dictionary<int, List<IHasInitiative>>();
+        var diffs = new List<InitiativeDiff>();
 
         foreach (var slot in state.Slots)
         {
-            int newDelay = slot.Delay <= 0 ? 0 : slot.Delay - 1;
-            if (!map.TryGetValue(newDelay, out var row))
+            var oldDelay = slot.Delay;
+            var newDelay = oldDelay <= 0 ? 0 : oldDelay - 1;
+
+            foreach (var entity in slot.Row)
             {
-                row = new List<IHasInitiative>();
-                map[newDelay] = row;
+                // Your design: Subject extends IHasInitiative.
+                // If some entries are not ISubject, you can either skip or throw.
+                if (entity is not ISubject subject)
+                    continue;
+
+                diffs.Add(new InitiativeDiff(context, subject, oldDelay, newDelay));
             }
-            row.AddRange(slot.Row);
         }
 
-        var slots = map
-            .OrderBy(kv => kv.Key)
-            .Select(kv => new InitiativeSlotState
-            {
-                Delay = kv.Key,
-                Row = kv.Value.ToArray()
-            })
-            .ToArray();
-
-        return new InitiativeTrackState { Slots = slots };
+        return diffs.ToArray();
     }
 
     /// <summary>
-    /// Pure move of a single entity by +dt (dt should be >= 0 for action costs).
-    /// Special-case: if the entity is the current (slot0[0]) and dt>0,
-    /// it is removed from the front of slot 0 and reinserted at delay dt (appended on collision).
+    /// Stages a single per-entity delay diff for moving an entity by +dt.
+    /// Apply() will update the track using SetDelay(...), so this composes with other diffs.
     ///
-    /// If the entity isn't current, it is relocated by adding dt to its current delay.
-    /// (No negative rules needed for your current loop.)
+    /// Rules:
+    /// - If entity is Current (slot 0, index 0): newDelay = dt
+    /// - Else: newDelay = oldDelay + dt
+    ///
+    /// Returns null if dt==0 or entity isn't present.
     /// </summary>
-    public static InitiativeTrackState MoveEntity(InitiativeTrackState state, IHasInitiative entity, int dt)
+    public static InitiativeDiff? MoveEntity(IContext context, IHasInitiative entity, int dt)
+    {
+        if (context == null) throw new ArgumentNullException(nameof(context));
+        if (entity == null) throw new ArgumentNullException(nameof(entity));
+
+        if (dt == 0) return null;
+
+        var state = context.InitiativeTrack;
+        if (state?.Slots == null || state.Slots.Length == 0) return null;
+
+        // Find entity delay & whether it is current (slot0[0]).
+        int? foundDelay = null;
+        bool isCurrent = false;
+
+        foreach (var slot in state.Slots)
+        {
+            if (slot.Row == null || slot.Row.Length == 0) continue;
+
+            // current check
+            if (slot.Delay == 0 && ReferenceEquals(slot.Row[0], entity))
+                isCurrent = true;
+
+            for (int i = 0; i < slot.Row.Length; i++)
+            {
+                if (ReferenceEquals(slot.Row[i], entity))
+                {
+                    foundDelay = slot.Delay;
+                    break;
+                }
+            }
+
+            if (foundDelay != null) break;
+        }
+
+        if (foundDelay == null)
+            return null; // entity not present => no-op (matches your previous behavior)
+
+        var oldDelay = foundDelay.Value;
+        var newDelay = isCurrent ? dt : checked(oldDelay + dt);
+
+        // If no actual change, avoid producing diffs (prevents reordering via SetDelay).
+        if (newDelay == oldDelay)
+            return null;
+
+        if (entity is not ISubject subject)
+            throw new InvalidOperationException("MoveEntity requires entity to implement ISubject (which extends IHasInitiative).");
+
+        return new InitiativeDiff(context, subject, oldDelay, newDelay);
+    }
+    
+    public static int? GetDelay(InitiativeTrackState state, IHasInitiative entity)
+    {
+        if (state?.Slots == null) return null;
+
+        foreach (var slot in state.Slots)
+        {
+            var idx = Array.IndexOf(slot.Row, entity);
+            if (idx >= 0) return slot.Delay;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Sets entity's delay to newDelay (>=0). Preserves relative row ordering:
+    /// - removing entity from old slot preserves old slot row order
+    /// - inserting into destination slot appends to the back (collision rule)
+    /// No-op if entity not present or delay unchanged.
+    /// </summary>
+    public static InitiativeTrackState SetDelay(InitiativeTrackState state, IHasInitiative entity, int newDelay)
     {
         if (state == null) throw new ArgumentNullException(nameof(state));
         if (entity == null) throw new ArgumentNullException(nameof(entity));
-        if (dt == 0) return state;
+        if (newDelay < 0) throw new ArgumentOutOfRangeException(nameof(newDelay));
 
-        // Build a mutable map delay -> row preserving order.
+        // Build delay->row map (preserve order)
         var map = state.Slots
             .OrderBy(s => s.Delay)
             .ToDictionary(s => s.Delay, s => s.Row.ToList());
 
-        // Find current slot of entity
         int? foundDelay = null;
         int foundIndex = -1;
 
@@ -136,44 +207,26 @@ public static class Initiative
             }
         }
 
-        if (foundDelay == null)
-            return state; // not present -> no-op (you can also throw)
+        if (foundDelay == null) return state;
 
-        bool isCurrent = (foundDelay.Value == 0 && foundIndex == 0);
+        if (foundDelay.Value == newDelay) return state; // important: avoid reorder
 
-        // Remove from old location
+        // remove
         map[foundDelay.Value].RemoveAt(foundIndex);
         if (map[foundDelay.Value].Count == 0)
             map.Remove(foundDelay.Value);
 
-        int newDelay;
-
-        if (isCurrent)
+        // insert (append)
+        if (!map.TryGetValue(newDelay, out var dest))
         {
-            // Action cost: current actor goes "back" by +dt
-            newDelay = dt;
+            dest = new List<IHasInitiative>();
+            map[newDelay] = dest;
         }
-        else
-        {
-            newDelay = checked(foundDelay.Value + dt);
-        }
-
-        if (!map.TryGetValue(newDelay, out var newRow))
-        {
-            newRow = new List<IHasInitiative>();
-            map[newDelay] = newRow;
-        }
-
-        // Collision rule: append to back of that slot's row.
-        newRow.Add(entity);
+        dest.Add(entity);
 
         var slots = map
             .OrderBy(kv => kv.Key)
-            .Select(kv => new InitiativeSlotState
-            {
-                Delay = kv.Key,
-                Row = kv.Value.ToArray()
-            })
+            .Select(kv => new InitiativeSlotState { Delay = kv.Key, Row = kv.Value.ToArray() })
             .ToArray();
 
         return new InitiativeTrackState { Slots = slots };

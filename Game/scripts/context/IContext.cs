@@ -1,3 +1,4 @@
+using System;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.initiative.state;
@@ -13,6 +14,8 @@ public interface IContext
     public Lawyer[] Lawyers { get; }
     public Witness[] Witnesses { get; }
     public Judge[] Judges { get; }
+
+    public event Action<InitiativeTrackState> InitiativeTrackChanged;
     
     public InitiativeTrackState InitiativeTrack { get; set; }
     

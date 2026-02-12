@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Action" load_steps=17 format=3 uid="uid://dkjh417e6bb1i"]
+[gd_resource type="Resource" script_class="Action" load_steps=21 format=3 uid="uid://dkjh417e6bb1i"]
 
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_5c7ca"]
 [ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="1_hh03v"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" uid="uid://dpv3u22mleltq" path="res://scripts/logic/effects/property/PropertyTransferEffect.cs" id="3_bbiax"]
 [ext_resource type="Script" uid="uid://cfvu1bn22txif" path="res://scripts/logic/conditions/subject/role/IsNotSource.cs" id="4_uw7v0"]
 [ext_resource type="Script" uid="uid://5ntnwgkkef8g" path="res://scripts/logic/conditions/subject/team/BelongsToSourceTeam.cs" id="6_bbiax"]
+[ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="6_uw7v0"]
+[ext_resource type="Script" uid="uid://ds1gqt268e3q8" path="res://scripts/logic/effects/initiative/InitiativeAddEffect.cs" id="7_a5wq2"]
 [ext_resource type="Script" uid="uid://b2u2rn01b0l0o" path="res://scripts/logic/effects/root/BasicEffect.cs" id="7_uw7v0"]
 
 [sub_resource type="Resource" id="Resource_a5wq2"]
@@ -30,9 +32,19 @@ Property = ExtResource("1_hh03v")
 SubjectConditions = [SubResource("Resource_n88ov"), SubResource("Resource_68wmy")]
 metadata/_custom_type_script = "uid://dpv3u22mleltq"
 
+[sub_resource type="Resource" id="Resource_uukth"]
+script = ExtResource("6_uw7v0")
+Amount = 1
+metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+
+[sub_resource type="Resource" id="Resource_5gljf"]
+script = ExtResource("7_a5wq2")
+AmountProvider = SubResource("Resource_uukth")
+metadata/_custom_type_script = "uid://ds1gqt268e3q8"
+
 [sub_resource type="Resource" id="Resource_4a4h7"]
 script = ExtResource("7_uw7v0")
-Effects = [SubResource("Resource_olvjs")]
+Effects = [SubResource("Resource_olvjs"), SubResource("Resource_5gljf")]
 metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
 
 [sub_resource type="Resource" id="Resource_2mt4m"]
@@ -50,7 +62,7 @@ metadata/_custom_type_script = "uid://cfvu1bn22txif"
 [resource]
 script = ExtResource("1_5c7ca")
 Label = "Stepping In"
-InitiativeCost = 6
+InitiativeCost = 0
 Costs = null
 SourceConditions = null
 TargetConditions = Array[Object]([SubResource("Resource_2mt4m"), SubResource("Resource_bbiax"), SubResource("Resource_uw7v0")])

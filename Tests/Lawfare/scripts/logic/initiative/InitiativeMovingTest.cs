@@ -1,33 +1,86 @@
 using System;
 using System.Linq;
 using Xunit;
+using Godot;
+using Lawfare.scripts.board.dice;
+using Lawfare.scripts.board.factions;
+using Lawfare.scripts.characters;
+using Lawfare.scripts.characters.lawyers;
+using Lawfare.scripts.context;
 using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.logic.initiative.state;
+using Lawfare.scripts.logic.keywords;
+using Lawfare.scripts.logic.triggers;
+using Lawfare.scripts.logic.modifiers;
+using Lawfare.scripts.subject;
+using Lawfare.scripts.subject.quantities;
+using Lawfare.scripts.subject.relations;
 
 namespace Tests.Lawfare.scripts.logic.initiative;
 
 public sealed class InitiativeMovingTest
 {
-    private sealed class TestEntity : IHasInitiative
+    // Minimal test subject: must be both ISubject and IHasInitiative for initiative diffs.
+    private sealed class TestEntity : ISubject, IHasInitiative
     {
         public TestEntity(string name) => Name = name;
         public string Name { get; }
         public override string ToString() => Name;
+
+        public Quantities Quantities => throw new NotImplementedException();
+        public Relations Relations { get; }
+        public KeywordBase[] Keywords { get; }
+        public Allegiances Allegiances => throw new NotImplementedException();
+        public bool CanHaveFaction { get; }
+        public System.Collections.Generic.IEnumerable<SkillPool> Pools { get; }
+        public bool IsExpired { get; set; }
+        public HostedTrigger[] Triggers => Array.Empty<HostedTrigger>();
+        public int Minimum(Property property) => 0;
+        public Vector3 DamagePosition { get; }
     }
 
-    private static IHasInitiative S(string name) => new TestEntity(name);
+    // Minimal context that only needs to carry the initiative track for diff Apply().
+    private sealed class TestContext : IContext
+    {
+        public InitiativeTrackState InitiativeTrack { get; set; } = new();
 
-    private static InitiativeTrackState State(params (int delay, IHasInitiative[] row)[] slots)
+        public Faction[] Factions => Array.Empty<Faction>();
+        public Lawyer[] Lawyers => Array.Empty<Lawyer>();
+        public Witness[] Witnesses => Array.Empty<Witness>();
+        public Judge[] Judges => Array.Empty<Judge>();
+        public event Action<InitiativeTrackState>? InitiativeTrackChanged;
+        public Team[] Teams => Array.Empty<Team>();
+        public ISubject[] AllSubjects => Array.Empty<ISubject>();
+        public Team GetTeam(ISubject subject) => throw new NotImplementedException();
+        public Team GetOpposingTeam(ISubject subject) => throw new NotImplementedException();
+    }
+
+    private static TestEntity S(string name) => new TestEntity(name);
+
+    private static InitiativeTrackState State(params (int delay, ISubject[] row)[] slots)
     {
         return new InitiativeTrackState
         {
-            Slots = slots.Select(s => new InitiativeSlotState { Delay = s.delay, Row = s.row }).ToArray()
+            Slots = slots
+                .Select(s => new InitiativeSlotState
+                {
+                    Delay = s.delay,
+                    Row = s.row.Cast<IHasInitiative>().ToArray()
+                })
+                .ToArray()
         };
+    }
+
+    private static void ApplyMove(TestContext ctx, TestEntity entity, int dt)
+    {
+        var diff = Initiative.MoveEntity(ctx, entity, dt);
+        if (diff != null)
+            diff.Value.Apply(); // mutates ctx.InitiativeTrack via SetDelay(...)
     }
 
     private static void AssertSlots(
         InitiativeTrackState state,
-        params (int delay, IHasInitiative[] row)[] expected)
+        params (int delay, ISubject[] row)[] expected)
     {
         var actual = Initiative.ReadSlots(state); // IReadOnlyList<InitiativeSlotDTO>
 
@@ -61,14 +114,17 @@ public sealed class InitiativeMovingTest
         var A = S("A");
         var B = S("B");
 
-        var state = State(
-            (0, new[] { A }),
-            (2, new[] { B })
-        );
+        var ctx = new TestContext
+        {
+            InitiativeTrack = State(
+                (0, new[] { A }),
+                (2, new[] { B })
+            )
+        };
 
-        var moved = Initiative.MoveEntity(state, A, 0);
+        ApplyMove(ctx, A, 0);
 
-        AssertSlots(moved,
+        AssertSlots(ctx.InitiativeTrack,
             (0, new[] { A }),
             (2, new[] { B })
         );
@@ -95,20 +151,23 @@ public sealed class InitiativeMovingTest
         var B = S("B");
         var C = S("C");
 
-        var state = State(
-            (0, new[] { A }),
-            (2, new[] { B }),
-            (3, new[] { C })
-        );
+        var ctx = new TestContext
+        {
+            InitiativeTrack = State(
+                (0, new[] { A }),
+                (2, new[] { B }),
+                (3, new[] { C })
+            )
+        };
 
-        var moved = Initiative.MoveEntity(state, A, 3);
+        ApplyMove(ctx, A, 3);
 
-        AssertSlots(moved,
+        AssertSlots(ctx.InitiativeTrack,
             (2, new[] { B }),
             (3, new[] { C, A })
         );
 
-        Assert.Null(Initiative.GetCurrent(moved));
+        Assert.Null(Initiative.GetCurrent(ctx.InitiativeTrack));
     }
 
     /*
@@ -132,19 +191,22 @@ public sealed class InitiativeMovingTest
         var C = S("C");
         var D = S("D");
 
-        var state = State(
-            (0, new[] { A, B, C }),
-            (2, new[] { D })
-        );
+        var ctx = new TestContext
+        {
+            InitiativeTrack = State(
+                (0, new[] { A, B, C }),
+                (2, new[] { D })
+            )
+        };
 
-        var moved = Initiative.MoveEntity(state, A, 2);
+        ApplyMove(ctx, A, 2);
 
-        AssertSlots(moved,
+        AssertSlots(ctx.InitiativeTrack,
             (0, new[] { B, C }),
             (2, new[] { D, A })
         );
 
-        Assert.Same(B, Initiative.GetCurrent(moved));
+        Assert.Same(B, Initiative.GetCurrent(ctx.InitiativeTrack));
     }
 
     /*
@@ -166,19 +228,22 @@ public sealed class InitiativeMovingTest
         var A = S("A");
         var B = S("B");
 
-        var state = State(
-            (0, new[] { A }),
-            (1, new[] { B })
-        );
+        var ctx = new TestContext
+        {
+            InitiativeTrack = State(
+                (0, new[] { A }),
+                (1, new[] { B })
+            )
+        };
 
-        var moved = Initiative.MoveEntity(state, B, 2);
+        ApplyMove(ctx, B, 2);
 
-        AssertSlots(moved,
+        AssertSlots(ctx.InitiativeTrack,
             (0, new[] { A }),
             (3, new[] { B })
         );
 
-        Assert.Same(A, Initiative.GetCurrent(moved));
+        Assert.Same(A, Initiative.GetCurrent(ctx.InitiativeTrack));
     }
 
     /*
@@ -204,16 +269,19 @@ public sealed class InitiativeMovingTest
         var C = S("C");
         var D = S("D");
 
-        var state = State(
-            (0, new[] { A }),
-            (2, new[] { C }),
-            (4, new[] { B }),
-            (6, new[] { D })
-        );
+        var ctx = new TestContext
+        {
+            InitiativeTrack = State(
+                (0, new[] { A }),
+                (2, new[] { C }),
+                (4, new[] { B }),
+                (6, new[] { D })
+            )
+        };
 
-        var moved = Initiative.MoveEntity(state, B, 2);
+        ApplyMove(ctx, B, 2);
 
-        AssertSlots(moved,
+        AssertSlots(ctx.InitiativeTrack,
             (0, new[] { A }),
             (2, new[] { C }),
             (6, new[] { D, B })
@@ -237,15 +305,19 @@ public sealed class InitiativeMovingTest
         var A = S("A");
         var D = S("D");
 
-        var state = State(
+        var ctx = new TestContext
+        {
+            InitiativeTrack = State(
+                (0, new[] { A })
+            )
+        };
+
+        ApplyMove(ctx, D, 3);
+
+        AssertSlots(ctx.InitiativeTrack,
             (0, new[] { A })
         );
 
-        var moved = Initiative.MoveEntity(state, D, 3);
-
-        AssertSlots(moved,
-            (0, new[] { A })
-        );
-        Assert.Same(A, Initiative.GetCurrent(moved));
+        Assert.Same(A, Initiative.GetCurrent(ctx.InitiativeTrack));
     }
 }

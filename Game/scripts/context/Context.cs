@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Godot;
 using Lawfare.scripts.board.factions;
@@ -19,7 +20,18 @@ public abstract partial class Context : Node, IContext
     public Team GetTeam(ISubject subject) => Teams.FirstOrDefault(team => team.Members.Contains(subject));
     public Team GetOpposingTeam(ISubject subject) => Teams.FirstOrDefault(team => !team.Members.Contains(subject));
 
-    public InitiativeTrackState InitiativeTrack { get; set; }
+    public event Action<InitiativeTrackState> InitiativeTrackChanged;
+
+    private InitiativeTrackState _initiativeTrack;
+    public InitiativeTrackState InitiativeTrack
+    {
+        get => _initiativeTrack;
+        set 
+        {
+            _initiativeTrack = value;
+            InitiativeTrackChanged?.Invoke(value);
+        }
+    }
 
     public ISubject[] AllSubjects =>
         new ISubject[]{}

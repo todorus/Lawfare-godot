@@ -1,10 +1,7 @@
 using System.Linq;
 using Godot;
-using Lawfare.scripts.context;
 using Lawfare.scripts.logic.conditions.subject;
 using Lawfare.scripts.logic.effects;
-using Lawfare.scripts.logic.effects.initiative;
-using Lawfare.scripts.logic.effects.property.amounts;
 using Lawfare.scripts.logic.effects.root;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.logic.initiative;
@@ -71,12 +68,9 @@ public partial class Action : Resource, IAction
     
     private ChangeGroup[] StageInitiative(GameEvent gameEvent)
     {
-        // Advance initiative track by 1 tick.
-        var original = gameEvent.Context.InitiativeTrack.Clone();
-        var updated = Initiative.MoveEntity(gameEvent.Context.InitiativeTrack, gameEvent.Source as IHasInitiative, InitiativeCost);
-
-        IDiff diff = new InitiativeDiff(gameEvent.Context, original, updated);
-
+        IDiff diff = Initiative.MoveEntity(gameEvent.Context, gameEvent.Source as IHasInitiative, InitiativeCost);
+        if(diff == null) return [];
+        
         return [new ChangeGroup([diff])];
     }
 }
