@@ -25,9 +25,7 @@ public partial struct GameEvent
     public DiceRoll[] DiceRolls;
 
     public IEnumerable<HostedTrigger> Triggers => Subjects.SelectMany(subject => subject.Triggers);
-    public ISubject[] Subjects => new[]{
-        Source, Target, Host, Space
-    }.Where(subject => subject != null).ToArray();
+    public ISubject[] Subjects => Context.AllSubjects;
 
     public Faction Faction;
 

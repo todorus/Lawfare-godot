@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="Keyword" load_steps=15 format=3 uid="uid://csovg1nkteoi"]
+
+[ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_jbwuu"]
+[ext_resource type="Script" uid="uid://d1yojxyksi7ub" path="res://scripts/logic/keywords/Keyword.cs" id="1_ybqjy"]
+[ext_resource type="Script" uid="uid://cs0o3tl2ojrkn" path="res://scripts/logic/effects/relation/faction/HostTeamFactionProvider.cs" id="2_boywj"]
+[ext_resource type="Resource" uid="uid://cf62sltuoikad" path="res://data/relations/Favor.tres" id="3_nbs4u"]
+[ext_resource type="Script" uid="uid://dlfwebu7jm0xp" path="res://scripts/logic/effects/relation/RelationAddEffect.cs" id="4_1hjv5"]
+[ext_resource type="Script" uid="uid://cbi2wyh8fv2fy" path="res://scripts/logic/effects/targets/characters/WitnessProvider.cs" id="5_taglu"]
+[ext_resource type="Script" uid="uid://drxu3481eg66a" path="res://scripts/logic/effects/root/TargetedEffect.cs" id="6_mam6y"]
+[ext_resource type="Script" uid="uid://binuvquyum7to" path="res://scripts/logic/triggers/Trigger.cs" id="7_tqfmf"]
+
+[sub_resource type="Resource" id="Resource_0ypwj"]
+script = ExtResource("1_jbwuu")
+Amount = 1
+metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+
+[sub_resource type="Resource" id="Resource_cu6vk"]
+script = ExtResource("2_boywj")
+metadata/_custom_type_script = "uid://cs0o3tl2ojrkn"
+
+[sub_resource type="Resource" id="Resource_rkt0a"]
+script = ExtResource("4_1hjv5")
+AmountProvider = SubResource("Resource_0ypwj")
+FactionProvider = SubResource("Resource_cu6vk")
+Property = ExtResource("3_nbs4u")
+metadata/_custom_type_script = "uid://dlfwebu7jm0xp"
+
+[sub_resource type="Resource" id="Resource_fentx"]
+script = ExtResource("5_taglu")
+metadata/_custom_type_script = "uid://cbi2wyh8fv2fy"
+
+[sub_resource type="Resource" id="Resource_e8ams"]
+script = ExtResource("6_mam6y")
+TargetProvider = SubResource("Resource_fentx")
+SourceConditions = null
+TargetConditions = null
+SpaceConditions = null
+Effects = [SubResource("Resource_rkt0a")]
+metadata/_custom_type_script = "uid://drxu3481eg66a"
+
+[sub_resource type="Resource" id="Resource_0523g"]
+script = ExtResource("7_tqfmf")
+RootEffect = SubResource("Resource_e8ams")
+Type = 10
+metadata/_custom_type_script = "uid://binuvquyum7to"
+
+[resource]
+script = ExtResource("1_ybqjy")
+Triggers = Array[Object]([SubResource("Resource_0523g")])
+Quantities = null
+Label = "Charming"
+metadata/_custom_type_script = "uid://d1yojxyksi7ub"

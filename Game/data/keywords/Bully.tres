@@ -61,4 +61,5 @@ metadata/_custom_type_script = "uid://binuvquyum7to"
 script = ExtResource("1_ntktv")
 Triggers = Array[Object]([SubResource("Resource_3c0fp")])
 Quantities = null
+Label = "Bully"
 metadata/_custom_type_script = "uid://d1yojxyksi7ub"

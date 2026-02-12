@@ -42,13 +42,11 @@ public partial class RelationAddEffect : RelationEffect
             Amount = subject.Relations.Get(Property, faction)
         };
             
-        subject.Relations.Add(Property, faction, amount);
-            
         var updated = new Relation
         {
             Property = Property,
             Faction = faction,
-            Amount = subject.Relations.Get(Property, faction)
+            Amount = subject.Relations.Get(Property, faction) + amount
         };
             
         return [new RelationAddDiff(subject, original, updated)];
