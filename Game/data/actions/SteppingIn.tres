@@ -50,7 +50,7 @@ metadata/_custom_type_script = "uid://cfvu1bn22txif"
 [resource]
 script = ExtResource("1_5c7ca")
 Label = "Stepping In"
-InitiativeCost = 3
+InitiativeCost = 6
 Costs = null
 SourceConditions = null
 TargetConditions = Array[Object]([SubResource("Resource_2mt4m"), SubResource("Resource_bbiax"), SubResource("Resource_uw7v0")])

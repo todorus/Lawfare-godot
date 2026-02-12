@@ -35,7 +35,7 @@ metadata/_custom_type_script = "uid://c6evptfljjytx"
 [resource]
 script = ExtResource("1_iy503")
 Label = "Diminish"
-InitiativeCost = 2
+InitiativeCost = 8
 Costs = null
 SourceConditions = null
 TargetConditions = Array[Object]([SubResource("Resource_rr6pm"), SubResource("Resource_brfgr")])

@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_1esrq")
 Label = "Expose"
-DicePools = null
+InitiativeCost = 10
 Costs = null
 SourceConditions = null
 TargetConditions = null

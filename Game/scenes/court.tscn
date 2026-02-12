@@ -155,8 +155,9 @@ offset_bottom = 100.0
 grow_horizontal = 2
 script = ExtResource("23_g8kxy")
 _portraitScene = ExtResource("24_t2k2p")
-_slotDistance = 150.0
+_slotDistance = 90.0
 _stackDistance = 60.0
+_moveDuration = 0.4
 
 [connection signal="DefenseChanged" from="." to="UI/Defense" method="SetTeam" flags=3]
 [connection signal="Initialized" from="." to="UI/Initiative" method="SeedFromContext" flags=3]

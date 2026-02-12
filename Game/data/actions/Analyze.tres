@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_bir8d")
 Label = "Analyze"
-InitiativeCost = 2
+InitiativeCost = 5
 Costs = null
 SourceConditions = null
 TargetConditions = null
