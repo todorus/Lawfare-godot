@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://ciidppm6330xl" path="res://scripts/ui/action/HandDisplay.cs" id="7_qyj8n"]
 [ext_resource type="PackedScene" uid="uid://bck6hda2qxaix" path="res://scenes/card.tscn" id="8_15585"]
 [ext_resource type="Script" uid="uid://csf0rd405loid" path="res://scripts/ui/testimony/TestimonialsDisplay.cs" id="17_cn0p0"]
+[ext_resource type="Texture2D" uid="uid://v6hq5q0toy11" path="res://data/hearing/witnessBench.png" id="19_l8syn"]
 [ext_resource type="Script" uid="uid://d1uv6yv1kas2g" path="res://scripts/ui/initiative/InitiativeTrackDisplay.cs" id="23_g8kxy"]
 [ext_resource type="Script" uid="uid://b2svjsvpg03ps" path="res://scripts/ui/character/team/TeamPortraitDisplay.cs" id="24_l8syn"]
 [ext_resource type="PackedScene" uid="uid://c18ew30a8q6yr" path="res://scenes/portrait.tscn" id="24_t2k2p"]
@@ -68,14 +69,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Witness" type="HBoxContainer" parent="UI" unique_id=590241454]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -607.0
-offset_top = 129.0
-offset_right = -3.0
-offset_bottom = 229.0
-grow_horizontal = 0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -302.0
+offset_top = 150.0
+offset_right = 302.0
+offset_bottom = 454.0
+grow_horizontal = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Testimony" type="VBoxContainer" parent="UI/Witness" unique_id=533071705]
@@ -84,12 +85,39 @@ layout_mode = 2
 script = ExtResource("17_cn0p0")
 _propertyConfig = ExtResource("2_b3dk5")
 
-[node name="WitnessStand" type="HBoxContainer" parent="UI/Witness" unique_id=215640992]
-custom_minimum_size = Vector2(300, 100)
+[node name="WitnessBench" type="Control" parent="UI/Witness" unique_id=238139827]
 layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WitnessStand" type="HBoxContainer" parent="UI/Witness/WitnessBench" unique_id=215640992]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 0
+offset_left = 4.0
+offset_right = 304.0
+offset_bottom = 304.0
 script = ExtResource("2_h0b8m")
 _characterScene = ExtResource("2_ogvvj")
 _mirror = true
+
+[node name="Character" parent="UI/Witness/WitnessBench/WitnessStand" unique_id=1135477087 instance=ExtResource("2_ogvvj")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Witness/WitnessBench" unique_id=1207653861]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -143.00003
+offset_top = -150.0
+offset_right = 46.597443
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("19_l8syn")
+expand_mode = 3
+stretch_mode = 4
 
 [node name="Prosecution" type="HBoxContainer" parent="UI" unique_id=2089078730]
 custom_minimum_size = Vector2(300, 100)
@@ -193,15 +221,15 @@ layout_mode = 2
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution" method="SetTeam" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/ProsecutionPortraits" method="SetTeam" flags=3]
 [connection signal="TestimonyChanged" from="." to="UI/Witness/Testimony" method="SetTestimonies" flags=3]
-[connection signal="WitnessesChanged" from="." to="UI/Witness/WitnessStand" method="SetWitnesses" flags=3]
+[connection signal="WitnessesChanged" from="." to="UI/Witness/WitnessBench/WitnessStand" method="SetWitnesses" flags=3]
 [connection signal="ActionResolved" from="Interaction" to="UI/Initiative" method="UpdateFromContext" flags=3]
 [connection signal="HandChanged" from="Interaction" to="UI/Hand" method="SetCards" flags=3]
 [connection signal="QuantitiesChanged" from="Interaction" to="UI/Witness/Testimony" method="SetQuantities" flags=3]
-[connection signal="TargetEventChanged" from="Interaction" to="UI/Witness/WitnessStand" method="SetActiveAction" flags=3]
+[connection signal="TargetEventChanged" from="Interaction" to="UI/Witness/WitnessBench/WitnessStand" method="SetActiveAction" flags=3]
 [connection signal="TargetEventChanged" from="Interaction" to="UI/Prosecution" method="SetActiveAction" flags=3]
 [connection signal="TargetEventChanged" from="Interaction" to="UI/Defense" method="SetActiveAction" flags=3]
 [connection signal="TickResolved" from="Interaction" to="UI/Initiative" method="UpdateFromContext" flags=3]
-[connection signal="CharacterClicked" from="UI/Witness/WitnessStand" to="Interaction" method="Primary" flags=3]
+[connection signal="CharacterClicked" from="UI/Witness/WitnessBench/WitnessStand" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/Prosecution" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/Defense" to="Interaction" method="Primary" flags=3]
 [connection signal="CardSelected" from="UI/Hand" to="Interaction" method="Primary" flags=3]

@@ -1,7 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://rtdumsb4nhvl"]
+[gd_scene format=3 uid="uid://rtdumsb4nhvl"]
 
 [ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_rkhd4"]
-[ext_resource type="Texture2D" uid="uid://dowwy4chuep8b" path="res://data/cases/testcase/molly/Molly.png" id="2_2cgup"]
 [ext_resource type="Script" uid="uid://c3ra1t4m0gxg1" path="res://scripts/ui/character/PropertyObserver.cs" id="2_irmqu"]
 [ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="3_7eonc"]
 [ext_resource type="Script" uid="uid://5e8whvir25un" path="res://scripts/ui/Clickable.cs" id="3_lrhn5"]
@@ -9,12 +8,13 @@
 [ext_resource type="Script" uid="uid://bpsgy63nxrko8" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="4_dp8ca"]
 [ext_resource type="Script" uid="uid://bb8ya73qwcytc" path="res://scripts/ui/toggles/VisibilityToggle.cs" id="5_0dpix"]
 [ext_resource type="PackedScene" uid="uid://5e8dlwob8q77" path="res://scenes/stat.tscn" id="5_0lw5n"]
+[ext_resource type="Texture2D" uid="uid://dnu7prw70nt6t" path="res://data/cases/testcase/molly/MollyF.png" id="5_50cep"]
 [ext_resource type="Script" uid="uid://cn5a8uepq262k" path="res://scripts/ui/relations/RelationsObserver.cs" id="6_0lw5n"]
 [ext_resource type="PackedScene" uid="uid://wvnkkx5gkjbr" path="res://scenes/relation.tscn" id="7_2cgup"]
 [ext_resource type="Material" uid="uid://cfs3ia1qgvmee" path="res://scripts/ui/character/ultMaterial.tres" id="8_a5ia6"]
 [ext_resource type="Script" uid="uid://c8x76h76uja0p" path="res://scripts/ui/character/GrayscaleControl.cs" id="9_8yvht"]
 
-[node name="Character" type="Control"]
+[node name="Character" type="Control" unique_id=1135477087]
 custom_minimum_size = Vector2(200, 304)
 layout_mode = 3
 anchors_preset = 0
@@ -23,11 +23,11 @@ offset_bottom = 304.0
 size_flags_vertical = 3
 script = ExtResource("1_rkhd4")
 
-[node name="UltObserver" type="Node" parent="."]
+[node name="UltObserver" type="Node" parent="." unique_id=1060125002]
 script = ExtResource("2_irmqu")
 _property = ExtResource("3_7eonc")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1964087694]
 material = ExtResource("4_50cep")
 layout_mode = 1
 anchors_preset = 7
@@ -40,12 +40,12 @@ offset_top = -273.83795
 offset_right = 90.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("2_2cgup")
+texture = ExtResource("5_50cep")
 expand_mode = 3
-stretch_mode = 4
+stretch_mode = 5
 script = ExtResource("3_lrhn5")
 
-[node name="UltParticles" type="ColorRect" parent="TextureRect"]
+[node name="UltParticles" type="ColorRect" parent="TextureRect" unique_id=524411190]
 visible = false
 material = ExtResource("8_a5ia6")
 layout_mode = 1
@@ -56,14 +56,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="VisibilityToggle" type="Node" parent="TextureRect/UltParticles"]
+[node name="VisibilityToggle" type="Node" parent="TextureRect/UltParticles" unique_id=1853351363]
 script = ExtResource("5_0dpix")
 
-[node name="GrayscaleControl" type="Node" parent="TextureRect" node_paths=PackedStringArray("_control")]
+[node name="GrayscaleControl" type="Node" parent="TextureRect" unique_id=545107816 node_paths=PackedStringArray("_control")]
 script = ExtResource("9_8yvht")
 _control = NodePath("..")
 
-[node name="Stats" type="VBoxContainer" parent="."]
+[node name="Stats" type="VBoxContainer" parent="." unique_id=676364370]
 layout_mode = 0
 offset_right = 73.0
 offset_bottom = 304.0
@@ -72,7 +72,7 @@ script = ExtResource("4_dp8ca")
 _quantityScene = ExtResource("5_0lw5n")
 _blacklist = [ExtResource("3_7eonc")]
 
-[node name="Relations" type="VBoxContainer" parent="."]
+[node name="Relations" type="VBoxContainer" parent="." unique_id=1604906879]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -84,7 +84,7 @@ mouse_filter = 2
 script = ExtResource("6_0lw5n")
 _relationScene = ExtResource("7_2cgup")
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=5822453]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -96,7 +96,7 @@ grow_vertical = 0
 max_value = 1.0
 show_percentage = false
 
-[node name="UltVisbilityToggle" type="Node" parent="ProgressBar"]
+[node name="UltVisbilityToggle" type="Node" parent="ProgressBar" unique_id=1767782456]
 script = ExtResource("5_0dpix")
 
 [connection signal="ImageChange" from="." to="TextureRect" method="set_texture"]

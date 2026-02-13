@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="WitnessDef" load_steps=3 format=3 uid="uid://cvv80drdpkbax"]
+[gd_resource type="Resource" script_class="WitnessDef" format=3 uid="uid://cvv80drdpkbax"]
 
-[ext_resource type="Texture2D" uid="uid://dowwy4chuep8b" path="res://data/cases/testcase/molly/Molly.png" id="1_6x12n"]
 [ext_resource type="Script" uid="uid://dv7yb4pkde6ag" path="res://scripts/characters/WitnessDef.cs" id="1_21kqy"]
+[ext_resource type="Texture2D" uid="uid://dnu7prw70nt6t" path="res://data/cases/testcase/molly/MollyF.png" id="1_rvrwf"]
 
 [resource]
 script = ExtResource("1_21kqy")
 Label = "Molly"
-Image = ExtResource("1_6x12n")
+Image = ExtResource("1_rvrwf")
 metadata/_custom_type_script = "uid://dv7yb4pkde6ag"
