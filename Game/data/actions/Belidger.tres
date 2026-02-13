@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Action" load_steps=11 format=3 uid="uid://bdtlhlybp3ouk"]
+[gd_resource type="Resource" script_class="Action" format=3 uid="uid://bdtlhlybp3ouk"]
 
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_gldme"]
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_nlu0a"]
@@ -31,8 +31,6 @@ metadata/_custom_type_script = "uid://rds4w4cn6dk0"
 script = ExtResource("1_nlu0a")
 Label = "Belidger"
 InitiativeCost = 3
-Costs = null
-SourceConditions = null
 TargetConditions = Array[Object]([SubResource("Resource_gldme")])
 Effect = SubResource("Resource_v67mk")
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

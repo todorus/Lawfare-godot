@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="LawyerDef" load_steps=9 format=3 uid="uid://b6xs3if2fxonr"]
+[gd_resource type="Resource" script_class="LawyerDef" format=3 uid="uid://b6xs3if2fxonr"]
 
 [ext_resource type="Resource" uid="uid://chypiquc6ve56" path="res://data/actions/Charm.tres" id="1_1qsth"]
 [ext_resource type="Texture2D" uid="uid://cucymd5t1bikd" path="res://data/lawyers/lawyer4.png" id="1_o40us"]
@@ -21,6 +21,4 @@ Portrait = ExtResource("4_80kmi")
 Initiative = 2
 Actions = Array[Object]([ExtResource("1_1qsth"), ExtResource("2_pu8yf")])
 Quantities = Array[Object]([SubResource("Resource_lw4e7")])
-Skills = null
-Keywords = Array[Object]([])
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

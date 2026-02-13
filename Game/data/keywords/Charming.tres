@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Keyword" load_steps=15 format=3 uid="uid://csovg1nkteoi"]
+[gd_resource type="Resource" script_class="Keyword" format=3 uid="uid://csovg1nkteoi"]
 
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_jbwuu"]
 [ext_resource type="Script" uid="uid://d1yojxyksi7ub" path="res://scripts/logic/keywords/Keyword.cs" id="1_ybqjy"]
@@ -32,9 +32,6 @@ metadata/_custom_type_script = "uid://cbi2wyh8fv2fy"
 [sub_resource type="Resource" id="Resource_e8ams"]
 script = ExtResource("6_mam6y")
 TargetProvider = SubResource("Resource_fentx")
-SourceConditions = null
-TargetConditions = null
-SpaceConditions = null
 Effects = [SubResource("Resource_rkt0a")]
 metadata/_custom_type_script = "uid://drxu3481eg66a"
 
@@ -47,6 +44,5 @@ metadata/_custom_type_script = "uid://binuvquyum7to"
 [resource]
 script = ExtResource("1_ybqjy")
 Triggers = Array[Object]([SubResource("Resource_0523g")])
-Quantities = null
 Label = "Charming"
 metadata/_custom_type_script = "uid://d1yojxyksi7ub"

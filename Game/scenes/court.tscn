@@ -1,9 +1,8 @@
-[gd_scene load_steps=28 format=3 uid="uid://cbwxvmo6277pw"]
+[gd_scene format=3 uid="uid://cbwxvmo6277pw"]
 
 [ext_resource type="Script" uid="uid://cu8fsnn8ylvnj" path="res://scripts/interaction/Selection.cs" id="1_15585"]
 [ext_resource type="Script" uid="uid://mxuq1pto8vy4" path="res://scripts/ui/character/TeamDisplay.cs" id="1_i1kge"]
 [ext_resource type="Script" uid="uid://dakbd7iyjfg5u" path="res://scripts/context/court/Hearing.cs" id="1_rnrgf"]
-[ext_resource type="Script" uid="uid://fykgxeo6cpvd" path="res://scripts/ui/character/JudgeDisplay.cs" id="2_5mv5b"]
 [ext_resource type="Resource" uid="uid://bf51k45dirbaj" path="res://data/properties/_propertyConfig.tres" id="2_b3dk5"]
 [ext_resource type="Script" uid="uid://b8ahrbftbgx62" path="res://scripts/ui/character/WitnessDisplay.cs" id="2_h0b8m"]
 [ext_resource type="Resource" uid="uid://cvuhvwqt47jr7" path="res://data/factions/Government.tres" id="2_lc033"]
@@ -23,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://bck6hda2qxaix" path="res://scenes/card.tscn" id="8_15585"]
 [ext_resource type="Script" uid="uid://csf0rd405loid" path="res://scripts/ui/testimony/TestimonialsDisplay.cs" id="17_cn0p0"]
 [ext_resource type="Script" uid="uid://d1uv6yv1kas2g" path="res://scripts/ui/initiative/InitiativeTrackDisplay.cs" id="23_g8kxy"]
+[ext_resource type="Script" uid="uid://b2svjsvpg03ps" path="res://scripts/ui/character/team/TeamPortraitDisplay.cs" id="24_l8syn"]
 [ext_resource type="PackedScene" uid="uid://c18ew30a8q6yr" path="res://scenes/portrait.tscn" id="24_t2k2p"]
 
 [sub_resource type="Resource" id="Resource_revm4"]
@@ -46,16 +46,16 @@ Defense = SubResource("Resource_revm4")
 _witnessDefs = Array[Object]([ExtResource("3_c7axm")])
 metadata/_custom_type_script = "uid://dkj1ucewrg5v4"
 
-[node name="Court" type="Node3D"]
+[node name="Court" type="Node3D" unique_id=74920853]
 script = ExtResource("1_rnrgf")
 _propertyConfig = ExtResource("2_b3dk5")
 _docketEntry = SubResource("Resource_lc033")
 
-[node name="Interaction" type="Node" parent="." node_paths=PackedStringArray("_context")]
+[node name="Interaction" type="Node" parent="." unique_id=116398533 node_paths=PackedStringArray("_context")]
 script = ExtResource("1_15585")
 _context = NodePath("..")
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." unique_id=1463181478]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,18 +64,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
 
-[node name="JudgeBench" type="HBoxContainer" parent="UI"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 1
-offset_left = -3.0
-offset_top = 129.0
-offset_right = 297.0
-offset_bottom = 229.0
-script = ExtResource("2_5mv5b")
-_characterScene = ExtResource("2_ogvvj")
-
-[node name="Witness" type="HBoxContainer" parent="UI"]
+[node name="Witness" type="HBoxContainer" parent="UI" unique_id=590241454]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -85,21 +76,22 @@ offset_top = 129.0
 offset_right = -3.0
 offset_bottom = 229.0
 grow_horizontal = 0
+metadata/_edit_use_anchors_ = true
 
-[node name="Testimony" type="VBoxContainer" parent="UI/Witness"]
+[node name="Testimony" type="VBoxContainer" parent="UI/Witness" unique_id=533071705]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 script = ExtResource("17_cn0p0")
 _propertyConfig = ExtResource("2_b3dk5")
 
-[node name="WitnessStand" type="HBoxContainer" parent="UI/Witness"]
+[node name="WitnessStand" type="HBoxContainer" parent="UI/Witness" unique_id=215640992]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 script = ExtResource("2_h0b8m")
 _characterScene = ExtResource("2_ogvvj")
 _mirror = true
 
-[node name="Prosecution" type="HBoxContainer" parent="UI"]
+[node name="Prosecution" type="HBoxContainer" parent="UI" unique_id=2089078730]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 1
 anchors_preset = 2
@@ -111,8 +103,9 @@ grow_vertical = 0
 theme_override_constants/separation = 20
 script = ExtResource("1_i1kge")
 _characterScene = ExtResource("2_ogvvj")
+metadata/_edit_use_anchors_ = true
 
-[node name="Defense" type="HBoxContainer" parent="UI"]
+[node name="Defense" type="HBoxContainer" parent="UI" unique_id=297979757]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 1
 anchors_preset = 3
@@ -129,7 +122,7 @@ script = ExtResource("1_i1kge")
 _characterScene = ExtResource("2_ogvvj")
 _mirror = true
 
-[node name="Hand" type="HBoxContainer" parent="UI"]
+[node name="Hand" type="HBoxContainer" parent="UI" unique_id=1298380904]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -145,7 +138,7 @@ alignment = 1
 script = ExtResource("7_qyj8n")
 _cardScene = ExtResource("8_15585")
 
-[node name="Initiative" type="Control" parent="UI"]
+[node name="Initiative" type="Control" parent="UI" unique_id=1545941221]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -159,21 +152,55 @@ _slotDistance = 90.0
 _stackDistance = 60.0
 _moveDuration = 0.4
 
+[node name="ProsecutionPortraits" type="VBoxContainer" parent="UI" unique_id=122176760]
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 110.0
+offset_bottom = 349.0
+script = ExtResource("24_l8syn")
+_characterScene = ExtResource("24_t2k2p")
+
+[node name="Portrait" parent="UI/ProsecutionPortraits" unique_id=1855410821 instance=ExtResource("24_t2k2p")]
+layout_mode = 2
+
+[node name="Portrait2" parent="UI/ProsecutionPortraits" unique_id=435133627 instance=ExtResource("24_t2k2p")]
+layout_mode = 2
+
+[node name="DefensePortraits" type="VBoxContainer" parent="UI" unique_id=1248420728]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -110.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 349.0
+grow_horizontal = 0
+script = ExtResource("24_l8syn")
+_characterScene = ExtResource("24_t2k2p")
+_mirror = true
+
+[node name="Portrait" parent="UI/DefensePortraits" unique_id=20107157 instance=ExtResource("24_t2k2p")]
+layout_mode = 2
+
+[node name="Portrait2" parent="UI/DefensePortraits" unique_id=951574454 instance=ExtResource("24_t2k2p")]
+layout_mode = 2
+
 [connection signal="DefenseChanged" from="." to="UI/Defense" method="SetTeam" flags=3]
+[connection signal="DefenseChanged" from="." to="UI/DefensePortraits" method="SetTeam" flags=3]
 [connection signal="Initialized" from="." to="UI/Initiative" method="SeedFromContext" flags=3]
-[connection signal="JudgesChanged" from="." to="UI/JudgeBench" method="SetJudges" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution" method="SetTeam" flags=3]
+[connection signal="ProsecutionChanged" from="." to="UI/ProsecutionPortraits" method="SetTeam" flags=3]
 [connection signal="TestimonyChanged" from="." to="UI/Witness/Testimony" method="SetTestimonies" flags=3]
 [connection signal="WitnessesChanged" from="." to="UI/Witness/WitnessStand" method="SetWitnesses" flags=3]
 [connection signal="ActionResolved" from="Interaction" to="UI/Initiative" method="UpdateFromContext" flags=3]
 [connection signal="HandChanged" from="Interaction" to="UI/Hand" method="SetCards" flags=3]
 [connection signal="QuantitiesChanged" from="Interaction" to="UI/Witness/Testimony" method="SetQuantities" flags=3]
-[connection signal="TargetEventChanged" from="Interaction" to="UI/JudgeBench" method="SetActiveAction" flags=3]
 [connection signal="TargetEventChanged" from="Interaction" to="UI/Witness/WitnessStand" method="SetActiveAction" flags=3]
 [connection signal="TargetEventChanged" from="Interaction" to="UI/Prosecution" method="SetActiveAction" flags=3]
 [connection signal="TargetEventChanged" from="Interaction" to="UI/Defense" method="SetActiveAction" flags=3]
 [connection signal="TickResolved" from="Interaction" to="UI/Initiative" method="UpdateFromContext" flags=3]
-[connection signal="CharacterClicked" from="UI/JudgeBench" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/Witness/WitnessStand" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/Prosecution" to="Interaction" method="Primary" flags=3]
 [connection signal="CharacterClicked" from="UI/Defense" to="Interaction" method="Primary" flags=3]

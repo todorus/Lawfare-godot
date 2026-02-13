@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Action" load_steps=21 format=3 uid="uid://dkjh417e6bb1i"]
+[gd_resource type="Resource" script_class="Action" format=3 uid="uid://dkjh417e6bb1i"]
 
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_5c7ca"]
 [ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="1_hh03v"]
@@ -63,8 +63,6 @@ metadata/_custom_type_script = "uid://cfvu1bn22txif"
 script = ExtResource("1_5c7ca")
 Label = "Stepping In"
 InitiativeCost = 0
-Costs = null
-SourceConditions = null
 TargetConditions = Array[Object]([SubResource("Resource_2mt4m"), SubResource("Resource_bbiax"), SubResource("Resource_uw7v0")])
 Effect = SubResource("Resource_4a4h7")
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

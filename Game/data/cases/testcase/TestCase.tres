@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Case" load_steps=13 format=3 uid="uid://diwh2kys4hwci"]
+[gd_resource type="Resource" script_class="Case" format=3 uid="uid://diwh2kys4hwci"]
 
 [ext_resource type="Resource" uid="uid://d2lxbo3stp4qg" path="res://data/factions/Corpos.tres" id="1_sr2vw"]
 [ext_resource type="Script" uid="uid://b45b71worgcl3" path="res://scripts/case/Case.cs" id="1_v07bd"]

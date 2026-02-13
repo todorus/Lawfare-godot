@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Action" load_steps=10 format=3 uid="uid://bqk366drvqyud"]
+[gd_resource type="Resource" script_class="Action" format=3 uid="uid://bqk366drvqyud"]
 
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_84w0s"]
 [ext_resource type="Script" uid="uid://ds1gqt268e3q8" path="res://scripts/logic/effects/initiative/InitiativeAddEffect.cs" id="2_2j8mu"]
@@ -29,8 +29,5 @@ metadata/_custom_type_script = "uid://blba6n07exhaq"
 [resource]
 script = ExtResource("5_jp0tj")
 Label = "Stall"
-Costs = null
-SourceConditions = null
-TargetConditions = null
 Effect = SubResource("Resource_yhs1e")
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

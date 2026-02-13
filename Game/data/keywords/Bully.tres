@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Keyword" load_steps=19 format=3 uid="uid://csjw1jp2l0fhf"]
+[gd_resource type="Resource" script_class="Keyword" format=3 uid="uid://csjw1jp2l0fhf"]
 
 [ext_resource type="Script" uid="uid://d1yojxyksi7ub" path="res://scripts/logic/keywords/Keyword.cs" id="1_ntktv"]
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_ygb0b"]
@@ -44,9 +44,6 @@ metadata/_custom_type_script = "uid://d30fxqo2jwojw"
 [sub_resource type="Resource" id="Resource_r2bn8"]
 script = ExtResource("8_d7lgq")
 TargetProvider = SubResource("Resource_owa8o")
-SourceConditions = null
-TargetConditions = null
-SpaceConditions = null
 Effects = [SubResource("Resource_cusj4")]
 metadata/_custom_type_script = "uid://drxu3481eg66a"
 
@@ -60,6 +57,5 @@ metadata/_custom_type_script = "uid://binuvquyum7to"
 [resource]
 script = ExtResource("1_ntktv")
 Triggers = Array[Object]([SubResource("Resource_3c0fp")])
-Quantities = null
 Label = "Bully"
 metadata/_custom_type_script = "uid://d1yojxyksi7ub"

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Trigger" load_steps=17 format=3 uid="uid://cxmk1wsrr6w7d"]
+[gd_resource type="Resource" script_class="Trigger" format=3 uid="uid://cxmk1wsrr6w7d"]
 
 [ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="2_hmol5"]
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="4_g41oi"]
@@ -43,9 +43,6 @@ metadata/_custom_type_script = "uid://d30fxqo2jwojw"
 [sub_resource type="Resource" id="Resource_n6tfj"]
 script = ExtResource("11_544hl")
 TargetProvider = SubResource("Resource_57cpw")
-SourceConditions = Array[Object]([])
-TargetConditions = Array[Object]([])
-SpaceConditions = Array[Object]([])
 Effects = [SubResource("Resource_nuhc6")]
 metadata/_custom_type_script = "uid://drxu3481eg66a"
 
