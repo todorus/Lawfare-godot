@@ -37,6 +37,6 @@ metadata/_custom_type_script = "uid://b3p2noi6tp34d"
 script = ExtResource("1_7i75q")
 Label = "Charm"
 InitiativeCost = 4
-TargetConditions = Array[Object]([SubResource("Resource_ffvgk")])
+TargetConditions = [SubResource("Resource_ffvgk")]
 Effect = SubResource("Resource_o35ty")
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

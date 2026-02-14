@@ -43,6 +43,6 @@ metadata/_custom_type_script = "uid://binuvquyum7to"
 
 [resource]
 script = ExtResource("1_ybqjy")
-Triggers = Array[Object]([SubResource("Resource_0523g")])
+Triggers = [SubResource("Resource_0523g")]
 Label = "Charming"
 metadata/_custom_type_script = "uid://d1yojxyksi7ub"

@@ -3,6 +3,7 @@ using System.Linq;
 using Godot;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.initiative.state;
 using Lawfare.scripts.subject;
 using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
@@ -21,6 +22,30 @@ public abstract partial class Context : Node, IContext
     public Team GetOpposingTeam(ISubject subject) => Teams.FirstOrDefault(team => !team.Members.Contains(subject));
 
     public event Action<InitiativeTrackState> InitiativeTrackChanged;
+    
+    [Signal]
+    public delegate void ActiveLawyerChangedEventHandler(Lawyer lawyer);
+    
+    [Signal]
+    public delegate void ActiveHandChangedEventHandler(Card[] hand);
+    
+    private Lawyer _activeLawyer;
+
+    public Lawyer ActiveLawyer
+    {
+        get => _activeLawyer;
+        set
+        {
+            var previousLawyer = _activeLawyer;
+            _activeLawyer = value;
+            if (previousLawyer == value) return;
+            
+            EmitSignalActiveLawyerChanged(value);
+            var actions = value?.Actions ?? [];
+            var cards = actions.Select(action => new Card(action)).ToArray();
+            EmitSignalActiveHandChanged(cards);
+        }
+    }
 
     private InitiativeTrackState _initiativeTrack;
     public InitiativeTrackState InitiativeTrack
@@ -30,6 +55,11 @@ public abstract partial class Context : Node, IContext
         {
             _initiativeTrack = value;
             InitiativeTrackChanged?.Invoke(value);
+
+            var slots = _initiativeTrack.Slots;
+            
+            if(slots == null || slots.Length == 0 || slots[0].Row.Length == 0) ActiveLawyer = null;
+            ActiveLawyer = _initiativeTrack.Slots[0].Row[0] as Lawyer;
         }
     }
 

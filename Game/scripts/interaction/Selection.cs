@@ -68,6 +68,11 @@ public partial class Selection : Node
             }
         }
     }
+    
+    public void SetSourceLawyer(Lawyer lawyer)
+    {
+        Source = lawyer;
+    }
 
     public void Secondary()
     {

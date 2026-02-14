@@ -56,6 +56,6 @@ metadata/_custom_type_script = "uid://binuvquyum7to"
 
 [resource]
 script = ExtResource("1_ntktv")
-Triggers = Array[Object]([SubResource("Resource_3c0fp")])
+Triggers = [SubResource("Resource_3c0fp")]
 Label = "Bully"
 metadata/_custom_type_script = "uid://d1yojxyksi7ub"

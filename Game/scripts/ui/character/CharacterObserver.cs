@@ -1,5 +1,6 @@
 using Godot;
 using Lawfare.scripts.characters;
+using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.@event;
@@ -40,6 +41,11 @@ public partial class CharacterObserver : Node
         {
             EmitSignalMirrorChanged(value);
         }
+    }
+    
+    public void SetLawyer(Lawyer lawyer)
+    {
+        Character = lawyer;
     }
     
     private ICharacter _character;

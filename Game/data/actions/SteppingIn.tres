@@ -63,6 +63,6 @@ metadata/_custom_type_script = "uid://cfvu1bn22txif"
 script = ExtResource("1_5c7ca")
 Label = "Stepping In"
 InitiativeCost = 0
-TargetConditions = Array[Object]([SubResource("Resource_2mt4m"), SubResource("Resource_bbiax"), SubResource("Resource_uw7v0")])
+TargetConditions = [SubResource("Resource_2mt4m"), SubResource("Resource_bbiax"), SubResource("Resource_uw7v0")]
 Effect = SubResource("Resource_4a4h7")
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"
