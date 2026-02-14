@@ -208,3 +208,5 @@ layout_mode = 2
 [connection signal="TickResolved" from="Interaction" to="UI/Initiative" method="UpdateFromContext" flags=3]
 [connection signal="CharacterClicked" from="UI/Witness/WitnessBench/WitnessStand" to="Interaction" method="Primary" flags=3]
 [connection signal="CardSelected" from="UI/Hand" to="Interaction" method="Primary" flags=3]
+[connection signal="CharacterClicked" from="UI/ProsecutionPortraits" to="Interaction" method="Primary" flags=3]
+[connection signal="CharacterClicked" from="UI/DefensePortraits" to="Interaction" method="Primary" flags=3]

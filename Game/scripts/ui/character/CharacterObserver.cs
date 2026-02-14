@@ -52,6 +52,7 @@ public partial class CharacterObserver : Node
 
     public ICharacter Character
     {
+        get => _character;
         set
         {
             _character = value;
