@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Godot;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.context;
@@ -22,7 +21,8 @@ public partial struct GameEvent
     
     public IContext Context;
 
-    public Dictionary<InputLabel, EffectInput> Inputs;
+    public Godot.Collections.Dictionary<InputLabel, EffectInput> Inputs =>
+        Action?.Inputs ?? new();
 
     // Intermediary data
     public DiceRoll[] DiceRolls;
