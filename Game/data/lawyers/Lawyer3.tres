@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="LawyerDef" load_steps=6 format=3 uid="uid://yxt08dahyxdv"]
+[gd_resource type="Resource" script_class="LawyerDef" format=3 uid="uid://yxt08dahyxdv"]
 
-[ext_resource type="Resource" uid="uid://cyco6yaxk8cwf" path="res://data/actions/Analyze.tres" id="1_fwquv"]
+[ext_resource type="Resource" uid="uid://blvdintyq4at7" path="res://data/actions2/Belidger2.tres" id="1_fwquv"]
 [ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/lawyers/LawyerDef.cs" id="1_r8x0m"]
 [ext_resource type="Texture2D" uid="uid://d0b0blrvixums" path="res://data/lawyers/lawyer3.png" id="1_x31pi"]
-[ext_resource type="Resource" uid="uid://bqk366drvqyud" path="res://data/actions/Stall.tres" id="2_0bh71"]
 [ext_resource type="Texture2D" uid="uid://4bnw78ms326q" path="res://data/lawyers/lawyer3Portrait.png" id="4_0bh71"]
 
 [resource]
@@ -11,8 +10,5 @@ script = ExtResource("1_r8x0m")
 Image = ExtResource("1_x31pi")
 Portrait = ExtResource("4_0bh71")
 Initiative = 3
-Actions = Array[Object]([ExtResource("1_fwquv"), ExtResource("2_0bh71")])
-Quantities = null
-Skills = null
-Keywords = null
+Actions = [ExtResource("1_fwquv")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"
