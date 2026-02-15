@@ -4,6 +4,7 @@ using Godot;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.context;
+using Lawfare.scripts.logic.inputs;
 using Lawfare.scripts.logic.triggers;
 using Lawfare.scripts.subject;
 
@@ -20,6 +21,8 @@ public partial struct GameEvent
     public ISubject Space;
     
     public IContext Context;
+
+    public Dictionary<InputLabel, EffectInput> Inputs;
 
     // Intermediary data
     public DiceRoll[] DiceRolls;

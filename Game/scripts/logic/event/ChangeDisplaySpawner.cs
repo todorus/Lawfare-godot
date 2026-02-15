@@ -2,6 +2,7 @@ using System.Linq;
 using Agents.scripts.ui.action;
 using Godot;
 using Lawfare.scripts.logic.effects;
+using Lawfare.scripts.logic.effects.direct.property;
 using Lawfare.scripts.logic.effects.property;
 using Lawfare.scripts.subject.quantities;
 
@@ -18,7 +19,7 @@ public partial class ChangeDisplaySpawner : Node3D
 
     public void DisplayChanges(IDiff[] changes)
     {
-        var propertyChanges = changes.OfType<PropertyAddEffect.PropertyDiff>();
+        var propertyChanges = changes.OfType<PropertyDiff>();
 
         var grouped = propertyChanges
             .GroupBy(pc => new { pc.Subject, pc.Original.Property })

@@ -2,6 +2,7 @@ using Godot;
 using Lawfare.scripts.logic.conditions.diff.subject;
 using Lawfare.scripts.logic.conditions.quantity.amount;
 using Lawfare.scripts.logic.effects;
+using Lawfare.scripts.logic.effects.direct.property;
 using Lawfare.scripts.logic.effects.property;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject.quantities;
@@ -29,7 +30,7 @@ public partial class IsWitnessQuantityDiff : DiffCondition
 
     public override bool Evaluate(GameEvent gameEventData, IDiff diff)
     {
-        if (diff is not PropertyAddEffect.PropertyDiff propertyDiff) return false;
+        if (diff is not PropertyDiff propertyDiff) return false;
         if (propertyDiff.Original.Property != _property) return false;
         
         var difference = propertyDiff.Updated - propertyDiff.Original;

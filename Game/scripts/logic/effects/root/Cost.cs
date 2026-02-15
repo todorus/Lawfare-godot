@@ -1,4 +1,5 @@
 using Godot;
+using Lawfare.scripts.logic.effects.direct.property;
 using Lawfare.scripts.logic.effects.property;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
@@ -21,12 +22,12 @@ public partial class Cost : Resource
         return subjectValue >= amount * multiplier;
     }
 
-    public PropertyAddEffect.PropertyDiff Stage(GameEvent gameEvent, ISubject subject)
+    public PropertyDiff Stage(GameEvent gameEvent, ISubject subject)
     {
         var amount = AmountProvider.GetAmount(gameEvent, subject);
         var oldAmount = subject.Quantities.GetValue(Property);
         var newAmount = subject.Quantities.StageAdd(Property, amount);
-        return new PropertyAddEffect.PropertyDiff(
+        return new PropertyDiff(
             subject,
             new Quantity
             {

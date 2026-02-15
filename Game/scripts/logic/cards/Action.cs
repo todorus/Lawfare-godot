@@ -1,10 +1,10 @@
 using System.Linq;
 using Godot;
-using Lawfare.scripts.logic.conditions.subject;
+using Godot.Collections;
 using Lawfare.scripts.logic.effects;
-using Lawfare.scripts.logic.effects.root;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.logic.initiative;
+using Lawfare.scripts.logic.inputs;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
 
@@ -15,60 +15,47 @@ public partial class Action : Resource, IAction
 {
     [Export]
     public string Label { get; private set; }
-
-    [ExportGroup("Costs")] 
-    [Export] 
-    public int InitiativeCost { get; private set; } = 1;
     
     [Export]
-    public Cost[] Costs { get; private set; } = [];
+    private int _initiativeCost = 0;
     
     public Skill[] DicePools => [];
     
-    [ExportGroup("Conditions")]
     [Export]
-    public SubjectCondition[] SourceConditions { get; private set; } = [];
-    [Export]
-    public SubjectCondition[] TargetConditions { get; private set; } = [];
+    public Dictionary<InputLabel, EffectInput> Inputs { get; private set; } = new();
     
-    [ExportGroup("Effects")]
     [Export]
-    public RootEffect Effect { get; set; }
+    public Effect[] Effects { get; private set; } = [];
 
     public bool CanPerform(ISubject source)
     {
         var gameEvent = new GameEvent { Source = source };
-        return Costs.All(cost => cost.CanMeet(gameEvent, source)) 
-            && SourceConditions.All(condition => condition.Evaluate(gameEvent, source));
+        return true; // TODO implement for real using future prequisites model
     }
     
     public bool CanTarget(GameEvent gameEvent, ISubject target)
     {
-        return TargetConditions.All(condition => condition.Evaluate(gameEvent, target));
+        return true; // TODO implement for real using future prequisites model
+        //TargetConditions.All(condition => condition.Evaluate(gameEvent, target));
     }
 
-    public bool Applies(GameEvent gameEvent) =>
-        Costs.All(cost => cost.CanMeet(gameEvent, gameEvent.Source))
-        && SourceConditions.All(condition => condition.Evaluate(gameEvent, gameEvent.Source))
-        && TargetConditions.All(condition => condition.Evaluate(gameEvent, gameEvent.Target))
-        && (Effect?.Applies(gameEvent, gameEvent.Source) ?? false);
+    public bool Applies(GameEvent gameEvent)
+    {
+        return true; // TODO implement for real using future prequisites model
+    }
 
     public ChangeGroup[] Stage(GameEvent gameEvent)
     {
-        var costChangegroup = Costs
-            .Select(cost => cost.Stage(gameEvent, gameEvent.Source))
-            .Cast<IDiff>().ToArray().ToChangeGroup();
         var initiativeChangeGroup = StageInitiative(gameEvent);
-        var effectDiffs = Effect?.Stage(gameEvent, gameEvent.Source) ?? [];
-        return new[]{costChangegroup}
-            .Concat(effectDiffs)
+        var effectDiffs = Effects.SelectMany(effectGroup => effectGroup.Stage(gameEvent)).ToArray();
+        return effectDiffs
             .Concat(initiativeChangeGroup)
             .ToArray();
     }
     
     private ChangeGroup[] StageInitiative(GameEvent gameEvent)
     {
-        IDiff diff = Initiative.MoveEntity(gameEvent.Context, gameEvent.Source as IHasInitiative, InitiativeCost);
+        IDiff diff = Initiative.MoveEntity(gameEvent.Context, gameEvent.Source as IHasInitiative, _initiativeCost);
         if(diff == null) return [];
         
         return [new ChangeGroup([diff])];

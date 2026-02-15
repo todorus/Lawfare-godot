@@ -9,7 +9,7 @@ using Lawfare.scripts.subject;
 namespace Lawfare.scripts.logic.effects.initiative;
 
 [GlobalClass]
-public partial class InitiativeAddEffect : Effect
+public partial class InitiativeAddEffect : EffectOld
 {
     [Export] public AmountProvider AmountProvider;
     protected override IDiff[] StageInternal(GameEvent gameEvent, ISubject subject)

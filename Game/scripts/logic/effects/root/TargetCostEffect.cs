@@ -12,7 +12,7 @@ public partial class TargetCostEffect : RootEffect
 {
     [Export] public Cost[] CostsPerTarget = [];
 
-    [Export] public Effect[] Effects;
+    [Export] public EffectOld[] Effects;
 
     [Export] public TargetSelector Targets;
 

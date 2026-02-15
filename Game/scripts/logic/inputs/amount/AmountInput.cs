@@ -1,11 +1,12 @@
-using Lawfare.scripts.context;
+using Godot;
 using Lawfare.scripts.logic.@event;
 
 namespace Lawfare.scripts.logic.inputs.amount;
 
-public abstract partial class AmountInput : Input
+[GlobalClass]
+public abstract partial class AmountInput : EffectInput
 {
-    public override object GetValue(Context context, GameEvent gameEvent) => GetAmountValue(context, gameEvent);
+    public override object GetValue(GameEvent gameEvent) => GetAmountValue(gameEvent);
     
-    protected abstract int GetAmountValue(Context context, GameEvent gameEvent);
+    protected abstract int GetAmountValue(GameEvent gameEvent);
 }

@@ -24,7 +24,7 @@ public partial class TargetedEffect : RootEffect
     
     [ExportCategory("Effects")]
     [Export] 
-    public Effect[] Effects = [];
+    public EffectOld[] Effects = [];
     
     public override bool Applies(GameEvent gameEvent, ISubject root)
     {

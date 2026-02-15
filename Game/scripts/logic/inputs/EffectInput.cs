@@ -1,13 +1,13 @@
 using Godot;
-using Lawfare.scripts.context;
 using Lawfare.scripts.logic.@event;
 
 namespace Lawfare.scripts.logic.inputs;
 
-public abstract partial class Input : Resource
+[GlobalClass]
+public abstract partial class EffectInput : Resource
 {
     [Export]
     public InputLabel Label { get; private set; }
     
-    public abstract object GetValue(Context context, GameEvent gameEvent);
+    public abstract object GetValue(GameEvent gameEvent);
 }

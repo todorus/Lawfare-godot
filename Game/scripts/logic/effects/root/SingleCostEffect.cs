@@ -11,7 +11,7 @@ public partial class SingleCostEffect : RootEffect
 {
     [Export] public Cost[] Costs = [];
 
-    [Export] public Effect[] Effects;
+    [Export] public EffectOld[] Effects;
 
     [Export] public TargetSelector Targets;
 

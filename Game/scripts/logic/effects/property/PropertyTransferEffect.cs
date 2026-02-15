@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Lawfare.scripts.logic.effects.direct.property;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
@@ -8,7 +9,7 @@ using AmountProvider = Lawfare.scripts.logic.effects.property.amounts.AmountProv
 namespace Lawfare.scripts.logic.effects.property;
 
 [GlobalClass]
-public partial class PropertyTransferEffect : Effect
+public partial class PropertyTransferEffect : EffectOld
 {
     [Export] public AmountProvider AmountProvider;
 
@@ -37,7 +38,7 @@ public partial class PropertyTransferEffect : Effect
     {
         var oldAmount = source.Quantities.GetValue(Property);
         var newAmount = source.Quantities.StageAdd(Property, amount);
-        return new PropertyAddEffect.PropertyDiff(
+        return new PropertyDiff(
             source,
             new Quantity
             {

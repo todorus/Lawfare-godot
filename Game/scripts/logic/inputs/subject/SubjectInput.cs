@@ -4,9 +4,9 @@ using Lawfare.scripts.subject;
 
 namespace Lawfare.scripts.logic.inputs.subject;
 
-public abstract partial class SubjectInput : Input
+public abstract partial class SubjectInput : EffectInput
 {
-    public override object GetValue(Context context, GameEvent gameEvent) => GetSubjectValue(context, gameEvent);
+    public override object GetValue(GameEvent gameEvent) => GetSubjectValue(gameEvent);
 
-    protected abstract ISubject GetSubjectValue(Context context, GameEvent gameEvent);
+    protected abstract ISubject GetSubjectValue(GameEvent gameEvent);
 }

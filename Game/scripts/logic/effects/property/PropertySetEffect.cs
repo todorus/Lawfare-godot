@@ -1,4 +1,5 @@
 using Godot;
+using Lawfare.scripts.logic.effects.direct.property;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
@@ -17,7 +18,7 @@ public partial class PropertySetEffect : PropertyEffect
         var newAmount = AmountProvider.GetAmount(gameEvent, subject);
         return
         [
-            new PropertyAddEffect.PropertyDiff(
+            new PropertyDiff(
                 subject,
                 new Quantity
                 {

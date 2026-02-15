@@ -4,7 +4,7 @@ using Lawfare.scripts.logic.@event;
 
 namespace Lawfare.scripts.logic.inputs;
 
-public abstract partial class InputRef : Resource
+public abstract partial class ValueRef : Resource
 {
-    public abstract object GetValue(Context context, GameEvent gameEvent);
+    public abstract object GetValue(GameEvent gameEvent);
 }
