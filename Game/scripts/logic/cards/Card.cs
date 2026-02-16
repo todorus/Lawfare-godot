@@ -12,8 +12,11 @@ namespace Lawfare.scripts.logic.cards;
 public partial class Card(Action action) : GodotObject, IAction
 {
     public string Label => action.Label;
+    
+    public bool RequiresTarget => action.RequiresTarget;
 
     public Skill[] DicePools => action.DicePools;
+    
     public Dictionary<InputLabel, EffectInput> Inputs => action.Inputs;
 
     public bool CanPerform(ISubject source) => action.CanPerform(source);

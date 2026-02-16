@@ -29,8 +29,9 @@ metadata/_custom_type_script = "uid://ck3aocmfew6an"
 script = ExtResource("1_0wo4f")
 Label = "Belidger2"
 _initiativeCost = 2
+RequiresTarget = false
 Inputs = Dictionary[ExtResource("5_3v33m"), ExtResource("6_vvui4")]({
 ExtResource("1_kgq1r"): SubResource("Resource_h1xes")
 })
-Effects = Array[Object]([SubResource("Resource_e47p7")])
+Effects = [SubResource("Resource_e47p7")]
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

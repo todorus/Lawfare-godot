@@ -84,6 +84,10 @@ public partial class Selection : Node
         if (godotObject is Card action)
         {
             Action = action;
+            if (!action.RequiresTarget)
+            {
+                TryExecute(null);
+            }
             return;
         }
 
@@ -94,21 +98,26 @@ public partial class Selection : Node
         
         if (Action != null)
         {
-            var gameEvent = ToActionEvent(_source, subject, Action);
-            if (!CanExecute(gameEvent))
-            {
-                // TODO feedback
-                return;
-            }
-            
-            Execute(_source, subject, Action);
-            Action = null;
+            TryExecute(subject);
         }
         else if(subject is Lawyer)
         {
             Source = subject;
             Action = null;
         }
+    }
+
+    private void TryExecute(ISubject subject)
+    {
+        var gameEvent = ToActionEvent(_source, subject, Action);
+        if (!CanExecute(gameEvent))
+        {
+            // TODO feedback
+            return;
+        }
+            
+        Execute(_source, subject, Action);
+        Action = null;
     }
 
     private bool CanExecute(GameEvent gameEvent)
@@ -131,7 +140,7 @@ public partial class Selection : Node
 
     public void Execute(ISubject source, ISubject target, IAction action)
     {
-        if (source == null || target == null) return;
+        if (source == null) return;
 
         var actionEvent = new GameEvent
         {

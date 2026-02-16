@@ -1,41 +1,47 @@
 [gd_resource type="Resource" script_class="Action" format=3 uid="uid://6wesnofhtwsj"]
 
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="1_3xgf8"]
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_iy503"]
-[ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_klcrj"]
 [ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="2_8tr6p"]
-[ext_resource type="Script" uid="uid://dsxkqn0fvmpgl" path="res://scripts/logic/effects/property/PropertyAddEffect.cs" id="3_rr6pm"]
+[ext_resource type="Script" uid="uid://d2frc3gu4tk33" path="res://scripts/logic/inputs/subject/refs/TargetRef.cs" id="3_k8iul"]
 [ext_resource type="Script" uid="uid://do2itakrdwe3" path="res://scripts/logic/conditions/subject/type/IsLawyer.cs" id="4_brfgr"]
-[ext_resource type="Script" uid="uid://b2u2rn01b0l0o" path="res://scripts/logic/effects/root/BasicEffect.cs" id="5_3xgf8"]
-[ext_resource type="Script" uid="uid://c6evptfljjytx" path="res://scripts/logic/conditions/subject/team/BelongsToTeamOpposingSource.cs" id="6_8tr6p"]
+[ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="4_p8itt"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="5_o4eww"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="6_edu0w"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="7_jb8ot"]
+[ext_resource type="Script" uid="uid://dldrh4yujggh" path="res://scripts/logic/conditions/subject/faction/BelongsNotToSourceFaction.cs" id="8_5kywe"]
 
-[sub_resource type="Resource" id="Resource_k8iul"]
-script = ExtResource("1_klcrj")
+[sub_resource type="Resource" id="Resource_s3wih"]
+script = ExtResource("3_k8iul")
+metadata/_custom_type_script = "uid://d2frc3gu4tk33"
+
+[sub_resource type="Resource" id="Resource_wiymq"]
+script = ExtResource("4_p8itt")
+_property = ExtResource("2_8tr6p")
+_target = SubResource("Resource_s3wih")
+_amount = ExtResource("1_3xgf8")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
+
+[sub_resource type="Resource" id="Resource_ygnjl"]
+script = ExtResource("7_jb8ot")
 Amount = -2
-metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
 
-[sub_resource type="Resource" id="Resource_p8itt"]
-script = ExtResource("3_rr6pm")
-AmountProvider = SubResource("Resource_k8iul")
-Property = ExtResource("2_8tr6p")
-metadata/_custom_type_script = "uid://dsxkqn0fvmpgl"
+[sub_resource type="Resource" id="Resource_eapy6"]
+script = ExtResource("8_5kywe")
+metadata/_custom_type_script = "uid://dldrh4yujggh"
 
-[sub_resource type="Resource" id="Resource_edu0w"]
-script = ExtResource("5_3xgf8")
-Effects = [SubResource("Resource_p8itt")]
-metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
-
-[sub_resource type="Resource" id="Resource_rr6pm"]
+[sub_resource type="Resource" id="Resource_7ccy7"]
 script = ExtResource("4_brfgr")
 metadata/_custom_type_script = "uid://do2itakrdwe3"
-
-[sub_resource type="Resource" id="Resource_brfgr"]
-script = ExtResource("6_8tr6p")
-metadata/_custom_type_script = "uid://c6evptfljjytx"
 
 [resource]
 script = ExtResource("1_iy503")
 Label = "Diminish"
-InitiativeCost = 8
-TargetConditions = [SubResource("Resource_rr6pm"), SubResource("Resource_brfgr")]
-Effect = SubResource("Resource_edu0w")
+_initiativeCost = 3
+_targetConditions = [SubResource("Resource_eapy6"), SubResource("Resource_7ccy7")]
+Inputs = Dictionary[ExtResource("5_o4eww"), ExtResource("6_edu0w")]({
+ExtResource("1_3xgf8"): SubResource("Resource_ygnjl")
+})
+Effects = [SubResource("Resource_wiymq")]
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

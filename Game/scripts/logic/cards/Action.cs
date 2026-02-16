@@ -1,6 +1,7 @@
 using System.Linq;
 using Godot;
 using Godot.Collections;
+using Lawfare.scripts.logic.conditions.subject;
 using Lawfare.scripts.logic.effects;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.logic.initiative;
@@ -19,8 +20,16 @@ public partial class Action : Resource, IAction
     [Export]
     private int _initiativeCost = 0;
     
+    [ExportGroup("Targeting")]
+    [Export]
+    public bool RequiresTarget { get; private set; } = true;
+    
+    [Export]
+    private SubjectCondition[] _targetConditions = [];
+    
     public Skill[] DicePools => [];
     
+    [ExportGroup("Effect")]
     [Export]
     public Dictionary<InputLabel, EffectInput> Inputs { get; private set; } = new();
     
@@ -35,8 +44,7 @@ public partial class Action : Resource, IAction
     
     public bool CanTarget(GameEvent gameEvent, ISubject target)
     {
-        return true; // TODO implement for real using future prequisites model
-        //TargetConditions.All(condition => condition.Evaluate(gameEvent, target));
+        return _targetConditions.All(condition => condition.Evaluate(gameEvent, target));
     }
 
     public bool Applies(GameEvent gameEvent)

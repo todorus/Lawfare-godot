@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ce37gapyfwrfn" path="res://data/lawyers/lawyer4Portrait.png" id="4_80kmi"]
 [ext_resource type="Resource" uid="uid://careqb4lcckol" path="res://data/properties/Alpha.tres" id="4_pu8yf"]
 [ext_resource type="Script" uid="uid://bf75xqw6x8sck" path="res://scripts/subject/quantities/Quantity.cs" id="5_80kmi"]
+[ext_resource type="Resource" uid="uid://kpkh2hwl0lv4" path="res://data/lawyers/StartCredibility.tres" id="6_80kmi"]
 [ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/lawyers/LawyerDef.cs" id="6_lw4e7"]
 
 [sub_resource type="Resource" id="Resource_lw4e7"]
@@ -19,5 +20,5 @@ Image = ExtResource("1_o40us")
 Portrait = ExtResource("4_80kmi")
 Initiative = 2
 Actions = [ExtResource("1_pu8yf")]
-Quantities = [SubResource("Resource_lw4e7")]
+Quantities = [SubResource("Resource_lw4e7"), ExtResource("6_80kmi")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

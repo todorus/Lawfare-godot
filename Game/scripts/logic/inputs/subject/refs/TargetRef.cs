@@ -10,6 +10,6 @@ public partial class TargetRef : SubjectRef
 {
     protected override ISubject GetSubjectValue(GameEvent gameEvent)
     {
-        return gameEvent.Source;
+        return gameEvent.Target;
     }
 }
