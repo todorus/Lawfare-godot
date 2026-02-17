@@ -3,6 +3,7 @@
 [ext_resource type="Resource" uid="uid://blvdintyq4at7" path="res://data/actions2/Belidger2.tres" id="1_hwboe"]
 [ext_resource type="Texture2D" uid="uid://pd4yhcj3vqta" path="res://data/lawyers/lawyer1.png" id="1_wjcu5"]
 [ext_resource type="Resource" uid="uid://6wesnofhtwsj" path="res://data/actions/Diminish.tres" id="2_npt1p"]
+[ext_resource type="Resource" uid="uid://chypiquc6ve56" path="res://data/actions/Charm.tres" id="3_2hitl"]
 [ext_resource type="Texture2D" uid="uid://dl8flx0pic6lo" path="res://data/lawyers/lawyer1Portrait.png" id="4_hwboe"]
 [ext_resource type="Resource" uid="uid://csovg1nkteoi" path="res://data/keywords/Charming.tres" id="4_npt1p"]
 [ext_resource type="Resource" uid="uid://kpkh2hwl0lv4" path="res://data/lawyers/StartCredibility.tres" id="4_waia8"]
@@ -22,7 +23,7 @@ Label = "Larry"
 Image = ExtResource("1_wjcu5")
 Portrait = ExtResource("4_hwboe")
 Initiative = 4
-Actions = [ExtResource("1_hwboe"), ExtResource("2_npt1p")]
+Actions = [ExtResource("1_hwboe"), ExtResource("2_npt1p"), ExtResource("3_2hitl")]
 Quantities = [ExtResource("4_waia8"), SubResource("Resource_2hitl")]
 Keywords = [ExtResource("4_npt1p")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

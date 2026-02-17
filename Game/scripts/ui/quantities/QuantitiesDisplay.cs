@@ -1,12 +1,16 @@
+using System.Linq;
 using Godot;
 using Lawfare.scripts.subject.quantities;
 
 namespace Lawfare.scripts.ui.quantities;
 
-public partial class QuantitiesObserver : Node
+public partial class QuantitiesDisplay : Container
 {
-    [Signal]
-    public delegate void QuantityChangeEventHandler(Quantity quantity);
+    [Export]
+    private PackedScene _quantityScene;
+    
+    [Export]
+    private Property[] _blacklist = [];
 
     public void SetQuantities(Quantities quantities) => Quantities = quantities;
     
@@ -31,12 +35,14 @@ public partial class QuantitiesObserver : Node
 
     private void UpdateQuantitiesDisplay(Quantities value)
     {
+        this.ClearChildren();
         if (value == null) return;
 
-        foreach (var quantity in value.All)
+        foreach (var quantity in value.All.Where(quantity => !_blacklist.Contains(quantity.Property)))
         {
-            Quantity quantityCopy = new  Quantity { Property = quantity.Property, Amount = quantity.Amount };
-            EmitSignalQuantityChange(quantityCopy);
+            var quantityDisplay = _quantityScene.Instantiate<QuantityObserver>();
+            quantityDisplay.Quantity = quantity;
+            AddChild(quantityDisplay);
         }
-    }   
+    }
 }

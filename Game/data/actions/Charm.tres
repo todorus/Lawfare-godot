@@ -1,42 +1,36 @@
 [gd_resource type="Resource" script_class="Action" format=3 uid="uid://chypiquc6ve56"]
 
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_7i75q"]
-[ext_resource type="Script" uid="uid://b2u2rn01b0l0o" path="res://scripts/logic/effects/root/BasicEffect.cs" id="1_feejd"]
-[ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_ffvgk"]
-[ext_resource type="Script" uid="uid://cjuspvcpekfge" path="res://scripts/logic/effects/relation/faction/SourceTeamFactionProvider.cs" id="2_ffvgk"]
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="1_ffvgk"]
+[ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="2_xjwsc"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="3_0r7a3"]
+[ext_resource type="Script" uid="uid://cafomty7ca7wx" path="res://scripts/logic/inputs/subject/refs/SourceTeamRef.cs" id="3_uodju"]
 [ext_resource type="Resource" uid="uid://cf62sltuoikad" path="res://data/relations/Favor.tres" id="3_uxfgl"]
-[ext_resource type="Script" uid="uid://dlfwebu7jm0xp" path="res://scripts/logic/effects/relation/RelationAddEffect.cs" id="4_3lbv7"]
-[ext_resource type="Script" uid="uid://b3p2noi6tp34d" path="res://scripts/logic/conditions/subject/team/BelongsNotToSourceTeam.cs" id="5_ffvgk"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="4_ffvgk"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="7_uodju"]
 
-[sub_resource type="Resource" id="Resource_n47ey"]
-script = ExtResource("1_ffvgk")
-Amount = 1
-metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+[sub_resource type="Resource" id="Resource_uxfgl"]
+script = ExtResource("3_uodju")
+metadata/_custom_type_script = "uid://cafomty7ca7wx"
 
 [sub_resource type="Resource" id="Resource_uodju"]
-script = ExtResource("2_ffvgk")
-metadata/_custom_type_script = "uid://cjuspvcpekfge"
+script = ExtResource("2_xjwsc")
+_property = ExtResource("3_uxfgl")
+_target = SubResource("Resource_uxfgl")
+_amount = ExtResource("1_ffvgk")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
 
-[sub_resource type="Resource" id="Resource_faitn"]
-script = ExtResource("4_3lbv7")
-AmountProvider = SubResource("Resource_n47ey")
-FactionProvider = SubResource("Resource_uodju")
-Property = ExtResource("3_uxfgl")
-metadata/_custom_type_script = "uid://dlfwebu7jm0xp"
-
-[sub_resource type="Resource" id="Resource_o35ty"]
-script = ExtResource("1_feejd")
-Effects = [SubResource("Resource_faitn")]
-metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
-
-[sub_resource type="Resource" id="Resource_ffvgk"]
-script = ExtResource("5_ffvgk")
-metadata/_custom_type_script = "uid://b3p2noi6tp34d"
+[sub_resource type="Resource" id="Resource_3lbv7"]
+script = ExtResource("7_uodju")
+Amount = 3
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
 
 [resource]
 script = ExtResource("1_7i75q")
 Label = "Charm"
-InitiativeCost = 4
-TargetConditions = [SubResource("Resource_ffvgk")]
-Effect = SubResource("Resource_o35ty")
+RequiresTarget = false
+Inputs = Dictionary[ExtResource("3_0r7a3"), ExtResource("4_ffvgk")]({
+ExtResource("1_ffvgk"): SubResource("Resource_3lbv7")
+})
+Effects = [SubResource("Resource_uodju")]
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

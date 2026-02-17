@@ -8,6 +8,7 @@
 
 [resource]
 script = ExtResource("1_7gulw")
+Label = "Rose"
 Image = ExtResource("1_74l1f")
 Portrait = ExtResource("4_ia0eg")
 Initiative = 4

@@ -16,6 +16,7 @@ metadata/_custom_type_script = "uid://bf75xqw6x8sck"
 
 [resource]
 script = ExtResource("6_lw4e7")
+Label = "Angelica"
 Image = ExtResource("1_o40us")
 Portrait = ExtResource("4_80kmi")
 Initiative = 2

@@ -32,7 +32,7 @@ public partial class Team : Resource, ISubject
         } 
     }
 
-    private Quantities _quantities = new Quantities();
+    private Quantities _quantities = new();
     public Quantities Quantities => _quantities;
     
     private Relations _relations = new Relations();
