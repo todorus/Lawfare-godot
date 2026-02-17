@@ -26,8 +26,7 @@
 [ext_resource type="Script" uid="uid://b2svjsvpg03ps" path="res://scripts/ui/character/team/TeamPortraitDisplay.cs" id="24_l8syn"]
 [ext_resource type="PackedScene" uid="uid://c18ew30a8q6yr" path="res://scenes/portrait.tscn" id="24_t2k2p"]
 [ext_resource type="Script" uid="uid://bsjh6vwaeum7f" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="25_xjkrd"]
-[ext_resource type="Script" uid="uid://c2jf6wvcavjim" path="res://scripts/ui/quantities/PropertyObserver.cs" id="26_33ers"]
-[ext_resource type="Resource" uid="uid://cf62sltuoikad" path="res://data/relations/Favor.tres" id="27_clopl"]
+[ext_resource type="PackedScene" uid="uid://1vn4b4btu520" path="res://scenes/meter.tscn" id="26_v012p"]
 
 [sub_resource type="Resource" id="Resource_revm4"]
 script = ExtResource("3_c6ra0")
@@ -164,7 +163,7 @@ _stackDistance = 60.0
 _moveDuration = 0.4
 
 [node name="Prosecution" type="VBoxContainer" parent="UI" unique_id=614781712]
-layout_mode = 0
+layout_mode = 1
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("24_erabv")
@@ -174,16 +173,8 @@ custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 script = ExtResource("25_xjkrd")
 
-[node name="Favor" type="Control" parent="UI/Prosecution/Meters" unique_id=1705708316]
-custom_minimum_size = Vector2(0, 50)
+[node name="Favor" parent="UI/Prosecution/Meters" unique_id=303630509 instance=ExtResource("26_v012p")]
 layout_mode = 2
-script = ExtResource("26_33ers")
-_property = ExtResource("27_clopl")
-
-[node name="ProgressBar" type="ProgressBar" parent="UI/Prosecution/Meters/Favor" unique_id=1926549626]
-layout_mode = 1
-offset_right = 300.0
-offset_bottom = 27.0
 
 [node name="ProsecutionPortraits" type="VBoxContainer" parent="UI/Prosecution" unique_id=122176760]
 layout_mode = 2
@@ -197,29 +188,41 @@ layout_mode = 2
 [node name="Portrait2" parent="UI/Prosecution/ProsecutionPortraits" unique_id=435133627 instance=ExtResource("24_t2k2p")]
 layout_mode = 2
 
-[node name="DefensePortraits" type="VBoxContainer" parent="UI" unique_id=1248420728]
+[node name="Defense" type="VBoxContainer" parent="UI" unique_id=497866653]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -110.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 349.0
+offset_left = -100.0
+offset_bottom = 238.0
 grow_horizontal = 0
+script = ExtResource("24_erabv")
+
+[node name="Meters" type="VBoxContainer" parent="UI/Defense" unique_id=1231042249]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+script = ExtResource("25_xjkrd")
+
+[node name="Favor" parent="UI/Defense/Meters" unique_id=952267235 instance=ExtResource("26_v012p")]
+layout_mode = 2
+
+[node name="DefensePortraits" type="VBoxContainer" parent="UI/Defense" unique_id=1248420728]
+layout_mode = 2
+size_flags_horizontal = 8
 script = ExtResource("24_l8syn")
 _characterScene = ExtResource("24_t2k2p")
 _mirror = true
 
-[node name="Portrait" parent="UI/DefensePortraits" unique_id=20107157 instance=ExtResource("24_t2k2p")]
+[node name="Portrait" parent="UI/Defense/DefensePortraits" unique_id=20107157 instance=ExtResource("24_t2k2p")]
 layout_mode = 2
 
-[node name="Portrait2" parent="UI/DefensePortraits" unique_id=951574454 instance=ExtResource("24_t2k2p")]
+[node name="Portrait2" parent="UI/Defense/DefensePortraits" unique_id=951574454 instance=ExtResource("24_t2k2p")]
 layout_mode = 2
 
 [connection signal="ActiveLawyerChanged" from="." to="Interaction" method="SetSourceLawyer" flags=3]
 [connection signal="ActiveLawyerChanged" from="." to="UI/Character" method="SetLawyer" flags=3]
-[connection signal="DefenseChanged" from="." to="UI/DefensePortraits" method="SetTeam" flags=3]
+[connection signal="DefenseChanged" from="." to="UI/Defense/DefensePortraits" method="SetTeam" flags=3]
+[connection signal="DefenseChanged" from="." to="UI/Defense" method="SetTeam" flags=3]
 [connection signal="Initialized" from="." to="UI/Initiative" method="SeedFromContext" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution" method="SetTeam" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution/ProsecutionPortraits" method="SetTeam" flags=3]
@@ -234,6 +237,7 @@ layout_mode = 2
 [connection signal="CardSelected" from="UI/Hand" to="Interaction" method="Primary" flags=3]
 [connection signal="QuantitiesChanged" from="UI/Prosecution" to="UI/Prosecution/Meters" method="SetQuantities" flags=3]
 [connection signal="QuantityChange" from="UI/Prosecution/Meters" to="UI/Prosecution/Meters/Favor" method="SetQuantity" flags=3]
-[connection signal="RatioChanged" from="UI/Prosecution/Meters/Favor" to="UI/Prosecution/Meters/Favor/ProgressBar" method="set_as_ratio" flags=3]
 [connection signal="CharacterClicked" from="UI/Prosecution/ProsecutionPortraits" to="Interaction" method="Primary" flags=3]
-[connection signal="CharacterClicked" from="UI/DefensePortraits" to="Interaction" method="Primary" flags=3]
+[connection signal="QuantitiesChanged" from="UI/Defense" to="UI/Defense/Meters" method="SetQuantities" flags=3]
+[connection signal="QuantityChange" from="UI/Defense/Meters" to="UI/Defense/Meters/Favor" method="SetQuantity" flags=3]
+[connection signal="CharacterClicked" from="UI/Defense/DefensePortraits" to="Interaction" method="Primary" flags=3]

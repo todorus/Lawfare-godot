@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://1vn4b4btu520"]
+
+[ext_resource type="Script" uid="uid://c2jf6wvcavjim" path="res://scripts/ui/quantities/PropertyObserver.cs" id="1_qwk81"]
+[ext_resource type="Resource" uid="uid://cf62sltuoikad" path="res://data/relations/Favor.tres" id="2_6mh7w"]
+
+[node name="Favor" type="Control" unique_id=303630509]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_qwk81")
+_property = ExtResource("2_6mh7w")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=122909502]
+layout_mode = 1
+offset_right = 300.0
+offset_bottom = 27.0
+
+[connection signal="RatioChanged" from="." to="ProgressBar" method="set_as_ratio" flags=3]
