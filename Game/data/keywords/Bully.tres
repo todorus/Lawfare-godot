@@ -1,15 +1,29 @@
 [gd_resource type="Resource" script_class="Keyword" format=3 uid="uid://csjw1jp2l0fhf"]
 
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="1_8736n"]
 [ext_resource type="Script" uid="uid://d1yojxyksi7ub" path="res://scripts/logic/keywords/Keyword.cs" id="1_ntktv"]
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_ygb0b"]
 [ext_resource type="Script" uid="uid://cdjefy7xew7c3" path="res://scripts/logic/conditions/quantity/amount/IsGreaterThan.cs" id="2_ahjxj"]
 [ext_resource type="Resource" uid="uid://cnm3jrueqy1xy" path="res://data/properties/Stress.tres" id="3_bf3md"]
+[ext_resource type="Script" uid="uid://diqxv3knp8kra" path="res://scripts/logic/inputs/subject/refs/HostRef.cs" id="3_u1i6e"]
+[ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="4_07c36"]
 [ext_resource type="Script" uid="uid://7g6cf5xvltrl" path="res://scripts/logic/conditions/event/diff/property/HasWitnessQuantityDiff.cs" id="4_8736n"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="5_m2squ"]
 [ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="5_u1i6e"]
-[ext_resource type="Script" uid="uid://dsxkqn0fvmpgl" path="res://scripts/logic/effects/property/PropertyAddEffect.cs" id="6_07c36"]
-[ext_resource type="Script" uid="uid://d30fxqo2jwojw" path="res://scripts/logic/effects/targets/role/HostProvider.cs" id="7_woflx"]
-[ext_resource type="Script" uid="uid://drxu3481eg66a" path="res://scripts/logic/effects/root/TargetedEffect.cs" id="8_d7lgq"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="6_u8265"]
 [ext_resource type="Script" uid="uid://binuvquyum7to" path="res://scripts/logic/triggers/Trigger.cs" id="9_ps76t"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="11_woflx"]
+
+[sub_resource type="Resource" id="Resource_d7lgq"]
+script = ExtResource("3_u1i6e")
+metadata/_custom_type_script = "uid://diqxv3knp8kra"
+
+[sub_resource type="Resource" id="Resource_ps76t"]
+script = ExtResource("4_07c36")
+_property = ExtResource("5_u1i6e")
+_target = SubResource("Resource_d7lgq")
+_amount = ExtResource("1_8736n")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
 
 [sub_resource type="Resource" id="Resource_oetvc"]
 script = ExtResource("1_ygb0b")
@@ -27,31 +41,18 @@ _amountCondition = SubResource("Resource_f87nx")
 metadata/_custom_type_script = "uid://7g6cf5xvltrl"
 
 [sub_resource type="Resource" id="Resource_155is"]
-script = ExtResource("1_ygb0b")
-Amount = 6
-metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
-
-[sub_resource type="Resource" id="Resource_cusj4"]
-script = ExtResource("6_07c36")
-AmountProvider = SubResource("Resource_155is")
-Property = ExtResource("5_u1i6e")
-metadata/_custom_type_script = "uid://dsxkqn0fvmpgl"
-
-[sub_resource type="Resource" id="Resource_owa8o"]
-script = ExtResource("7_woflx")
-metadata/_custom_type_script = "uid://d30fxqo2jwojw"
-
-[sub_resource type="Resource" id="Resource_r2bn8"]
-script = ExtResource("8_d7lgq")
-TargetProvider = SubResource("Resource_owa8o")
-Effects = [SubResource("Resource_cusj4")]
-metadata/_custom_type_script = "uid://drxu3481eg66a"
+script = ExtResource("11_woflx")
+Amount = 2
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
 
 [sub_resource type="Resource" id="Resource_3c0fp"]
 script = ExtResource("9_ps76t")
-EventConditions = [SubResource("Resource_vlj8f")]
-RootEffect = SubResource("Resource_r2bn8")
 Type = 4
+EventConditions = [SubResource("Resource_vlj8f")]
+Inputs = Dictionary[ExtResource("5_m2squ"), ExtResource("6_u8265")]({
+ExtResource("1_8736n"): SubResource("Resource_155is")
+})
+Effects = [SubResource("Resource_ps76t")]
 metadata/_custom_type_script = "uid://binuvquyum7to"
 
 [resource]

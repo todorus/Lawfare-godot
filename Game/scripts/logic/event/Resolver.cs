@@ -52,11 +52,11 @@ public static class Resolver
         return gameEventData.Triggers?
                    .Where(triggerHost => triggerHost.Trigger.Applies(gameEventData with
                    {
-                       Host = triggerHost.Host, Faction = triggerHost.Host.Allegiances.Primary
+                       Host = triggerHost.Host, Action = triggerHost.Trigger, Faction = triggerHost.Host.Allegiances.Primary
                    }))
                    .SelectMany(triggerHost => triggerHost.Trigger.Stage(gameEventData with
                    {
-                       Host = triggerHost.Host, Faction = triggerHost.Host.Allegiances.Primary
+                       Host = triggerHost.Host, Action = triggerHost.Trigger, Faction = triggerHost.Host.Allegiances.Primary
                    }))
                    .ToArray()
                ?? Array.Empty<ChangeGroup>();

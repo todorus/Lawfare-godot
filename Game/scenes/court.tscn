@@ -221,8 +221,8 @@ layout_mode = 2
 
 [connection signal="ActiveLawyerChanged" from="." to="Interaction" method="SetSourceLawyer" flags=3]
 [connection signal="ActiveLawyerChanged" from="." to="UI/Character" method="SetLawyer" flags=3]
-[connection signal="DefenseChanged" from="." to="UI/Defense/DefensePortraits" method="SetTeam" flags=3]
 [connection signal="DefenseChanged" from="." to="UI/Defense" method="SetTeam" flags=3]
+[connection signal="DefenseChanged" from="." to="UI/Defense/DefensePortraits" method="SetTeam" flags=3]
 [connection signal="Initialized" from="." to="UI/Initiative" method="SeedFromContext" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution" method="SetTeam" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution/ProsecutionPortraits" method="SetTeam" flags=3]

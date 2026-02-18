@@ -4,10 +4,8 @@
 [ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="4_g41oi"]
 [ext_resource type="Script" uid="uid://b7nabowgww8qt" path="res://scripts/logic/conditions/event/diff/property/HasHostQuantityDiff.cs" id="4_h65td"]
 [ext_resource type="Script" uid="uid://b024d1d42h006" path="res://scripts/logic/conditions/quantity/amount/IsSmallerThan.cs" id="5_pp6hg"]
-[ext_resource type="Resource" uid="uid://careqb4lcckol" path="res://data/properties/Alpha.tres" id="8_syir8"]
-[ext_resource type="Script" uid="uid://dsxkqn0fvmpgl" path="res://scripts/logic/effects/property/PropertyAddEffect.cs" id="9_xpsw4"]
-[ext_resource type="Script" uid="uid://d30fxqo2jwojw" path="res://scripts/logic/effects/targets/role/HostProvider.cs" id="10_tfq6r"]
-[ext_resource type="Script" uid="uid://drxu3481eg66a" path="res://scripts/logic/effects/root/TargetedEffect.cs" id="11_544hl"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="5_vm1cj"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="6_3xa83"]
 [ext_resource type="Script" uid="uid://binuvquyum7to" path="res://scripts/logic/triggers/Trigger.cs" id="12_n4iue"]
 
 [sub_resource type="Resource" id="Resource_mtgor"]
@@ -25,31 +23,9 @@ _property = ExtResource("2_hmol5")
 _amountCondition = SubResource("Resource_rvyor")
 metadata/_custom_type_script = "uid://b7nabowgww8qt"
 
-[sub_resource type="Resource" id="Resource_b7sre"]
-script = ExtResource("4_g41oi")
-Amount = 2
-metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
-
-[sub_resource type="Resource" id="Resource_nuhc6"]
-script = ExtResource("9_xpsw4")
-AmountProvider = SubResource("Resource_b7sre")
-Property = ExtResource("8_syir8")
-metadata/_custom_type_script = "uid://dsxkqn0fvmpgl"
-
-[sub_resource type="Resource" id="Resource_57cpw"]
-script = ExtResource("10_tfq6r")
-metadata/_custom_type_script = "uid://d30fxqo2jwojw"
-
-[sub_resource type="Resource" id="Resource_n6tfj"]
-script = ExtResource("11_544hl")
-TargetProvider = SubResource("Resource_57cpw")
-Effects = [SubResource("Resource_nuhc6")]
-metadata/_custom_type_script = "uid://drxu3481eg66a"
-
 [resource]
 script = ExtResource("12_n4iue")
-EventConditions = [SubResource("Resource_6d4ad")]
-RootEffect = SubResource("Resource_n6tfj")
-Type = 4
 Label = "Arrogant"
+Type = 4
+EventConditions = [SubResource("Resource_6d4ad")]
 metadata/_custom_type_script = "uid://binuvquyum7to"

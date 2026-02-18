@@ -55,7 +55,7 @@ public partial class Action : Resource, IAction
     public ChangeGroup[] Stage(GameEvent gameEvent)
     {
         var initiativeChangeGroup = StageInitiative(gameEvent);
-        var effectDiffs = Effects.SelectMany(effectGroup => effectGroup.Stage(gameEvent)).ToArray();
+        var effectDiffs = Effects.SelectMany(effect => effect.Stage(gameEvent)).ToArray();
         return effectDiffs
             .Concat(initiativeChangeGroup)
             .ToArray();
