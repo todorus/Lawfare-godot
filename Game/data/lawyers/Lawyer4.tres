@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cucymd5t1bikd" path="res://data/lawyers/lawyer4.png" id="1_o40us"]
 [ext_resource type="Resource" uid="uid://blvdintyq4at7" path="res://data/actions2/Belidger2.tres" id="1_pu8yf"]
+[ext_resource type="Resource" uid="uid://dkjh417e6bb1i" path="res://data/actions/SteppingIn.tres" id="2_lw4e7"]
 [ext_resource type="Texture2D" uid="uid://ce37gapyfwrfn" path="res://data/lawyers/lawyer4Portrait.png" id="4_80kmi"]
 [ext_resource type="Resource" uid="uid://careqb4lcckol" path="res://data/properties/Alpha.tres" id="4_pu8yf"]
 [ext_resource type="Script" uid="uid://bf75xqw6x8sck" path="res://scripts/subject/quantities/Quantity.cs" id="5_80kmi"]
@@ -20,6 +21,6 @@ Label = "Angelica"
 Image = ExtResource("1_o40us")
 Portrait = ExtResource("4_80kmi")
 Initiative = 2
-Actions = [ExtResource("1_pu8yf")]
+Actions = [ExtResource("1_pu8yf"), ExtResource("2_lw4e7")]
 Quantities = [SubResource("Resource_lw4e7"), ExtResource("6_80kmi")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

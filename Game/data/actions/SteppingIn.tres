@@ -1,68 +1,67 @@
 [gd_resource type="Resource" script_class="Action" format=3 uid="uid://dkjh417e6bb1i"]
 
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="1_2tanr"]
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="1_5c7ca"]
-[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="1_hh03v"]
-[ext_resource type="Script" uid="uid://duenc3ccpf85n" path="res://scripts/logic/effects/property/amounts/property/PropertyAmount.cs" id="2_2mt4m"]
-[ext_resource type="Script" uid="uid://do2itakrdwe3" path="res://scripts/logic/conditions/subject/type/IsLawyer.cs" id="3_2mt4m"]
-[ext_resource type="Script" uid="uid://dpv3u22mleltq" path="res://scripts/logic/effects/property/PropertyTransferEffect.cs" id="3_bbiax"]
-[ext_resource type="Script" uid="uid://cfvu1bn22txif" path="res://scripts/logic/conditions/subject/role/IsNotSource.cs" id="4_uw7v0"]
-[ext_resource type="Script" uid="uid://5ntnwgkkef8g" path="res://scripts/logic/conditions/subject/team/BelongsToSourceTeam.cs" id="6_bbiax"]
-[ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="6_uw7v0"]
-[ext_resource type="Script" uid="uid://ds1gqt268e3q8" path="res://scripts/logic/effects/initiative/InitiativeAddEffect.cs" id="7_a5wq2"]
-[ext_resource type="Script" uid="uid://b2u2rn01b0l0o" path="res://scripts/logic/effects/root/BasicEffect.cs" id="7_uw7v0"]
-
-[sub_resource type="Resource" id="Resource_a5wq2"]
-script = ExtResource("2_2mt4m")
-Property = ExtResource("1_hh03v")
-Multiplier = 0.75
-metadata/_custom_type_script = "uid://duenc3ccpf85n"
-
-[sub_resource type="Resource" id="Resource_n88ov"]
-script = ExtResource("3_2mt4m")
-metadata/_custom_type_script = "uid://do2itakrdwe3"
-
-[sub_resource type="Resource" id="Resource_68wmy"]
-script = ExtResource("4_uw7v0")
-metadata/_custom_type_script = "uid://cfvu1bn22txif"
-
-[sub_resource type="Resource" id="Resource_olvjs"]
-script = ExtResource("3_bbiax")
-AmountProvider = SubResource("Resource_a5wq2")
-Property = ExtResource("1_hh03v")
-SubjectConditions = [SubResource("Resource_n88ov"), SubResource("Resource_68wmy")]
-metadata/_custom_type_script = "uid://dpv3u22mleltq"
+[ext_resource type="Script" uid="uid://d2frc3gu4tk33" path="res://scripts/logic/inputs/subject/refs/TargetRef.cs" id="1_bbiax"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="2_h3kn6"]
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="2_uw7v0"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="3_a5wq2"]
+[ext_resource type="Script" uid="uid://nax7csowau54" path="res://scripts/logic/inputs/subject/refs/SourceRef.cs" id="4_n88ov"]
+[ext_resource type="Script" uid="uid://dlrwum6tgpw0g" path="res://scripts/logic/effects/transfer/PropertyTransferEffect.cs" id="5_68wmy"]
+[ext_resource type="Resource" uid="uid://cik1egad503wh" path="res://data/actions2/inputlabels/Initiative.tres" id="6_n88ov"]
+[ext_resource type="Script" uid="uid://cfj4apn5dneu7" path="res://scripts/logic/effects/direct/initiative/DirectInitiativeAddEffect.cs" id="7_68wmy"]
+[ext_resource type="Script" uid="uid://dtklu8jy4aflk" path="res://scripts/logic/inputs/amount/PropertyAmountInput.cs" id="8_olvjs"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="11_olvjs"]
 
 [sub_resource type="Resource" id="Resource_uukth"]
-script = ExtResource("6_uw7v0")
-Amount = 1
-metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+script = ExtResource("1_bbiax")
+metadata/_custom_type_script = "uid://d2frc3gu4tk33"
 
 [sub_resource type="Resource" id="Resource_5gljf"]
-script = ExtResource("7_a5wq2")
-AmountProvider = SubResource("Resource_uukth")
-metadata/_custom_type_script = "uid://ds1gqt268e3q8"
+script = ExtResource("4_n88ov")
+metadata/_custom_type_script = "uid://nax7csowau54"
+
+[sub_resource type="Resource" id="Resource_8ex2i"]
+script = ExtResource("5_68wmy")
+_from = SubResource("Resource_uukth")
+_fromProperty = ExtResource("3_a5wq2")
+_fromAmount = ExtResource("2_uw7v0")
+_to = SubResource("Resource_5gljf")
+_toProperty = ExtResource("3_a5wq2")
+_toAmount = ExtResource("2_uw7v0")
+metadata/_custom_type_script = "uid://dlrwum6tgpw0g"
+
+[sub_resource type="Resource" id="Resource_msxay"]
+script = ExtResource("1_bbiax")
+metadata/_custom_type_script = "uid://d2frc3gu4tk33"
+
+[sub_resource type="Resource" id="Resource_fuwnr"]
+script = ExtResource("7_68wmy")
+_target = SubResource("Resource_msxay")
+_amount = ExtResource("6_n88ov")
+metadata/_custom_type_script = "uid://cfj4apn5dneu7"
 
 [sub_resource type="Resource" id="Resource_4a4h7"]
-script = ExtResource("7_uw7v0")
-Effects = [SubResource("Resource_olvjs"), SubResource("Resource_5gljf")]
-metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
+script = ExtResource("1_bbiax")
+metadata/_custom_type_script = "uid://d2frc3gu4tk33"
 
-[sub_resource type="Resource" id="Resource_2mt4m"]
-script = ExtResource("3_2mt4m")
-metadata/_custom_type_script = "uid://do2itakrdwe3"
+[sub_resource type="Resource" id="Resource_xg511"]
+script = ExtResource("8_olvjs")
+_subjectRef = SubResource("Resource_4a4h7")
+_property = ExtResource("3_a5wq2")
+metadata/_custom_type_script = "uid://dtklu8jy4aflk"
 
-[sub_resource type="Resource" id="Resource_bbiax"]
-script = ExtResource("6_bbiax")
-metadata/_custom_type_script = "uid://5ntnwgkkef8g"
-
-[sub_resource type="Resource" id="Resource_uw7v0"]
-script = ExtResource("4_uw7v0")
-metadata/_custom_type_script = "uid://cfvu1bn22txif"
+[sub_resource type="Resource" id="Resource_tqpfh"]
+script = ExtResource("11_olvjs")
+Amount = 1
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
 
 [resource]
 script = ExtResource("1_5c7ca")
 Label = "Stepping In"
-InitiativeCost = 0
-TargetConditions = [SubResource("Resource_2mt4m"), SubResource("Resource_bbiax"), SubResource("Resource_uw7v0")]
-Effect = SubResource("Resource_4a4h7")
+Inputs = Dictionary[ExtResource("1_2tanr"), ExtResource("2_h3kn6")]({
+ExtResource("2_uw7v0"): SubResource("Resource_xg511"),
+ExtResource("6_n88ov"): SubResource("Resource_tqpfh")
+})
+Effects = [SubResource("Resource_8ex2i"), SubResource("Resource_fuwnr")]
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"

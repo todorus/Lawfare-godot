@@ -9,7 +9,6 @@
     <Content Include="scripts\ui\character\portrait\portraitMaterial.tres" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="scripts\logic\effects\transfer\" />
     <Folder Include="scripts\logic\targeting\" />
   </ItemGroup>
 </Project>

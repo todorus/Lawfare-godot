@@ -1,9 +1,7 @@
 using Godot;
-using Lawfare.scripts.context;
 using Lawfare.scripts.logic.effects.property.amounts;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.logic.initiative;
-using Lawfare.scripts.logic.initiative.state;
 using Lawfare.scripts.subject;
 
 namespace Lawfare.scripts.logic.effects.initiative;

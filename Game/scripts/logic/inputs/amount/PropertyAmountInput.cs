@@ -17,12 +17,15 @@ public partial class PropertyAmountInput : AmountInput
     [Export]
     private Property _property;
     
+    [Export]
+    private float _multiplier = 1f;
+    
     protected override int GetAmountValue(GameEvent gameEvent)
     {
         var subjectValue = _subjectRef.GetValue(gameEvent);
         if (subjectValue is not ISubject subject) return 0;
 
         var amount = subject.Quantities.GetValue(_property);
-        return amount;
+        return (int) (_multiplier * amount);
     }
 }
