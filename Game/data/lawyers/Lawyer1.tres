@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://csovg1nkteoi" path="res://data/keywords/Charming.tres" id="4_npt1p"]
 [ext_resource type="Resource" uid="uid://kpkh2hwl0lv4" path="res://data/lawyers/StartCredibility.tres" id="4_waia8"]
 [ext_resource type="Resource" uid="uid://careqb4lcckol" path="res://data/properties/Alpha.tres" id="5_sf0wt"]
+[ext_resource type="Resource" uid="uid://dfttc7vniuwm0" path="res://data/keywords/Empath.tres" id="6_8egeo"]
 [ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/lawyers/LawyerDef.cs" id="6_hwboe"]
 [ext_resource type="Script" uid="uid://bf75xqw6x8sck" path="res://scripts/subject/quantities/Quantity.cs" id="6_npt1p"]
 
@@ -25,5 +26,5 @@ Portrait = ExtResource("4_hwboe")
 Initiative = 4
 Actions = [ExtResource("1_hwboe"), ExtResource("2_npt1p"), ExtResource("3_2hitl")]
 Quantities = [ExtResource("4_waia8"), SubResource("Resource_2hitl")]
-Keywords = [ExtResource("4_npt1p")]
+Keywords = [ExtResource("4_npt1p"), ExtResource("6_8egeo")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

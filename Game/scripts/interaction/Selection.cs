@@ -173,5 +173,16 @@ public partial class Selection : Node
             tickEvent.Resolve();
         }
         EmitSignalTickResolved(_context);
+
+        if (source != Initiative.GetCurrent(_context.InitiativeTrack))
+        {
+            var startTurnEvent = actionEvent with
+            {
+                Type = EventType.StartTurn,
+                Action = null,
+            };
+            var startTurnResolution = startTurnEvent.Resolve();
+            EmitSignalResolution(startTurnResolution);   
+        }
     } 
 }
