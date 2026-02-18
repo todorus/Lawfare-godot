@@ -59,6 +59,7 @@ metadata/_custom_type_script = "uid://ck3aocmfew6an"
 [resource]
 script = ExtResource("1_5c7ca")
 Label = "Stepping In"
+_initiativeCost = 1
 Inputs = Dictionary[ExtResource("1_2tanr"), ExtResource("2_h3kn6")]({
 ExtResource("2_uw7v0"): SubResource("Resource_xg511"),
 ExtResource("6_n88ov"): SubResource("Resource_tqpfh")

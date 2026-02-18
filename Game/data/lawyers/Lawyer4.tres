@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="LawyerDef" format=3 uid="uid://b6xs3if2fxonr"]
 
 [ext_resource type="Texture2D" uid="uid://cucymd5t1bikd" path="res://data/lawyers/lawyer4.png" id="1_o40us"]
-[ext_resource type="Resource" uid="uid://blvdintyq4at7" path="res://data/actions2/Belidger2.tres" id="1_pu8yf"]
+[ext_resource type="Resource" uid="uid://llehvk5tur5j" path="res://data/actions/Affiliate.tres" id="2_ihouq"]
 [ext_resource type="Resource" uid="uid://dkjh417e6bb1i" path="res://data/actions/SteppingIn.tres" id="2_lw4e7"]
 [ext_resource type="Texture2D" uid="uid://ce37gapyfwrfn" path="res://data/lawyers/lawyer4Portrait.png" id="4_80kmi"]
 [ext_resource type="Resource" uid="uid://careqb4lcckol" path="res://data/properties/Alpha.tres" id="4_pu8yf"]
@@ -21,6 +21,6 @@ Label = "Angelica"
 Image = ExtResource("1_o40us")
 Portrait = ExtResource("4_80kmi")
 Initiative = 2
-Actions = [ExtResource("1_pu8yf"), ExtResource("2_lw4e7")]
+Actions = [ExtResource("2_lw4e7"), ExtResource("2_ihouq")]
 Quantities = [SubResource("Resource_lw4e7"), ExtResource("6_80kmi")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

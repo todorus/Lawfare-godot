@@ -34,17 +34,18 @@ public partial class PropertyTransferEffect : Effect
     
     public override ChangeGroup[] Stage(GameEvent gameEvent)
     {
-        var fromDiff = Stage(gameEvent, _from, _fromProperty, _fromAmount);
-        var toDiff = Stage(gameEvent, _to, _toProperty, _toAmount);
+        var fromDiff = Stage(gameEvent, _from, _fromProperty, _fromAmount, true);
+        var toDiff = Stage(gameEvent, _to, _toProperty, _toAmount, false);
         var changeGroup = new ChangeGroup([fromDiff, toDiff]);
         return [changeGroup];
     }
     
-    private IDiff Stage(GameEvent gameEvent, SubjectRef subjectRef, Property property, InputLabel input)
+    private IDiff Stage(GameEvent gameEvent, SubjectRef subjectRef, Property property, InputLabel input, bool negate)
     {
         var subject = subjectRef.GetValue(gameEvent) as ISubject;
         var amountInput = gameEvent.Inputs[input] as AmountInput;
         var amount = amountInput?.GetValue(gameEvent) as int? ?? 0;
+        if (negate) amount = -amount;
         
         var oldAmount = subject.Quantities.GetValue(property);
         var newAmount = subject.Quantities.StageAdd(property, amount);
