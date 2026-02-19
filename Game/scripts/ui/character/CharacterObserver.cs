@@ -43,9 +43,9 @@ public partial class CharacterObserver : Node
         }
     }
     
-    public void SetLawyer(Lawyer lawyer)
+    public void SetCharacter(GodotObject character)
     {
-        Character = lawyer;
+        Character = character as ICharacter;
     }
     
     private ICharacter _character;

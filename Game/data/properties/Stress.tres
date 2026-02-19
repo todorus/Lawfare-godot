@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Property" load_steps=3 format=3 uid="uid://cnm3jrueqy1xy"]
+[gd_resource type="Resource" script_class="Property" format=3 uid="uid://cnm3jrueqy1xy"]
 
 [ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_dibgm"]
 [ext_resource type="Texture2D" uid="uid://cr3va1ciunp2k" path="res://data/properties/stress.png" id="1_vogm6"]
@@ -7,4 +7,5 @@
 script = ExtResource("1_dibgm")
 Label = "Stress"
 Icon = ExtResource("1_vogm6")
+Maximum = 20
 metadata/_custom_type_script = "uid://bui75swsppjh6"

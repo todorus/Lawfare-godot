@@ -14,7 +14,7 @@ namespace Lawfare.scripts.context.court;
 public partial class Hearing : Context
 {
     [Signal]
-    public delegate void WitnessesChangedEventHandler(Witness[] witness);
+    public delegate void WitnessChangedEventHandler(Witness witness);
     [Signal]
     public delegate void ProsecutionChangedEventHandler(Team prosecution);
     [Signal]
@@ -99,7 +99,7 @@ public partial class Hearing : Context
         set
         {
             _currentWitness = value;
-            EmitSignalWitnessesChanged([CurrentWitness]);
+            EmitSignalWitnessChanged(CurrentWitness);
             UpdateTestimonies();
             EmitSignalAnyChanged();
         }

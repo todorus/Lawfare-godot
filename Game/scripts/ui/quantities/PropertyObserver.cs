@@ -11,9 +11,19 @@ public partial class PropertyObserver : Node
     public delegate void AmountChangedEventHandler(string amount);
     [Signal]
     public delegate void RatioChangedEventHandler(float ratio);
-
-    [Export] 
+    
     private Property _property;
+
+    [Export]
+    public Property Property
+    {
+        get => _property;
+        set
+        {
+            _property = value;
+            EmitSignalIconChanged(Property.Icon);
+        }
+    }
 
     public void SetQuantity(Quantity quantity)
     {
@@ -23,7 +33,6 @@ public partial class PropertyObserver : Node
 
     private void UpdateDisplay(IQuantity quantity)
     {
-        EmitSignalIconChanged(quantity?.Property.Icon);
         var amount = quantity?.Amount ?? 0;
         EmitSignalAmountChanged(amount.ToString());
         var ratio = quantity != null ? (float) amount / _property.Maximum : 0f;
