@@ -12,6 +12,12 @@ public partial class PropertyObserver : Node
     [Signal]
     public delegate void RatioChangedEventHandler(float ratio);
     
+    [Signal]
+    public delegate void OnLayoutDirectionChangedEventHandler(Window.LayoutDirection layoutDirection);
+    
+    [Signal]
+    public delegate void OnOppositeLayoutDirectionChangedEventHandler(Window.LayoutDirection layoutDirection);
+    
     private Property _property;
 
     [Export]
@@ -23,6 +29,12 @@ public partial class PropertyObserver : Node
             _property = value;
             EmitSignalIconChanged(Property.Icon);
         }
+    }
+
+    public void SetMirror(bool value)
+    {
+        EmitSignalOnLayoutDirectionChanged(value ? Window.LayoutDirection.Rtl : Window.LayoutDirection.Ltr);
+        EmitSignalOnOppositeLayoutDirectionChanged(value ? Window.LayoutDirection.Ltr : Window.LayoutDirection.Rtl);
     }
 
     public void SetQuantity(Quantity quantity)

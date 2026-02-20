@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="Property" load_steps=2 format=3 uid="uid://env6fylvumkl"]
+[gd_resource type="Resource" script_class="Property" format=3 uid="uid://env6fylvumkl"]
 
+[ext_resource type="Texture2D" uid="uid://di8mgoqapl54y" path="res://data/properties/Charge.png" id="1_e4c42"]
 [ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_hygqj"]
 
 [resource]
 script = ExtResource("1_hygqj")
 Label = "Charge"
+Icon = ExtResource("1_e4c42")
 Maximum = 20
 metadata/_custom_type_script = "uid://bui75swsppjh6"

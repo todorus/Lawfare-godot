@@ -3,25 +3,22 @@
 [ext_resource type="Script" uid="uid://c2jf6wvcavjim" path="res://scripts/ui/quantities/PropertyObserver.cs" id="1_qwk81"]
 [ext_resource type="Texture2D" uid="uid://m8cbn4k80fl5" path="res://data/relations/leverage.png" id="2_qwk81"]
 
-[node name="Favor" type="Control" unique_id=303630509]
+[node name="Favor" type="HBoxContainer" unique_id=112009403]
 custom_minimum_size = Vector2(0, 30)
-layout_mode = 3
-anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 30.0
 script = ExtResource("1_qwk81")
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=122909502]
-layout_mode = 1
-offset_left = 33.0
-offset_top = 7.0
-offset_right = 333.0
-offset_bottom = 34.0
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 3
 
 [node name="Icon" type="TextureRect" parent="." unique_id=1738749767]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 2
 texture = ExtResource("2_qwk81")
 expand_mode = 3
 
 [connection signal="IconChanged" from="." to="Icon" method="set_texture" flags=3]
+[connection signal="OnLayoutDirectionChanged" from="." to="ProgressBar" method="set_layout_direction" flags=3]
 [connection signal="RatioChanged" from="." to="ProgressBar" method="set_as_ratio" flags=3]

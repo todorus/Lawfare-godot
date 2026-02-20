@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://0sri7pfs0uyu"]
 
-[ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_rjvbs"]
+[ext_resource type="Script" uid="uid://db1igst2ij10s" path="res://scripts/ui/character/team/MemberObserver.cs" id="1_f7csv"]
 [ext_resource type="PackedScene" uid="uid://c18ew30a8q6yr" path="res://scenes/portrait.tscn" id="1_sivpj"]
 [ext_resource type="Script" uid="uid://bsjh6vwaeum7f" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="2_rjvbs"]
 [ext_resource type="PackedScene" uid="uid://1vn4b4btu520" path="res://scenes/meter.tscn" id="3_f7csv"]
@@ -8,8 +8,9 @@
 [ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="6_f7csv"]
 
 [node name="Member" type="HBoxContainer" unique_id=1728950275]
+layout_direction = 2
 size_flags_horizontal = 0
-script = ExtResource("1_rjvbs")
+script = ExtResource("1_f7csv")
 
 [node name="Portrait" parent="." unique_id=20107157 instance=ExtResource("1_sivpj")]
 layout_mode = 2
@@ -29,6 +30,10 @@ Property = ExtResource("6_f7csv")
 
 [connection signal="CharacterChange" from="." to="Portrait" method="SetCharacter" flags=3]
 [connection signal="MirrorChanged" from="." to="Portrait" method="SetMirror" flags=3]
+[connection signal="MirrorChanged" from="." to="Meters/Ult" method="SetMirror" flags=3]
+[connection signal="MirrorChanged" from="." to="Meters/Credibility" method="SetMirror" flags=3]
+[connection signal="OnLayoutDirectionChanged" from="." to="." method="set_layout_direction" flags=3]
+[connection signal="OnOppositeLayoutDirectionChanged" from="." to="Meters" method="set_layout_direction" flags=3]
 [connection signal="QuantitiesChanged" from="." to="Meters" method="SetQuantities" flags=3]
 [connection signal="CharacterClicked" from="Portrait" to="." method="OnClicked" flags=3]
 [connection signal="QuantityChange" from="Meters" to="Meters/Ult" method="SetQuantity" flags=3]

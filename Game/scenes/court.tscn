@@ -180,8 +180,8 @@ _cardScene = ExtResource("8_15585")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 333.0
-offset_right = -295.0
+offset_left = 446.0
+offset_right = -443.0
 offset_bottom = 100.0
 grow_horizontal = 2
 script = ExtResource("23_g8kxy")
@@ -194,10 +194,12 @@ _moveDuration = 0.4
 layout_mode = 1
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_constants/separation = 10
 script = ExtResource("24_erabv")
 
 [node name="Meters" type="VBoxContainer" parent="UI/Prosecution" unique_id=1448170455]
 custom_minimum_size = Vector2(300, 0)
+layout_direction = 3
 layout_mode = 2
 script = ExtResource("25_xjkrd")
 
@@ -225,6 +227,7 @@ anchor_right = 1.0
 offset_left = -100.0
 offset_bottom = 238.0
 grow_horizontal = 0
+theme_override_constants/separation = 10
 script = ExtResource("24_erabv")
 
 [node name="Meters" type="VBoxContainer" parent="UI/Defense" unique_id=1231042249]

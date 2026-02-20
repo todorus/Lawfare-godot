@@ -39,7 +39,7 @@ public partial class CharacterObserver : Control
     
     public void SetMirror(bool mirror) => Mirror = mirror;
 
-    public bool Mirror
+    public virtual bool Mirror
     {
         set
         {
@@ -52,9 +52,9 @@ public partial class CharacterObserver : Control
         Character = character as ICharacter;
     }
     
-    private ICharacter _character;
+    protected ICharacter _character;
 
-    public ICharacter Character
+    public virtual ICharacter Character
     {
         get => _character;
         set
