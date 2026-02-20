@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Action" format=3 uid="uid://b16hymst1mqjp"]
+
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="1_8x6bw"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="1_e3tbi"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="2_eayy5"]
+[ext_resource type="Resource" uid="uid://cnm3jrueqy1xy" path="res://data/properties/Stress.tres" id="2_l5mby"]
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="3_f8y5o"]
+[ext_resource type="Script" uid="uid://dkn70gu5lyfwt" path="res://scripts/logic/inputs/subject/refs/WitnessRef.cs" id="3_sah73"]
+[ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="4_11wws"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="7_uki21"]
+
+[sub_resource type="Resource" id="Resource_7tcpk"]
+script = ExtResource("3_sah73")
+metadata/_custom_type_script = "uid://dkn70gu5lyfwt"
+
+[sub_resource type="Resource" id="Resource_wllsm"]
+script = ExtResource("4_11wws")
+_property = ExtResource("2_l5mby")
+_target = SubResource("Resource_7tcpk")
+_amount = ExtResource("1_8x6bw")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
+
+[sub_resource type="Resource" id="Resource_lmqyq"]
+script = ExtResource("7_uki21")
+Amount = -1
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
+
+[resource]
+script = ExtResource("3_f8y5o")
+Label = "Keep it friendly"
+Description = "Reduce Witness Stress by 2."
+_initiativeCost = 2
+RequiresTarget = false
+Inputs = Dictionary[ExtResource("1_e3tbi"), ExtResource("2_eayy5")]({
+ExtResource("1_8x6bw"): SubResource("Resource_lmqyq")
+})
+Effects = [SubResource("Resource_wllsm")]
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"

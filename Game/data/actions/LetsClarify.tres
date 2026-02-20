@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Action" format=3 uid="uid://bu5efk6a6n86c"]
+
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="1_eeu2a"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="1_ot7cj"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="2_f4tg7"]
+[ext_resource type="Resource" uid="uid://cibhkmlu2qqg0" path="res://data/properties/Defensiveness.tres" id="2_kq0pi"]
+[ext_resource type="Script" uid="uid://dkn70gu5lyfwt" path="res://scripts/logic/inputs/subject/refs/WitnessRef.cs" id="3_08ngx"]
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="3_q8w3i"]
+[ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="4_oxyij"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="7_1w4ir"]
+
+[sub_resource type="Resource" id="Resource_nix5c"]
+script = ExtResource("3_08ngx")
+metadata/_custom_type_script = "uid://dkn70gu5lyfwt"
+
+[sub_resource type="Resource" id="Resource_aalii"]
+script = ExtResource("4_oxyij")
+_property = ExtResource("2_kq0pi")
+_target = SubResource("Resource_nix5c")
+_amount = ExtResource("1_eeu2a")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
+
+[sub_resource type="Resource" id="Resource_l08wx"]
+script = ExtResource("7_1w4ir")
+Amount = -3
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
+
+[resource]
+script = ExtResource("3_q8w3i")
+Label = "Let's clarify"
+Description = "Reduce Witness Defensiveness by 3."
+_initiativeCost = 3
+RequiresTarget = false
+Inputs = Dictionary[ExtResource("1_ot7cj"), ExtResource("2_f4tg7")]({
+ExtResource("1_eeu2a"): SubResource("Resource_l08wx")
+})
+Effects = [SubResource("Resource_aalii")]
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"

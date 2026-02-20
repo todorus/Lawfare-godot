@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="LawyerDef" format=3 uid="uid://dxamvp3krvewl"]
 
-[ext_resource type="Resource" uid="uid://blvdintyq4at7" path="res://data/actions2/Belidger2.tres" id="1_5hgf8"]
+[ext_resource type="Resource" uid="uid://blvdintyq4at7" path="res://data/actions/Intimidate.tres" id="1_4xjm4"]
 [ext_resource type="Texture2D" uid="uid://dltuk38xvfupd" path="res://data/lawyers/lawyer2.png" id="1_h8a00"]
 [ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/lawyers/LawyerDef.cs" id="1_hstcw"]
 [ext_resource type="Resource" uid="uid://6wesnofhtwsj" path="res://data/actions/Diminish.tres" id="2_eqvf8"]
-[ext_resource type="Resource" uid="uid://chypiquc6ve56" path="res://data/actions/Charm.tres" id="3_4xjm4"]
+[ext_resource type="Resource" uid="uid://cruood1gjkmdb" path="res://data/actions/CornerThem.tres" id="3_agr46"]
 [ext_resource type="Resource" uid="uid://dm25638f8xarv" path="res://data/keywords/Arrogant.tres" id="4_l5b1a"]
 [ext_resource type="Resource" uid="uid://csjw1jp2l0fhf" path="res://data/keywords/Bully.tres" id="5_5hgf8"]
 [ext_resource type="Texture2D" uid="uid://cjv55m3atnh3k" path="res://data/lawyers/lawyer2Portrait.png" id="6_eqvf8"]
@@ -12,11 +12,11 @@
 
 [resource]
 script = ExtResource("1_hstcw")
-Label = "Billy"
+Label = "Claude"
 Image = ExtResource("1_h8a00")
 Portrait = ExtResource("6_eqvf8")
 Initiative = 1
-Actions = [ExtResource("1_5hgf8"), ExtResource("2_eqvf8"), ExtResource("3_4xjm4")]
+Actions = [ExtResource("1_4xjm4"), ExtResource("2_eqvf8"), ExtResource("3_agr46")]
 Quantities = [ExtResource("7_n383s")]
 Keywords = [ExtResource("4_l5b1a"), ExtResource("5_5hgf8")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

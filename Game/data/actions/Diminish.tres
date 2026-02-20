@@ -24,7 +24,7 @@ metadata/_custom_type_script = "uid://bfyfq5h6quwei"
 
 [sub_resource type="Resource" id="Resource_ygnjl"]
 script = ExtResource("7_jb8ot")
-Amount = -2
+Amount = -4
 metadata/_custom_type_script = "uid://ck3aocmfew6an"
 
 [sub_resource type="Resource" id="Resource_eapy6"]
@@ -38,6 +38,7 @@ metadata/_custom_type_script = "uid://do2itakrdwe3"
 [resource]
 script = ExtResource("1_iy503")
 Label = "Diminish"
+Description = "Reduce target lawyer’s Credibility by 4."
 _initiativeCost = 3
 _targetConditions = [SubResource("Resource_eapy6"), SubResource("Resource_7ccy7")]
 Inputs = Dictionary[ExtResource("5_o4eww"), ExtResource("6_edu0w")]({

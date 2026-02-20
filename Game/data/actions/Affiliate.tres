@@ -52,6 +52,7 @@ metadata/_custom_type_script = "uid://5ntnwgkkef8g"
 [resource]
 script = ExtResource("3_3jkm0")
 Label = "Affiliate"
+Description = "Transfer Credibility of target allied lawyer to Hera."
 _initiativeCost = 2
 _targetConditions = [SubResource("Resource_jqv2b"), SubResource("Resource_euajt")]
 Inputs = Dictionary[ExtResource("1_5cx0a"), ExtResource("2_bngpu")]({

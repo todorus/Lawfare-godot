@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="InputLabel" format=3 uid="uid://x1mj250rot5w"]
+
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="1_rchew"]
+
+[resource]
+script = ExtResource("1_rchew")
+metadata/_custom_type_script = "uid://bygourootjc2o"
