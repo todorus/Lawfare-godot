@@ -1,0 +1,51 @@
+[gd_resource type="Resource" script_class="Action" format=3 uid="uid://qtl4sxdae24p"]
+
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="1_27apf"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="1_e3q0m"]
+[ext_resource type="Resource" uid="uid://cnm3jrueqy1xy" path="res://data/properties/Stress.tres" id="2_f1c8j"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="2_ytabx"]
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="3_66wpv"]
+[ext_resource type="Script" uid="uid://dkn70gu5lyfwt" path="res://scripts/logic/inputs/subject/refs/WitnessRef.cs" id="3_qol6l"]
+[ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="4_synw7"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="5_lnf8w"]
+[ext_resource type="Script" uid="uid://nax7csowau54" path="res://scripts/logic/inputs/subject/refs/SourceRef.cs" id="6_v8mh0"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="9_5scej"]
+
+[sub_resource type="Resource" id="Resource_uomaj"]
+script = ExtResource("3_qol6l")
+metadata/_custom_type_script = "uid://dkn70gu5lyfwt"
+
+[sub_resource type="Resource" id="Resource_kgrnp"]
+script = ExtResource("4_synw7")
+_property = ExtResource("2_f1c8j")
+_target = SubResource("Resource_uomaj")
+_amount = ExtResource("1_27apf")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
+
+[sub_resource type="Resource" id="Resource_c35g8"]
+script = ExtResource("6_v8mh0")
+metadata/_custom_type_script = "uid://nax7csowau54"
+
+[sub_resource type="Resource" id="Resource_omlbh"]
+script = ExtResource("4_synw7")
+_property = ExtResource("5_lnf8w")
+_target = SubResource("Resource_c35g8")
+_amount = ExtResource("1_27apf")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
+
+[sub_resource type="Resource" id="Resource_j7vtx"]
+script = ExtResource("9_5scej")
+Amount = 2
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
+
+[resource]
+script = ExtResource("3_66wpv")
+Label = "Nervous Push"
+Description = "Increase Witness Stress by 2. Gain 2 Charge"
+_initiativeCost = 2
+RequiresTarget = false
+Inputs = Dictionary[ExtResource("1_e3q0m"), ExtResource("2_ytabx")]({
+ExtResource("1_27apf"): SubResource("Resource_j7vtx")
+})
+Effects = [SubResource("Resource_kgrnp"), SubResource("Resource_omlbh")]
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"

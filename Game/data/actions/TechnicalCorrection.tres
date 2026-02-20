@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="Action" format=3 uid="uid://do0iwc0jjkyqx"]
+
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="1_214dp"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="1_suogy"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="2_h81um"]
+[ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="2_ufvxg"]
+[ext_resource type="Script" uid="uid://d2frc3gu4tk33" path="res://scripts/logic/inputs/subject/refs/TargetRef.cs" id="3_4uct1"]
+[ext_resource type="Script" uid="uid://5ntnwgkkef8g" path="res://scripts/logic/conditions/subject/team/BelongsToSourceTeam.cs" id="3_8i0md"]
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="3_qjoru"]
+[ext_resource type="Script" uid="uid://do2itakrdwe3" path="res://scripts/logic/conditions/subject/type/IsLawyer.cs" id="4_6d17q"]
+[ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="4_8pokj"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="7_gp6kc"]
+
+[sub_resource type="Resource" id="Resource_k7lrg"]
+script = ExtResource("3_4uct1")
+metadata/_custom_type_script = "uid://d2frc3gu4tk33"
+
+[sub_resource type="Resource" id="Resource_rt0pn"]
+script = ExtResource("4_8pokj")
+_property = ExtResource("2_ufvxg")
+_target = SubResource("Resource_k7lrg")
+_amount = ExtResource("1_214dp")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
+
+[sub_resource type="Resource" id="Resource_egyxl"]
+script = ExtResource("7_gp6kc")
+Amount = 2
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
+
+[sub_resource type="Resource" id="Resource_u6117"]
+script = ExtResource("3_8i0md")
+metadata/_custom_type_script = "uid://5ntnwgkkef8g"
+
+[sub_resource type="Resource" id="Resource_3boul"]
+script = ExtResource("4_6d17q")
+metadata/_custom_type_script = "uid://do2itakrdwe3"
+
+[resource]
+script = ExtResource("3_qjoru")
+Label = "Technical Correction"
+Description = "Increase target allied lawyer’s Credibility by 2."
+_initiativeCost = 1
+_targetConditions = [SubResource("Resource_u6117"), SubResource("Resource_3boul")]
+Inputs = Dictionary[ExtResource("1_suogy"), ExtResource("2_h81um")]({
+ExtResource("1_214dp"): SubResource("Resource_egyxl")
+})
+Effects = [SubResource("Resource_rt0pn")]
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"

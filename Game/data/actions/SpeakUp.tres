@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="Action" format=3 uid="uid://ckxnq7sksje78"]
+
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="1_jxgc2"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="1_r8klg"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="2_23fid"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="2_f57sw"]
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="3_5c1ja"]
+[ext_resource type="Script" uid="uid://nax7csowau54" path="res://scripts/logic/inputs/subject/refs/SourceRef.cs" id="3_7wrvc"]
+[ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="4_dygpe"]
+[ext_resource type="Resource" uid="uid://cr88pygcsnbpq" path="res://data/actions2/inputlabels/Credibility.tres" id="5_5mvy4"]
+[ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="6_6kshy"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="9_y6hgl"]
+
+[sub_resource type="Resource" id="Resource_caqjb"]
+script = ExtResource("3_7wrvc")
+metadata/_custom_type_script = "uid://nax7csowau54"
+
+[sub_resource type="Resource" id="Resource_rig4j"]
+script = ExtResource("4_dygpe")
+_property = ExtResource("2_23fid")
+_target = SubResource("Resource_caqjb")
+_amount = ExtResource("1_jxgc2")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
+
+[sub_resource type="Resource" id="Resource_1p5it"]
+script = ExtResource("3_7wrvc")
+metadata/_custom_type_script = "uid://nax7csowau54"
+
+[sub_resource type="Resource" id="Resource_442cs"]
+script = ExtResource("4_dygpe")
+_property = ExtResource("6_6kshy")
+_target = SubResource("Resource_1p5it")
+_amount = ExtResource("5_5mvy4")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
+
+[sub_resource type="Resource" id="Resource_tp2j0"]
+script = ExtResource("9_y6hgl")
+Amount = 2
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
+
+[sub_resource type="Resource" id="Resource_i33w7"]
+script = ExtResource("9_y6hgl")
+Amount = -1
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
+
+[resource]
+script = ExtResource("3_5c1ja")
+Label = "Speak Up"
+Description = "Gain 2 Charge. Lose 1 Credibility."
+_initiativeCost = 1
+RequiresTarget = false
+Inputs = Dictionary[ExtResource("1_r8klg"), ExtResource("2_f57sw")]({
+ExtResource("1_jxgc2"): SubResource("Resource_tp2j0"),
+ExtResource("5_5mvy4"): SubResource("Resource_i33w7")
+})
+Effects = [SubResource("Resource_rig4j"), SubResource("Resource_442cs")]
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"

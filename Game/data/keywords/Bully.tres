@@ -12,7 +12,10 @@
 [ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="5_u1i6e"]
 [ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="6_u8265"]
 [ext_resource type="Script" uid="uid://binuvquyum7to" path="res://scripts/logic/triggers/Trigger.cs" id="9_ps76t"]
-[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="11_woflx"]
+[ext_resource type="Script" uid="uid://dkn70gu5lyfwt" path="res://scripts/logic/inputs/subject/refs/WitnessRef.cs" id="11_u1i6e"]
+[ext_resource type="Script" uid="uid://dtklu8jy4aflk" path="res://scripts/logic/inputs/amount/PropertyAmountInput.cs" id="12_07c36"]
+[ext_resource type="Resource" uid="uid://cibhkmlu2qqg0" path="res://data/properties/Defensiveness.tres" id="13_woflx"]
+[ext_resource type="Script" uid="uid://bya24h40yxk1i" path="res://scripts/logic/inputs/amount/SumAmountInput.cs" id="14_d7lgq"]
 
 [sub_resource type="Resource" id="Resource_d7lgq"]
 script = ExtResource("3_u1i6e")
@@ -41,16 +44,37 @@ _amountCondition = SubResource("Resource_f87nx")
 metadata/_custom_type_script = "uid://7g6cf5xvltrl"
 
 [sub_resource type="Resource" id="Resource_155is"]
-script = ExtResource("11_woflx")
-Amount = 2
-metadata/_custom_type_script = "uid://ck3aocmfew6an"
+script = ExtResource("11_u1i6e")
+metadata/_custom_type_script = "uid://dkn70gu5lyfwt"
+
+[sub_resource type="Resource" id="Resource_cusj4"]
+script = ExtResource("12_07c36")
+_subjectRef = SubResource("Resource_155is")
+_property = ExtResource("3_bf3md")
+metadata/_custom_type_script = "uid://dtklu8jy4aflk"
+
+[sub_resource type="Resource" id="Resource_owa8o"]
+script = ExtResource("11_u1i6e")
+metadata/_custom_type_script = "uid://dkn70gu5lyfwt"
+
+[sub_resource type="Resource" id="Resource_r2bn8"]
+script = ExtResource("12_07c36")
+_subjectRef = SubResource("Resource_owa8o")
+_property = ExtResource("13_woflx")
+_multiplier = -1.0
+metadata/_custom_type_script = "uid://dtklu8jy4aflk"
+
+[sub_resource type="Resource" id="Resource_615q3"]
+script = ExtResource("14_d7lgq")
+Inputs = [SubResource("Resource_cusj4"), SubResource("Resource_r2bn8")]
+metadata/_custom_type_script = "uid://bya24h40yxk1i"
 
 [sub_resource type="Resource" id="Resource_3c0fp"]
 script = ExtResource("9_ps76t")
 Type = 4
 EventConditions = [SubResource("Resource_vlj8f")]
 Inputs = Dictionary[ExtResource("5_m2squ"), ExtResource("6_u8265")]({
-ExtResource("1_8736n"): SubResource("Resource_155is")
+ExtResource("1_8736n"): SubResource("Resource_615q3")
 })
 Effects = [SubResource("Resource_ps76t")]
 metadata/_custom_type_script = "uid://binuvquyum7to"

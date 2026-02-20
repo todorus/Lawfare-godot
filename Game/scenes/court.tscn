@@ -29,6 +29,7 @@
 [ext_resource type="Script" uid="uid://bsjh6vwaeum7f" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="25_xjkrd"]
 [ext_resource type="PackedScene" uid="uid://1vn4b4btu520" path="res://scenes/meter.tscn" id="26_v012p"]
 [ext_resource type="Resource" uid="uid://cf62sltuoikad" path="res://data/relations/Favor.tres" id="27_erabv"]
+[ext_resource type="Resource" uid="uid://b3wnho0mbwqki" path="res://data/properties/Leniency.tres" id="29_clopl"]
 [ext_resource type="PackedScene" uid="uid://0sri7pfs0uyu" path="res://scenes/member.tscn" id="30_33ers"]
 
 [sub_resource type="Resource" id="Resource_revm4"]
@@ -207,6 +208,10 @@ script = ExtResource("25_xjkrd")
 layout_mode = 2
 Property = ExtResource("27_erabv")
 
+[node name="Leniency" parent="UI/Prosecution/Meters" unique_id=112009403 instance=ExtResource("26_v012p")]
+layout_mode = 2
+Property = ExtResource("29_clopl")
+
 [node name="ProsecutionPortraits" type="VBoxContainer" parent="UI/Prosecution" unique_id=122176760]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -238,6 +243,10 @@ script = ExtResource("25_xjkrd")
 [node name="Favor" parent="UI/Defense/Meters" unique_id=952267235 instance=ExtResource("26_v012p")]
 layout_mode = 2
 Property = ExtResource("27_erabv")
+
+[node name="Leniency" parent="UI/Defense/Meters" unique_id=1731691501 instance=ExtResource("26_v012p")]
+layout_mode = 2
+Property = ExtResource("29_clopl")
 
 [node name="DefensePortraits" type="VBoxContainer" parent="UI/Defense" unique_id=1248420728]
 layout_mode = 2
@@ -272,7 +281,9 @@ layout_mode = 2
 [connection signal="OnCurrentChanged" from="UI/Initiative" to="UI/Character" method="SetCharacter" flags=3]
 [connection signal="QuantitiesChanged" from="UI/Prosecution" to="UI/Prosecution/Meters" method="SetQuantities" flags=3]
 [connection signal="QuantityChange" from="UI/Prosecution/Meters" to="UI/Prosecution/Meters/Favor" method="SetQuantity" flags=3]
+[connection signal="QuantityChange" from="UI/Prosecution/Meters" to="UI/Prosecution/Meters/Leniency" method="SetQuantity" flags=3]
 [connection signal="CharacterClicked" from="UI/Prosecution/ProsecutionPortraits" to="Interaction" method="Primary" flags=3]
 [connection signal="QuantitiesChanged" from="UI/Defense" to="UI/Defense/Meters" method="SetQuantities" flags=3]
 [connection signal="QuantityChange" from="UI/Defense/Meters" to="UI/Defense/Meters/Favor" method="SetQuantity" flags=3]
+[connection signal="QuantityChange" from="UI/Defense/Meters" to="UI/Defense/Meters/Leniency" method="SetQuantity" flags=3]
 [connection signal="CharacterClicked" from="UI/Defense/DefensePortraits" to="Interaction" method="Primary" flags=3]

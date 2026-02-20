@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/lawyers/LawyerDef.cs" id="1_7gulw"]
 [ext_resource type="Texture2D" uid="uid://d1iaox6uwecmd" path="res://data/lawyers/lawyer5.png" id="1_74l1f"]
-[ext_resource type="Resource" uid="uid://blvdintyq4at7" path="res://data/actions/Intimidate.tres" id="1_gjvnq"]
+[ext_resource type="Resource" uid="uid://ckxnq7sksje78" path="res://data/actions/SpeakUp.tres" id="1_rm5cy"]
+[ext_resource type="Resource" uid="uid://btt5a7512ghcd" path="res://data/actions/ConsultNotes.tres" id="2_vywvu"]
+[ext_resource type="Resource" uid="uid://qtl4sxdae24p" path="res://data/actions/NervousPush.tres" id="3_vsw0e"]
 [ext_resource type="Resource" uid="uid://kpkh2hwl0lv4" path="res://data/lawyers/StartCredibility.tres" id="4_chgmm"]
 [ext_resource type="Texture2D" uid="uid://bv6nr454pwpod" path="res://data/lawyers/lawyer5Portrait.png" id="4_ia0eg"]
 
@@ -12,6 +14,6 @@ Label = "Rose"
 Image = ExtResource("1_74l1f")
 Portrait = ExtResource("4_ia0eg")
 Initiative = 4
-Actions = [ExtResource("1_gjvnq")]
+Actions = [ExtResource("1_rm5cy"), ExtResource("2_vywvu"), ExtResource("3_vsw0e")]
 Quantities = [ExtResource("4_chgmm")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

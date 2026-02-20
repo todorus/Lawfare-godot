@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Property" format=3 uid="uid://b3wnho0mbwqki"]
+
+[ext_resource type="Texture2D" uid="uid://801m8ltxhba4" path="res://data/properties/Leniency.png" id="1_7kabl"]
+[ext_resource type="Script" uid="uid://bui75swsppjh6" path="res://scripts/subject/quantities/Property.cs" id="1_fwtr3"]
+
+[resource]
+script = ExtResource("1_fwtr3")
+Label = "Leniency"
+Icon = ExtResource("1_7kabl")
+Maximum = 20
+metadata/_custom_type_script = "uid://bui75swsppjh6"

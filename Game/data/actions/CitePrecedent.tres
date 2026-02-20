@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Action" format=3 uid="uid://d0wmuwl2f2j2x"]
+
+[ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="1_e1a68"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="1_eqxa4"]
+[ext_resource type="Resource" uid="uid://b3wnho0mbwqki" path="res://data/properties/Leniency.tres" id="2_mopud"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="2_xgg8c"]
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="3_1kqeq"]
+[ext_resource type="Script" uid="uid://cafomty7ca7wx" path="res://scripts/logic/inputs/subject/refs/SourceTeamRef.cs" id="3_u21rn"]
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="4_kq2dj"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="5_mopud"]
+
+[sub_resource type="Resource" id="Resource_4ihwb"]
+script = ExtResource("3_u21rn")
+metadata/_custom_type_script = "uid://cafomty7ca7wx"
+
+[sub_resource type="Resource" id="Resource_u21rn"]
+script = ExtResource("1_e1a68")
+_property = ExtResource("2_mopud")
+_target = SubResource("Resource_4ihwb")
+_amount = ExtResource("4_kq2dj")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
+
+[sub_resource type="Resource" id="Resource_mg22s"]
+script = ExtResource("5_mopud")
+Amount = 2
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
+
+[resource]
+script = ExtResource("3_1kqeq")
+Label = "Cite Precedent"
+Description = "Increase Team Leniency by 2."
+_initiativeCost = 2
+RequiresTarget = false
+Inputs = Dictionary[ExtResource("1_eqxa4"), ExtResource("2_xgg8c")]({
+ExtResource("4_kq2dj"): SubResource("Resource_mg22s")
+})
+Effects = [SubResource("Resource_u21rn")]
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"

@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Action" format=3 uid="uid://btt5a7512ghcd"]
+
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="1_0s0k0"]
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="1_rexwn"]
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="2_0cbau"]
+[ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="2_1qdmj"]
+[ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="3_4q0ud"]
+[ext_resource type="Script" uid="uid://nax7csowau54" path="res://scripts/logic/inputs/subject/refs/SourceRef.cs" id="3_xmc70"]
+[ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="4_d0dio"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="7_g8n7o"]
+
+[sub_resource type="Resource" id="Resource_os7dx"]
+script = ExtResource("3_xmc70")
+metadata/_custom_type_script = "uid://nax7csowau54"
+
+[sub_resource type="Resource" id="Resource_qe5gb"]
+script = ExtResource("4_d0dio")
+_property = ExtResource("2_1qdmj")
+_target = SubResource("Resource_os7dx")
+_amount = ExtResource("1_rexwn")
+metadata/_custom_type_script = "uid://bfyfq5h6quwei"
+
+[sub_resource type="Resource" id="Resource_7rmll"]
+script = ExtResource("7_g8n7o")
+Amount = 3
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
+
+[resource]
+script = ExtResource("3_4q0ud")
+Label = "Consult Notes"
+Description = "Gain 3 Credibility."
+_initiativeCost = 2
+RequiresTarget = false
+Inputs = Dictionary[ExtResource("1_0s0k0"), ExtResource("2_0cbau")]({
+ExtResource("1_rexwn"): SubResource("Resource_7rmll")
+})
+Effects = [SubResource("Resource_qe5gb")]
+metadata/_custom_type_script = "uid://dpeknvqfvfhx"
