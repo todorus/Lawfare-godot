@@ -9,6 +9,9 @@ public partial class CardDisplay : Control
     public delegate void LabelChangedEventHandler(string label);
     
     [Signal]
+    public delegate void DescriptionChangedEventHandler(string description);
+    
+    [Signal]
     public delegate void OnClickedEventHandler(Card card);
     
     private Card _card;
@@ -19,6 +22,7 @@ public partial class CardDisplay : Control
         {
             _card = value;
             EmitSignalLabelChanged(value?.Label);
+            EmitSignalDescriptionChanged(value?.Description);
         }
     }
     

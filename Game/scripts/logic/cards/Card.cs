@@ -13,6 +13,8 @@ public partial class Card(Action action) : GodotObject, IAction
 {
     public string Label => action.Label;
     
+    public string Description => action.Description;
+    
     public bool RequiresTarget => action.RequiresTarget;
 
     public Skill[] DicePools => action.DicePools;

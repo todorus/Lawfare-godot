@@ -18,6 +18,9 @@ public partial class Action : Resource, IAction
     public string Label { get; private set; }
     
     [Export]
+    public string Description { get; private set; }
+    
+    [Export]
     private int _initiativeCost = 0;
     
     [ExportGroup("Targeting")]
