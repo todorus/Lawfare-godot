@@ -18,7 +18,6 @@ public partial class TeamPortraitDisplay : Container
     [Signal]
     public delegate void CharacterClickedEventHandler(Lawyer character);
     
-    private List<PortraitDisplay> _displays = new();
     private List<CharacterObserver> _characterObservers = new();
 
     public void SetActiveAction(GameEventDto dto)
@@ -38,33 +37,29 @@ public partial class TeamPortraitDisplay : Container
     {
         set
         {
-            this.ClearChildren();
-            _characterObservers.Clear();
-            
-            foreach (var display in _displays)
+            foreach (var display in _characterObservers)
             {
                 display.CharacterClicked -= OnCharacterClicked;   
             }
-            _displays.Clear();
+            _characterObservers.Clear();
+            this.ClearChildren();
             
             if (value == null) return;
             
             foreach (var member in value.Members)
             {
-                var display = _characterScene.Instantiate<PortraitDisplay>();
-                display.CharacterClicked += OnCharacterClicked;
-                var characterObserver = display.CharacterObserver;
+                var characterObserver = _characterScene.Instantiate<CharacterObserver>();
+                characterObserver.CharacterClicked += OnCharacterClicked;
                 characterObserver.Character = member;
                 characterObserver.Mirror = _mirror;
-                AddChild(display);
+                AddChild(characterObserver);
                 _characterObservers.Add(characterObserver);
-                _displays.Add(display);
             }
         }
     }
 
-    private void OnCharacterClicked(Lawyer character)
+    private void OnCharacterClicked(GodotObject character)
     {
-        EmitSignalCharacterClicked(character);
+        EmitSignalCharacterClicked(character as Lawyer);
     }
 }

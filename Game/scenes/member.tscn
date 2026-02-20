@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://0sri7pfs0uyu"]
+
+[ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_rjvbs"]
+[ext_resource type="PackedScene" uid="uid://c18ew30a8q6yr" path="res://scenes/portrait.tscn" id="1_sivpj"]
+[ext_resource type="Script" uid="uid://bsjh6vwaeum7f" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="2_rjvbs"]
+[ext_resource type="PackedScene" uid="uid://1vn4b4btu520" path="res://scenes/meter.tscn" id="3_f7csv"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="5_rjvbs"]
+[ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="6_f7csv"]
+
+[node name="Member" type="HBoxContainer" unique_id=1728950275]
+size_flags_horizontal = 0
+script = ExtResource("1_rjvbs")
+
+[node name="Portrait" parent="." unique_id=20107157 instance=ExtResource("1_sivpj")]
+layout_mode = 2
+
+[node name="Meters" type="VBoxContainer" parent="." unique_id=1286808037]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+script = ExtResource("2_rjvbs")
+
+[node name="Ult" parent="Meters" unique_id=303630509 instance=ExtResource("3_f7csv")]
+layout_mode = 2
+Property = ExtResource("5_rjvbs")
+
+[node name="Credibility" parent="Meters" unique_id=1794081029 instance=ExtResource("3_f7csv")]
+layout_mode = 2
+Property = ExtResource("6_f7csv")
+
+[connection signal="CharacterChange" from="." to="Portrait" method="SetCharacter" flags=3]
+[connection signal="MirrorChanged" from="." to="Portrait" method="SetMirror" flags=3]
+[connection signal="QuantitiesChanged" from="." to="Meters" method="SetQuantities" flags=3]
+[connection signal="CharacterClicked" from="Portrait" to="." method="OnClicked" flags=3]
+[connection signal="QuantityChange" from="Meters" to="Meters/Ult" method="SetQuantity" flags=3]
+[connection signal="QuantityChange" from="Meters" to="Meters/Credibility" method="SetQuantity" flags=3]

@@ -11,6 +11,11 @@ public partial class PortraitDisplay : Control
     [Signal]
     public delegate void CharacterClickedEventHandler(Lawyer character);
     
+    public void SetCharacter(GodotObject character)
+    {
+        CharacterObserver.SetCharacter(character);
+    }
+    
     public void Clicked()
     {
         EmitSignalCharacterClicked(CharacterObserver.Character as Lawyer);

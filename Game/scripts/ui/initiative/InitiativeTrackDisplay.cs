@@ -5,6 +5,7 @@ using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.logic.initiative.state;
+using Lawfare.scripts.ui.character;
 using Lawfare.scripts.ui.character.portrait;
 
 namespace Lawfare.scripts.ui.initiative;
@@ -31,15 +32,15 @@ public partial class InitiativeTrackDisplay : Control
     [Export] private Tween.TransitionType _transition = Tween.TransitionType.Cubic;
     [Export] private Tween.EaseType _ease = Tween.EaseType.Out;
     
-    private Dictionary<ICharacter, PortraitDisplay> _portraitInstances = new();
+    private Dictionary<ICharacter, CharacterObserver> _portraitInstances = new();
 
     public void SeedFromContext(Context context)
     {
         _portraitInstances.Clear();
         foreach (var lawyer in context.Lawyers)
         {
-            var instance = _portraitScene.Instantiate<PortraitDisplay>();
-            instance.CharacterObserver.Character = lawyer;
+            var instance = _portraitScene.Instantiate<CharacterObserver>();
+            instance.Character = lawyer;
             _portraitInstances[lawyer] = instance;
             AddChild(instance);
         }

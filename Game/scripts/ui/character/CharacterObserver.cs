@@ -1,8 +1,5 @@
 using Godot;
 using Lawfare.scripts.characters;
-using Lawfare.scripts.characters.lawyers;
-using Lawfare.scripts.context;
-using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
@@ -10,8 +7,11 @@ using Lawfare.scripts.subject.relations;
 
 namespace Lawfare.scripts.ui.character;
 
-public partial class CharacterObserver : Node
+public partial class CharacterObserver : Control
 {
+    [Signal]
+    public delegate void CharacterChangeEventHandler(GodotObject character);
+    
     [Signal]
     public delegate void ImageChangeEventHandler(Texture2D texture);
     [Signal]
@@ -34,6 +34,10 @@ public partial class CharacterObserver : Node
     
     [Signal]
     public delegate void TargetableChangedEventHandler(bool targetable);
+    
+    public void OnClicked(GodotObject character) => EmitSignalCharacterClicked(character);
+    
+    public void SetMirror(bool mirror) => Mirror = mirror;
 
     public bool Mirror
     {
@@ -61,6 +65,8 @@ public partial class CharacterObserver : Node
             EmitSignalLabelChanged(value?.Label);
             EmitSignalQuantitiesChanged(value?.Quantities);
             EmitSignalRelationsChanged(value?.Relations);
+            
+            EmitSignalCharacterChange(value as GodotObject);
         }
     }
     
