@@ -27,6 +27,9 @@ public partial class LawyerDef : Resource
     public int Initiative { get; private set; }
     
     [Export]
+    public Ultimate Ultimate { get; private set; }
+    
+    [Export]
     public Action[] Actions { get; private set; } = [];
     
     [Export]

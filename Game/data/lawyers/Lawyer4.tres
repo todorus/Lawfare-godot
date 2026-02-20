@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bf75xqw6x8sck" path="res://scripts/subject/quantities/Quantity.cs" id="5_80kmi"]
 [ext_resource type="Resource" uid="uid://kpkh2hwl0lv4" path="res://data/lawyers/StartCredibility.tres" id="6_80kmi"]
 [ext_resource type="Script" uid="uid://cnj2arvpule3p" path="res://scripts/characters/lawyers/LawyerDef.cs" id="6_lw4e7"]
+[ext_resource type="Script" uid="uid://bjcste7ntxgww" path="res://scripts/logic/cards/Ultimate.cs" id="9_o5iie"]
 
 [sub_resource type="Resource" id="Resource_lw4e7"]
 script = ExtResource("5_80kmi")
@@ -16,12 +17,18 @@ Property = ExtResource("4_pu8yf")
 Amount = 4
 metadata/_custom_type_script = "uid://bf75xqw6x8sck"
 
+[sub_resource type="Resource" id="Resource_47qlr"]
+script = ExtResource("9_o5iie")
+Label = "Demand"
+metadata/_custom_type_script = "uid://bjcste7ntxgww"
+
 [resource]
 script = ExtResource("6_lw4e7")
 Label = "Angelica"
 Image = ExtResource("1_o40us")
 Portrait = ExtResource("4_80kmi")
 Initiative = 2
+Ultimate = SubResource("Resource_47qlr")
 Actions = [ExtResource("2_lw4e7"), ExtResource("2_ihouq"), ExtResource("3_ihouq")]
 Quantities = [SubResource("Resource_lw4e7"), ExtResource("6_80kmi")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

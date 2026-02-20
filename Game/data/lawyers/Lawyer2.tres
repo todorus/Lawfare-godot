@@ -9,6 +9,12 @@
 [ext_resource type="Resource" uid="uid://csjw1jp2l0fhf" path="res://data/keywords/Bully.tres" id="5_5hgf8"]
 [ext_resource type="Texture2D" uid="uid://cjv55m3atnh3k" path="res://data/lawyers/lawyer2Portrait.png" id="6_eqvf8"]
 [ext_resource type="Resource" uid="uid://kpkh2hwl0lv4" path="res://data/lawyers/StartCredibility.tres" id="7_n383s"]
+[ext_resource type="Script" uid="uid://bjcste7ntxgww" path="res://scripts/logic/cards/Ultimate.cs" id="9_agr46"]
+
+[sub_resource type="Resource" id="Resource_62jpw"]
+script = ExtResource("9_agr46")
+Label = "Pressure Valve"
+metadata/_custom_type_script = "uid://bjcste7ntxgww"
 
 [resource]
 script = ExtResource("1_hstcw")
@@ -16,6 +22,7 @@ Label = "Claude"
 Image = ExtResource("1_h8a00")
 Portrait = ExtResource("6_eqvf8")
 Initiative = 1
+Ultimate = SubResource("Resource_62jpw")
 Actions = [ExtResource("1_4xjm4"), ExtResource("2_eqvf8"), ExtResource("3_agr46")]
 Quantities = [ExtResource("7_n383s")]
 Keywords = [ExtResource("4_l5b1a"), ExtResource("5_5hgf8")]

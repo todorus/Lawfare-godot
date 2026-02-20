@@ -7,6 +7,9 @@ namespace Lawfare.scripts.ui.testimony;
 
 public partial class TestimonialsDisplay : Container
 {
+    [Signal]
+    public delegate void TestimonyPressedEventHandler(Testimony testimony);
+    
     [Export] 
     private PropertyConfig _propertyConfig;
     
@@ -52,6 +55,7 @@ public partial class TestimonialsDisplay : Container
             {
                 var testimonyDisplay = new TestimonyDisplay();
                 testimonyDisplay.Testimony = testimony;
+                testimonyDisplay.Pressed += () => EmitSignalTestimonyPressed(testimony);
                 _testimonyDisplays.Add(testimonyDisplay);
                 AddChild(testimonyDisplay);
             }

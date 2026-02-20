@@ -1,5 +1,6 @@
 using System.Linq;
 using Godot;
+using Lawfare.scripts.@case;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.cards;
 using Lawfare.scripts.logic.@event;
@@ -34,6 +35,9 @@ public partial class Selection : Node
     
     [Export]
     private Context _context;
+    
+    [Export]
+    private PropertyConfig _propertyConfig;
 
     private Card _action;
 
@@ -72,6 +76,16 @@ public partial class Selection : Node
     public void SetSourceLawyer(Lawyer lawyer)
     {
         Source = lawyer;
+    }
+
+    public void SetTestimony(Testimony testimony)
+    {
+        if(Source is not Lawyer lawyer) return;
+        var charge = lawyer.Quantities.GetValue(_propertyConfig.Charge);
+        if(charge < _propertyConfig.Charge.Maximum) return;
+
+        GD.Print(lawyer.Ultimate.Label);
+
     }
 
     public void Secondary()

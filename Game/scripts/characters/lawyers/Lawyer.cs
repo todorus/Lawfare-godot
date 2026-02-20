@@ -20,6 +20,8 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
     public Texture2D Image => definition.Image;
     public Texture2D Portrait => definition.Portrait;
     
+    public Ultimate Ultimate => definition.Ultimate;
+    
     public Action[] Actions => definition.Actions;
     
     public Quantities Quantities { get; } = new(definition.Quantities);

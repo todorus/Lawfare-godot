@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="3_7eonc"]
 [ext_resource type="Script" uid="uid://5e8whvir25un" path="res://scripts/ui/Clickable.cs" id="3_lrhn5"]
 [ext_resource type="Material" uid="uid://b44ipok7iyrxk" path="res://scripts/ui/character/characterMaterial.tres" id="4_50cep"]
-[ext_resource type="Script" uid="uid://bpsgy63nxrko8" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="4_dp8ca"]
+[ext_resource type="Script" uid="uid://bpsgy63nxrko8" path="res://scripts/ui/quantities/QuantitiesDisplay.cs" id="4_dp8ca"]
 [ext_resource type="Script" uid="uid://bb8ya73qwcytc" path="res://scripts/ui/toggles/VisibilityToggle.cs" id="5_0dpix"]
 [ext_resource type="PackedScene" uid="uid://5e8dlwob8q77" path="res://scenes/stat.tscn" id="5_0lw5n"]
 [ext_resource type="Texture2D" uid="uid://dnu7prw70nt6t" path="res://data/cases/testcase/molly/MollyF.png" id="5_50cep"]

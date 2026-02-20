@@ -7,6 +7,12 @@
 [ext_resource type="Resource" uid="uid://qtl4sxdae24p" path="res://data/actions/NervousPush.tres" id="3_vsw0e"]
 [ext_resource type="Resource" uid="uid://kpkh2hwl0lv4" path="res://data/lawyers/StartCredibility.tres" id="4_chgmm"]
 [ext_resource type="Texture2D" uid="uid://bv6nr454pwpod" path="res://data/lawyers/lawyer5Portrait.png" id="4_ia0eg"]
+[ext_resource type="Script" uid="uid://bjcste7ntxgww" path="res://scripts/logic/cards/Ultimate.cs" id="7_vywvu"]
+
+[sub_resource type="Resource" id="Resource_vsw0e"]
+script = ExtResource("7_vywvu")
+Label = "Um Actually"
+metadata/_custom_type_script = "uid://bjcste7ntxgww"
 
 [resource]
 script = ExtResource("1_7gulw")
@@ -14,6 +20,7 @@ Label = "Rose"
 Image = ExtResource("1_74l1f")
 Portrait = ExtResource("4_ia0eg")
 Initiative = 4
+Ultimate = SubResource("Resource_vsw0e")
 Actions = [ExtResource("1_rm5cy"), ExtResource("2_vywvu"), ExtResource("3_vsw0e")]
 Quantities = [ExtResource("4_chgmm")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"
