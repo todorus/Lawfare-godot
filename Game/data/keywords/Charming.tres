@@ -33,7 +33,7 @@ metadata/_custom_type_script = "uid://ck3aocmfew6an"
 
 [sub_resource type="Resource" id="Resource_0523g"]
 script = ExtResource("7_tqfmf")
-Type = 10
+Type = 5
 HostConditions = [SubResource("Resource_1hjv5")]
 Inputs = Dictionary[ExtResource("4_nbs4u"), ExtResource("5_1hjv5")]({
 ExtResource("1_jbwuu"): SubResource("Resource_tqfmf")
