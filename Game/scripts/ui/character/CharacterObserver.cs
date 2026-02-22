@@ -39,10 +39,14 @@ public partial class CharacterObserver : Control
     
     public void SetMirror(bool mirror) => Mirror = mirror;
 
+    private bool _mirror = false;
+    [Export]
     public virtual bool Mirror
     {
+        get => _mirror;
         set
         {
+            _mirror = value;
             EmitSignalMirrorChanged(value);
         }
     }

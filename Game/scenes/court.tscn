@@ -31,6 +31,7 @@
 [ext_resource type="Resource" uid="uid://cf62sltuoikad" path="res://data/relations/Favor.tres" id="27_erabv"]
 [ext_resource type="Resource" uid="uid://b3wnho0mbwqki" path="res://data/properties/Leniency.tres" id="29_clopl"]
 [ext_resource type="PackedScene" uid="uid://0sri7pfs0uyu" path="res://scenes/member.tscn" id="30_33ers"]
+[ext_resource type="PackedScene" uid="uid://b5im4vyxk71p0" path="res://scenes/speaker.tscn" id="32_8gn2p"]
 
 [sub_resource type="Resource" id="Resource_revm4"]
 script = ExtResource("3_c6ra0")
@@ -73,17 +74,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
-
-[node name="Character" parent="UI" unique_id=993777195 instance=ExtResource("2_ogvvj")]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 30.0
-offset_top = -304.0
-offset_right = 230.0
-offset_bottom = 0.0
-grow_vertical = 0
 
 [node name="Witness2" type="Control" parent="UI" unique_id=1708385072]
 anchors_preset = 0
@@ -225,6 +215,15 @@ layout_mode = 2
 [node name="Member2" parent="UI/Prosecution/ProsecutionPortraits" unique_id=433187948 instance=ExtResource("30_33ers")]
 layout_mode = 2
 
+[node name="ProsecutionSpeaker" parent="UI" unique_id=1066444419 instance=ExtResource("32_8gn2p")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -304.0
+offset_bottom = 0.0
+grow_vertical = 0
+
 [node name="Defense" type="VBoxContainer" parent="UI" unique_id=497866653]
 layout_mode = 1
 anchors_preset = 1
@@ -262,13 +261,31 @@ layout_mode = 2
 [node name="Member2" parent="UI/Defense/DefensePortraits" unique_id=1615181197 instance=ExtResource("30_33ers")]
 layout_mode = 2
 
+[node name="DefenseSpeaker" parent="UI" unique_id=1889383886 instance=ExtResource("32_8gn2p")]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -274.0
+offset_top = -304.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 0
+Mirror = true
+
 [connection signal="ActiveLawyerChanged" from="." to="Interaction" method="SetSourceLawyer" flags=3]
-[connection signal="ActiveLawyerChanged" from="." to="UI/Character" method="SetCharacter" flags=3]
 [connection signal="DefenseChanged" from="." to="UI/Defense" method="SetTeam" flags=3]
 [connection signal="DefenseChanged" from="." to="UI/Defense/DefensePortraits" method="SetTeam" flags=3]
+[connection signal="DefenseChanged" from="." to="UI/DefenseSpeaker" method="SetTeam" flags=3]
 [connection signal="Initialized" from="." to="UI/Initiative" method="SeedFromContext" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution" method="SetTeam" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution/ProsecutionPortraits" method="SetTeam" flags=3]
+[connection signal="ProsecutionChanged" from="." to="UI/ProsecutionSpeaker" method="SetTeam" flags=3]
+[connection signal="SpeakerChanged" from="." to="UI/ProsecutionSpeaker" method="OnSpeakerChange" flags=3]
+[connection signal="SpeakerChanged" from="." to="UI/DefenseSpeaker" method="OnSpeakerChange" flags=3]
 [connection signal="TestimonyChanged" from="." to="UI/Witness2/Witness/Testimony" method="SetTestimonies" flags=3]
 [connection signal="WitnessChanged" from="." to="UI/Witness2/WitnessBench/Witness" method="SetCharacter" flags=3]
 [connection signal="ActionResolved" from="Interaction" to="UI/Initiative" method="UpdateFromContext" flags=3]
@@ -280,7 +297,6 @@ layout_mode = 2
 [connection signal="QuantityChange" from="UI/Witness2/Meters" to="UI/Witness2/Meters/Stress" method="SetQuantity" flags=3]
 [connection signal="QuantityChange" from="UI/Witness2/Meters" to="UI/Witness2/Meters/Defensiveness" method="SetQuantity" flags=3]
 [connection signal="CardSelected" from="UI/Hand" to="Interaction" method="Primary" flags=3]
-[connection signal="OnCurrentChanged" from="UI/Initiative" to="UI/Character" method="SetCharacter" flags=3]
 [connection signal="QuantitiesChanged" from="UI/Prosecution" to="UI/Prosecution/Meters" method="SetQuantities" flags=3]
 [connection signal="QuantityChange" from="UI/Prosecution/Meters" to="UI/Prosecution/Meters/Favor" method="SetQuantity" flags=3]
 [connection signal="QuantityChange" from="UI/Prosecution/Meters" to="UI/Prosecution/Meters/Leniency" method="SetQuantity" flags=3]

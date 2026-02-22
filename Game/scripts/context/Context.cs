@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Lawfare.scripts.board.factions;
@@ -18,6 +19,10 @@ public abstract partial class Context : Node, IContext
     public abstract Witness[] Witnesses { get; }
     public abstract Judge[] Judges { get; }
     public abstract Team[] Teams { get; }
+    
+    private Dictionary<Team, Lawyer> _speakers = new();
+    public Lawyer GetSpeaker(Team team) => _speakers.ContainsKey(team) ? _speakers[team] : null;
+
     public Team GetTeam(ISubject subject) => Teams.FirstOrDefault(team => team.Members.Contains(subject));
     public Team GetOpposingTeam(ISubject subject) => Teams.FirstOrDefault(team => !team.Members.Contains(subject));
 
@@ -29,6 +34,9 @@ public abstract partial class Context : Node, IContext
     [Signal]
     public delegate void ActiveHandChangedEventHandler(Card[] hand);
     
+    [Signal]
+    public delegate void SpeakerChangedEventHandler(Team team, Lawyer lawyer);
+    
     private Lawyer _activeLawyer;
 
     public Lawyer ActiveLawyer
@@ -38,6 +46,14 @@ public abstract partial class Context : Node, IContext
         {
             var previousLawyer = _activeLawyer;
             _activeLawyer = value;
+            
+            var team = GetTeam(value);
+            if (team != null)
+            {
+                _speakers[team] = value;
+                EmitSignalSpeakerChanged(team, value);
+            }
+            
             if (previousLawyer == value) return;
             
             EmitSignalActiveLawyerChanged(value);

@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://b5im4vyxk71p0"]
+
+[ext_resource type="Script" uid="uid://cxs6i1f8pkot8" path="res://scripts/ui/character/SpeakerObserver.cs" id="1_72scy"]
+[ext_resource type="Script" uid="uid://c3ra1t4m0gxg1" path="res://scripts/ui/character/PropertyObserver.cs" id="2_4xe8x"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="3_146hn"]
+[ext_resource type="Material" uid="uid://b44ipok7iyrxk" path="res://scripts/ui/character/characterMaterial.tres" id="4_1n7tg"]
+[ext_resource type="Texture2D" uid="uid://dnu7prw70nt6t" path="res://data/cases/testcase/molly/MollyF.png" id="5_qat21"]
+[ext_resource type="Script" uid="uid://5e8whvir25un" path="res://scripts/ui/Clickable.cs" id="6_3qj02"]
+[ext_resource type="Material" uid="uid://cfs3ia1qgvmee" path="res://scripts/ui/character/ultMaterial.tres" id="7_2wd8r"]
+[ext_resource type="Script" uid="uid://bb8ya73qwcytc" path="res://scripts/ui/toggles/VisibilityToggle.cs" id="8_2ka1m"]
+[ext_resource type="Script" uid="uid://c8x76h76uja0p" path="res://scripts/ui/character/GrayscaleControl.cs" id="9_rntd6"]
+[ext_resource type="Script" uid="uid://bpsgy63nxrko8" path="res://scripts/ui/quantities/QuantitiesDisplay.cs" id="10_rrero"]
+[ext_resource type="PackedScene" uid="uid://5e8dlwob8q77" path="res://scenes/stat.tscn" id="11_5wai4"]
+[ext_resource type="Script" uid="uid://cn5a8uepq262k" path="res://scripts/ui/relations/RelationsObserver.cs" id="12_eubn0"]
+[ext_resource type="PackedScene" uid="uid://wvnkkx5gkjbr" path="res://scenes/relation.tscn" id="13_e0jpt"]
+
+[node name="Character" type="Control" unique_id=1135477087]
+custom_minimum_size = Vector2(200, 304)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 274.0
+offset_bottom = 304.0
+size_flags_vertical = 3
+script = ExtResource("1_72scy")
+
+[node name="UltObserver" type="Node" parent="." unique_id=1060125002]
+script = ExtResource("2_4xe8x")
+_property = ExtResource("3_146hn")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1964087694]
+material = ExtResource("4_1n7tg")
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -273.83795
+offset_right = 90.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("5_qat21")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("6_3qj02")
+
+[node name="UltParticles" type="ColorRect" parent="TextureRect" unique_id=524411190]
+visible = false
+material = ExtResource("7_2wd8r")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="VisibilityToggle" type="Node" parent="TextureRect/UltParticles" unique_id=1853351363]
+script = ExtResource("8_2ka1m")
+
+[node name="GrayscaleControl" type="Node" parent="TextureRect" unique_id=545107816 node_paths=PackedStringArray("_control")]
+script = ExtResource("9_rntd6")
+_control = NodePath("..")
+
+[node name="Stats" type="VBoxContainer" parent="." unique_id=676364370]
+layout_mode = 0
+offset_right = 73.0
+offset_bottom = 304.0
+mouse_filter = 2
+script = ExtResource("10_rrero")
+_quantityScene = ExtResource("11_5wai4")
+_blacklist = [ExtResource("3_146hn")]
+
+[node name="Relations" type="VBoxContainer" parent="." unique_id=1604906879]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_bottom = 309.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("12_eubn0")
+_relationScene = ExtResource("13_e0jpt")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=5822453]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 1.0
+show_percentage = false
+
+[node name="UltVisbilityToggle" type="Node" parent="ProgressBar" unique_id=1767782456]
+script = ExtResource("8_2ka1m")
+
+[connection signal="ImageChange" from="." to="TextureRect" method="set_texture"]
+[connection signal="MirrorChanged" from="." to="TextureRect" method="set_flip_h"]
+[connection signal="QuantitiesChanged" from="." to="UltObserver" method="SetQuantities" flags=3]
+[connection signal="QuantitiesChanged" from="." to="Stats" method="SetQuantities" flags=3]
+[connection signal="RelationsChanged" from="." to="Relations" method="SetRelations" flags=3]
+[connection signal="TargetableChanged" from="." to="TextureRect/GrayscaleControl" method="SetDisabled" flags=3]
+[connection signal="MeterFull" from="UltObserver" to="TextureRect/UltParticles/VisibilityToggle" method="SetVisible" flags=3]
+[connection signal="MeterProgress" from="UltObserver" to="ProgressBar" method="set_as_ratio" flags=3]
+[connection signal="MeterVisible" from="UltObserver" to="ProgressBar/UltVisbilityToggle" method="SetVisible" flags=3]
+[connection signal="Clicked" from="TextureRect" to="." method="OnClicked" flags=3]

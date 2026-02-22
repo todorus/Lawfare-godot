@@ -45,9 +45,14 @@ public partial class Hearing : Context
             {
                 lawyer.Quantities.Set(_propertyConfig.Charge, 0);
             }
-            
+
             EmitSignalProsecutionChanged(value.Prosecution);
             EmitSignalDefenseChanged(value.Defense);
+            foreach (var team in Teams)
+            {
+                EmitSignalSpeakerChanged(team, null);
+            }
+            
             EmitSignalJudgesChanged(value.Judges);
             CurrentFaction = _docketEntry.Case.ProsecutorCaseFile.Faction;
             

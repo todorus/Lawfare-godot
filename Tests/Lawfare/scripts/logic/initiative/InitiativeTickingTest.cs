@@ -55,6 +55,8 @@ public sealed class InitiativeTickingTest
         public event Action<InitiativeTrackState>? InitiativeTrackChanged;
         public Team[] Teams => Array.Empty<Team>();
         public ISubject[] AllSubjects => Array.Empty<ISubject>();
+        public Lawyer GetSpeaker(Team team) => null;
+
         public Team GetTeam(ISubject subject) => throw new NotImplementedException();
         public Team GetOpposingTeam(ISubject subject) => throw new NotImplementedException();
     }

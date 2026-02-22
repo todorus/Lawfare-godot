@@ -23,6 +23,8 @@ public interface IContext
 
     public ISubject[] AllSubjects { get; }
     
+    public Lawyer GetSpeaker(Team team);
+    
     public Team GetTeam(ISubject subject);
     public Team GetOpposingTeam(ISubject subject);
 }
