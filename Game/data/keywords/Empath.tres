@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://diqxv3knp8kra" path="res://scripts/logic/inputs/subject/refs/HostRef.cs" id="3_eqeov"]
 [ext_resource type="Script" uid="uid://binuvquyum7to" path="res://scripts/logic/triggers/Trigger.cs" id="4_efo71"]
 [ext_resource type="Script" uid="uid://bfyfq5h6quwei" path="res://scripts/logic/effects/direct/property/DirectPropertyAddEffect.cs" id="4_suhr7"]
-[ext_resource type="Script" uid="uid://rmocuip1bhc8" path="res://scripts/logic/conditions/subject/initiative/IsActing.cs" id="5_l71ss"]
+[ext_resource type="Script" uid="uid://bm1qbafyk5vhr" path="res://scripts/logic/conditions/subject/position/IsSpeaker.cs" id="5_suhr7"]
 [ext_resource type="Resource" uid="uid://cf62sltuoikad" path="res://data/relations/Favor.tres" id="8_suhr7"]
 [ext_resource type="Script" uid="uid://b7wi45snin7tt" path="res://scripts/logic/inputs/subject/refs/HostTeamRef.cs" id="9_l71ss"]
 [ext_resource type="Script" uid="uid://dtklu8jy4aflk" path="res://scripts/logic/inputs/amount/PropertyAmountInput.cs" id="10_7e4q5"]
@@ -24,9 +24,9 @@ _target = SubResource("Resource_7e4q5")
 _amount = ExtResource("1_hkdt7")
 metadata/_custom_type_script = "uid://bfyfq5h6quwei"
 
-[sub_resource type="Resource" id="Resource_fmabo"]
-script = ExtResource("5_l71ss")
-metadata/_custom_type_script = "uid://rmocuip1bhc8"
+[sub_resource type="Resource" id="Resource_l71ss"]
+script = ExtResource("5_suhr7")
+metadata/_custom_type_script = "uid://bm1qbafyk5vhr"
 
 [sub_resource type="Resource" id="Resource_6ucer"]
 script = ExtResource("9_l71ss")
@@ -40,8 +40,8 @@ metadata/_custom_type_script = "uid://dtklu8jy4aflk"
 
 [sub_resource type="Resource" id="Resource_padxu"]
 script = ExtResource("4_efo71")
-Type = 5
-HostConditions = [SubResource("Resource_fmabo")]
+Type = 10
+HostConditions = [SubResource("Resource_l71ss")]
 Inputs = Dictionary[ExtResource("2_jpsd8"), ExtResource("3_6b02b")]({
 ExtResource("1_hkdt7"): SubResource("Resource_p4p71")
 })
