@@ -175,17 +175,13 @@ public partial class Selection : Node
         var afterResolution = afterActionEvent.Resolve();
         EmitSignalResolution(afterResolution);
         EmitSignalActionResolved(_context);
-        
+
+        Tick(actionEvent);
         while (Initiative.GetCurrent(_context.InitiativeTrack) == null)
         {
-            var tickEvent = actionEvent with
-            {
-                Type = EventType.Tick,
-                Action = null,
-            };
-
-            tickEvent.Resolve();
+           Tick(actionEvent);
         }
+        _context.UpdateCurrent();
         EmitSignalTickResolved(_context);
 
         if (source != Initiative.GetCurrent(_context.InitiativeTrack))
@@ -198,5 +194,16 @@ public partial class Selection : Node
             var startTurnResolution = startTurnEvent.Resolve();
             EmitSignalResolution(startTurnResolution);   
         }
-    } 
+    }
+
+    private void Tick(GameEvent actionEvent)
+    {
+        var tickEvent = actionEvent with
+        {
+            Type = EventType.Tick,
+            Action = null,
+        };
+
+        tickEvent.Resolve();
+    }
 }

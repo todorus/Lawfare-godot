@@ -75,7 +75,7 @@ public static class Resolver
         if (!gameEventData.ShouldTick()) return [];
 
         // Advance initiative track by 1 tick.
-        var diffs = Initiative.Tick(gameEventData.Context).Cast<IDiff>().ToArray();
+        var diffs = Initiative.Tick(gameEventData.Context);
         return [diffs.ToChangeGroup()];
     }
 

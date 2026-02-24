@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lawfare.scripts.context;
+using Lawfare.scripts.logic.effects;
 using Lawfare.scripts.logic.effects.initiative;
 using Lawfare.scripts.logic.initiative.state;
 using Lawfare.scripts.subject;
@@ -146,19 +147,17 @@ public static class Initiative
         return diffs.ToArray();
     }
 
-    public static InitiativeDiff[] Tick(IContext context)
+    public static IDiff[] Tick(IContext context)
     {
         var state = context.InitiativeTrack;
 
         if (state.Slots.Length == 0)
-            return Array.Empty<InitiativeDiff>();
+            return Array.Empty<IDiff>();
 
         if (state.CurrentIndex < state.RoundEndIndex)
-        {
-            state.CurrentIndex++;
-            return Array.Empty<InitiativeDiff>();
-        }
+            return [new TickDiff(context, context.InitiativeTrack.CurrentIndex, context.InitiativeTrack.CurrentIndex + 1)];
 
+        // CurrentIndex == RoundEndIndex: compute next round
         int roundLength = state.RoundEndIndex + 1;
 
         var staggered = state.Slots
@@ -181,10 +180,7 @@ public static class Initiative
                 : new InitiativeSlotState { Occupant = null, IsStaggered = false };
         }
 
-        state.Slots = newSlots;
-        state.CurrentIndex = 0;
-
-        return Array.Empty<InitiativeDiff>();
+        return [new RoundRebuildDiff(context, newSlots)];
     }
 
     public static InitiativeTrackState SetSlot(InitiativeTrackState state, int index, IHasInitiative? occupant, bool isStaggered = false)

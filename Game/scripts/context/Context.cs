@@ -5,6 +5,7 @@ using Godot;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.logic.cards;
+using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.logic.initiative.state;
 using Lawfare.scripts.subject;
 using Lawyer = Lawfare.scripts.characters.lawyers.Lawyer;
@@ -71,12 +72,15 @@ public abstract partial class Context : Node, IContext
         {
             _initiativeTrack = value;
             InitiativeTrackChanged?.Invoke(value);
-
-            var slots = _initiativeTrack.Slots;
-            
-            if(slots == null || slots.Length == 0 || slots[0].Occupant == null) ActiveLawyer = null;
-            ActiveLawyer = _initiativeTrack.Slots[0].Occupant as Lawyer;
+            UpdateCurrent();
         }
+    }
+    
+    public void UpdateCurrent()
+    {
+        var current = Initiative.GetCurrent(_initiativeTrack);
+        if(current == null) ActiveLawyer = null;
+        ActiveLawyer = current as Lawyer;
     }
 
     public ISubject[] AllSubjects =>

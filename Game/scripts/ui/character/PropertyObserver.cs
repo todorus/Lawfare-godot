@@ -45,7 +45,7 @@ public partial class PropertyObserver : Node
 
     private void OnQuantitiesChanged(Quantities quantities)
     {
-        var hasProperty = quantities.Has(_property);
+        var hasProperty = quantities?.Has(_property) ?? false;
         EmitSignalMeterVisible(hasProperty);
         if(!hasProperty) return;
         

@@ -4,6 +4,7 @@ using Xunit;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.logic.initiative.state;
+using Lawfare.scripts.logic.effects.initiative;
 using Lawfare.scripts.board.factions;
 using Lawfare.scripts.characters;
 using Lawfare.scripts.characters.lawyers;
@@ -92,7 +93,10 @@ public sealed class InitiativeTickingTest
             }
         };
 
-        Tick(ctx);
+        var diffs = Initiative.Tick(ctx);
+        Assert.Empty(diffs);
+
+        foreach (var d in diffs) d.Apply();
 
         Assert.Empty(Initiative.ReadSlots(ctx.InitiativeTrack));
         Assert.Null(Initiative.GetCurrent(ctx.InitiativeTrack));
@@ -123,7 +127,12 @@ public sealed class InitiativeTickingTest
                 (null, false))
         };
 
-        Tick(ctx);
+        var diffs = Initiative.Tick(ctx);
+
+        Assert.Single(diffs);
+        Assert.IsType<TickDiff>(diffs[0]);
+
+        foreach (var d in diffs) d.Apply();
 
         Assert.Equal(3, ctx.InitiativeTrack.CurrentIndex);
 
@@ -159,7 +168,11 @@ public sealed class InitiativeTickingTest
                 (null, false))
         };
 
-        Tick(ctx);
+        var diffs = Initiative.Tick(ctx);
+        Assert.Single(diffs);
+        Assert.IsType<TickDiff>(diffs[0]);
+
+        foreach (var d in diffs) d.Apply();
 
         Assert.Same(C, Initiative.GetCurrent(ctx.InitiativeTrack));
     }
@@ -193,7 +206,12 @@ public sealed class InitiativeTickingTest
                 (Y,    true))
         };
 
-        Tick(ctx);
+        var diffs = Initiative.Tick(ctx);
+
+        Assert.Single(diffs);
+        Assert.IsType<RoundRebuildDiff>(diffs[0]);
+
+        foreach (var d in diffs) d.Apply();
 
         Assert.Equal(0, ctx.InitiativeTrack.CurrentIndex);
         Assert.Equal(4, ctx.InitiativeTrack.RoundEndIndex);
@@ -232,7 +250,12 @@ public sealed class InitiativeTickingTest
                 (Z,    true))
         };
 
-        Tick(ctx);
+        var diffs = Initiative.Tick(ctx);
+
+        Assert.Single(diffs);
+        Assert.IsType<RoundRebuildDiff>(diffs[0]);
+
+        foreach (var d in diffs) d.Apply();
 
         Assert.Equal(0, ctx.InitiativeTrack.CurrentIndex);
         Assert.Equal(3, ctx.InitiativeTrack.RoundEndIndex);

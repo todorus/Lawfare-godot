@@ -65,21 +65,18 @@ public partial class InitiativeTrackDisplay : Control
     {
         var tween = CreateTween();
         tween.SetParallel(true);
-
-        var deltaX = 0f;
-        var lastDelay = 0;
         var portraitIndex = 0;
         
         for(int i = 0; i < slots.Count; i++)
         {
             var slot = slots[i];
-            deltaX += i * _slotDistance;
             var entity = slot.Occupant;
-            if(_portraitInstances.TryGetValue(entity as ICharacter, out var portrait))
+            
+            if(entity != null && _portraitInstances.TryGetValue(entity as ICharacter, out var portrait))
             {
                 // Position the portrait based on the slot index and stack 
-                deltaX += _stackDistance;
                     
+                var deltaX = i * _slotDistance;
                 var targetX = Size.X - deltaX - portrait.Size.X;
                 var targetPos = new Vector2(targetX, 0);
                     

@@ -32,7 +32,7 @@ public readonly struct InitiativeDiff(IContext context, ISubject subject, int or
             Initiative.SetSlot(state, OriginalIndex, null, false);
         }
 
-        Initiative.SetSlot(state, UpdatedIndex, occupant, becameStaggered);
+        context.InitiativeTrack = Initiative.SetSlot(state, UpdatedIndex, occupant, becameStaggered);
 
         return this;
     }

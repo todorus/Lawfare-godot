@@ -57,11 +57,12 @@ public partial class Action : Resource, IAction
 
     public ChangeGroup[] Stage(GameEvent gameEvent)
     {
-        var initiativeChangeGroup = StageInitiative(gameEvent);
-        var effectDiffs = Effects.SelectMany(effect => effect.Stage(gameEvent)).ToArray();
-        return effectDiffs
-            .Concat(initiativeChangeGroup)
-            .ToArray();
+        return Effects.SelectMany(effect => effect.Stage(gameEvent)).ToArray();
+        // var initiativeChangeGroup = StageInitiative(gameEvent);
+        // var effectDiffs = Effects.SelectMany(effect => effect.Stage(gameEvent)).ToArray();
+        // return effectDiffs
+        //     .Concat(initiativeChangeGroup)
+        //     .ToArray();
     }
     
     private ChangeGroup[] StageInitiative(GameEvent gameEvent)
