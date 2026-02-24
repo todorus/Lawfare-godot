@@ -176,12 +176,7 @@ public partial class Selection : Node
         EmitSignalResolution(afterResolution);
         EmitSignalActionResolved(_context);
 
-        Tick(actionEvent);
-        while (Initiative.GetCurrent(_context.InitiativeTrack) == null)
-        {
-           Tick(actionEvent);
-        }
-        _context.UpdateCurrent();
+        ProcessTicks(actionEvent);
         EmitSignalTickResolved(_context);
 
         if (source != Initiative.GetCurrent(_context.InitiativeTrack))
@@ -194,6 +189,18 @@ public partial class Selection : Node
             var startTurnResolution = startTurnEvent.Resolve();
             EmitSignalResolution(startTurnResolution);   
         }
+    }
+    
+    private void ProcessTicks(GameEvent actionEvent)
+    {
+        Tick(actionEvent);
+        var current = Initiative.GetCurrent(_context.InitiativeTrack);
+        while (current is Lawyer { HasActed: true })
+        {
+            Tick(actionEvent);
+            current = Initiative.GetCurrent(_context.InitiativeTrack);
+        }
+        _context.UpdateCurrent();
     }
 
     private void Tick(GameEvent actionEvent)

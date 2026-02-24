@@ -11,6 +11,7 @@ public sealed class InitiativeSeedingTest
     {
         public TestEntity(string name) => Name = name;
         public string Name { get; }
+        public bool HasActed { get; set; }
         public override string ToString() => Name;
     }
 

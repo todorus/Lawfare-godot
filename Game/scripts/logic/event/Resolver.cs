@@ -3,6 +3,7 @@ using System.Linq;
 using Lawfare.scripts.board.dice;
 using Lawfare.scripts.dice;
 using Lawfare.scripts.logic.effects;
+using Lawfare.scripts.logic.effects.initiative;
 using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.subject;
 using Lawfare.scripts.subject.quantities;
@@ -67,7 +68,23 @@ public static class Resolver
         if (!gameEventData.ShouldRunAction()) return [];
 
         if (gameEventData.Action == null || !gameEventData.Action.Applies(gameEventData)) return [];
-        return gameEventData.Action.Stage(gameEventData with { Faction = gameEventData.Source?.Allegiances?.Primary });
+
+        var actionGroups =
+            gameEventData.Action.Stage(gameEventData with { Faction = gameEventData.Source?.Allegiances?.Primary });
+        var hasActedChangeGroup = HasActedChangeGroup(gameEventData);
+        return actionGroups
+            .Concat([hasActedChangeGroup])
+            .ToArray();
+    }
+    
+    private static ChangeGroup HasActedChangeGroup(GameEvent gameEventData)
+    {
+        IDiff[] hasActedDiffs = [];
+        if (gameEventData.Source != null)
+        {
+            hasActedDiffs = [new HasActedDiff(gameEventData.Source, true)];
+        }
+        return hasActedDiffs.ToChangeGroup();
     }
 
     private static ChangeGroup[] StageTick(this GameEvent gameEventData)

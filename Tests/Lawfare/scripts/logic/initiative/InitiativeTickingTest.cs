@@ -18,6 +18,7 @@ public sealed class InitiativeTickingTest
     {
         public TestEntity(string name) : base(name) { }
         public override string ToString() => Label;
+        public bool HasActed { get; set; }
     }
 
     private sealed class TestContext : IContext
@@ -194,6 +195,12 @@ public sealed class InitiativeTickingTest
         var X = E("X");
         var Y = E("Y");
 
+        A.HasActed = true;
+        B.HasActed = true;
+        C.HasActed = true;
+        X.HasActed = true;
+        Y.HasActed = true;
+
         var ctx = new TestContext
         {
             InitiativeTrack = State(4, 4,
@@ -208,7 +215,6 @@ public sealed class InitiativeTickingTest
 
         var diffs = Initiative.Tick(ctx);
 
-        Assert.Single(diffs);
         Assert.IsType<RoundRebuildDiff>(diffs[0]);
 
         foreach (var d in diffs) d.Apply();
@@ -223,6 +229,12 @@ public sealed class InitiativeTickingTest
             (A, false),
             (B, false),
             (C, false));
+
+        Assert.False(A.HasActed);
+        Assert.False(B.HasActed);
+        Assert.False(C.HasActed);
+        Assert.False(X.HasActed);
+        Assert.False(Y.HasActed);
     }
 
     /*
@@ -240,6 +252,10 @@ public sealed class InitiativeTickingTest
         var B = E("B");
         var Z = E("Z");
 
+        A.HasActed = true;
+        B.HasActed = true;
+        Z.HasActed = true;
+
         var ctx = new TestContext
         {
             InitiativeTrack = State(3, 3,
@@ -252,7 +268,6 @@ public sealed class InitiativeTickingTest
 
         var diffs = Initiative.Tick(ctx);
 
-        Assert.Single(diffs);
         Assert.IsType<RoundRebuildDiff>(diffs[0]);
 
         foreach (var d in diffs) d.Apply();
@@ -266,5 +281,9 @@ public sealed class InitiativeTickingTest
             (A,    false),
             (B,    false),
             (null, false));
+
+        Assert.False(A.HasActed);
+        Assert.False(B.HasActed);
+        Assert.False(Z.HasActed);
     }
 }

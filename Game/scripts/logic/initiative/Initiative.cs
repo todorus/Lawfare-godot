@@ -180,7 +180,8 @@ public static class Initiative
                 : new InitiativeSlotState { Occupant = null, IsStaggered = false };
         }
 
-        return [new RoundRebuildDiff(context, newSlots)];
+        return [new RoundRebuildDiff(context, newSlots),
+            ..ordered.Select(e => new HasActedDiff(e as ISubject, false))];
     }
 
     public static InitiativeTrackState SetSlot(InitiativeTrackState state, int index, IHasInitiative? occupant, bool isStaggered = false)

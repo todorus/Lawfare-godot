@@ -22,6 +22,7 @@ public class SubjectStub(string label) : ISubject
     public bool CanHaveFaction { get; set; } = true;
     public IEnumerable<SkillPool> Pools { get; set; } = [];
     public bool IsExpired { get; set; } = false;
+    public bool HasActed { get; set; }
     public int Minimum(Property property) => property.Minimum;
 
     public Vector3 DamagePosition { get; }

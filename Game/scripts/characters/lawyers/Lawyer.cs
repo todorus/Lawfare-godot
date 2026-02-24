@@ -38,6 +38,7 @@ public partial class Lawyer(LawyerDef definition) : GodotObject, ISubject, IChar
     public bool CanHaveFaction => true;
     public IEnumerable<SkillPool> Pools => definition.Skills.Select(skill => new SkillPool { Skill = skill.Skill, Dice = skill.Amount});
     public bool IsExpired { get; set; }
+    public bool HasActed { get; set; } = false;
     public int Minimum(Property property) => property.Minimum;
     
     public int Initiative => definition.Initiative;
