@@ -195,7 +195,7 @@ public partial class Selection : Node
     {
         Tick(actionEvent);
         var current = Initiative.GetCurrent(_context.InitiativeTrack);
-        while (current is Lawyer { HasActed: true })
+        while (current == null || current is Lawyer { HasActed: true })
         {
             Tick(actionEvent);
             current = Initiative.GetCurrent(_context.InitiativeTrack);
