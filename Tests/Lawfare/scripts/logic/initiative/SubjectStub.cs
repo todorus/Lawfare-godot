@@ -13,9 +13,9 @@ namespace Tests.Lawfare.scripts.logic.initiative;
 public class SubjectStub(string label) : ISubject
 {
     public string Label = label;
-    
-    public Quantities Quantities { get; set; } = new Quantities();
-    public Relations Relations { get; set; } = new Relations();
+
+    public Quantities Quantities { get; set; } = null;
+    public Relations Relations { get; set; } = null;
     public HostedTrigger[] Triggers { get; set; } = [];
     public KeywordBase[] Keywords { get; set; } = [];
     public Allegiances Allegiances { get; set; } = new Allegiances();

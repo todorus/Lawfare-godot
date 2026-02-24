@@ -1,53 +1,27 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Godot;
-using Lawfare.scripts.board.dice;
-using Lawfare.scripts.board.factions;
-using Lawfare.scripts.characters;
-using Lawfare.scripts.characters.lawyers;
 using Xunit;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.logic.initiative.state;
-using Lawfare.scripts.logic.keywords;
-using Lawfare.scripts.logic.triggers;
+using Lawfare.scripts.board.factions;
+using Lawfare.scripts.characters;
+using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.subject;
-using Lawfare.scripts.subject.quantities;
-using Lawfare.scripts.subject.relations;
 
 namespace Tests.Lawfare.scripts.logic.initiative;
 
 public sealed class InitiativeTickingTest
 {
-    // Minimal test subject: must be both ISubject and IHasInitiative for initiative diffs.
-    private sealed class TestEntity : ISubject, IHasInitiative
+    private sealed class TestEntity : SubjectStub, IHasInitiative
     {
-        public TestEntity(string name) => Name = name;
-        public string Name { get; }
-        public override string ToString() => Name;
-
-        // ---- ISubject members ----
-        // Adjust these stubs to match your actual ISubject interface requirements.
-        // If your real ISubject has many members, prefer creating a dedicated TestSubject in Tests project.
-        public Quantities Quantities => throw new NotImplementedException();
-        public Relations Relations { get; }
-        public KeywordBase[] Keywords { get; }
-        public Allegiances Allegiances => throw new NotImplementedException();
-        public bool CanHaveFaction { get; }
-        public IEnumerable<SkillPool> Pools { get; }
-        public bool IsExpired { get; set; }
-        public HostedTrigger[] Triggers => Array.Empty<HostedTrigger>();
-        public int Minimum(Property property) => 0;
-        public Vector3 DamagePosition { get; }
+        public TestEntity(string name) : base(name) { }
+        public override string ToString() => Label;
     }
 
-    // Minimal context that only needs to carry the initiative track for diff Apply().
     private sealed class TestContext : IContext
     {
         public InitiativeTrackState InitiativeTrack { get; set; } = new();
-
-        // ---- IContext members (not needed for these tests) ----
         public Faction[] Factions => Array.Empty<Faction>();
         public Lawyer[] Lawyers => Array.Empty<Lawyer>();
         public Witness[] Witnesses => Array.Empty<Witness>();
@@ -56,219 +30,218 @@ public sealed class InitiativeTickingTest
         public Team[] Teams => Array.Empty<Team>();
         public ISubject[] AllSubjects => Array.Empty<ISubject>();
         public Lawyer GetSpeaker(Team team) => null;
-
         public Team GetTeam(ISubject subject) => throw new NotImplementedException();
         public Team GetOpposingTeam(ISubject subject) => throw new NotImplementedException();
     }
 
-    private static ISubject S(string name) => new TestEntity(name);
+    private static TestEntity E(string name) => new TestEntity(name);
 
-    private static InitiativeTrackState State(params (int delay, ISubject[] row)[] slots)
+    private static InitiativeTrackState State(
+        int currentIndex,
+        int roundEndIndex,
+        params (IHasInitiative? occupant, bool isStaggered)[] slots)
     {
         return new InitiativeTrackState
         {
-            Slots = slots.Select(s => new InitiativeSlotState { Delay = s.delay, Row = s.row.Cast<IHasInitiative>().ToArray() }).ToArray()
+            CurrentIndex = currentIndex,
+            RoundEndIndex = roundEndIndex,
+            Slots = slots.Select(s => new InitiativeSlotState
+            {
+                Occupant = s.occupant,
+                IsStaggered = s.isStaggered
+            }).ToArray()
         };
     }
 
-    private static InitiativeTrackState TickN(InitiativeTrackState state, int n)
+    private static void Tick(TestContext ctx)
     {
-        var ctx = new TestContext { InitiativeTrack = state };
-
-        for (int i = 0; i < n; i++)
-        {
-            var diffs = Initiative.Tick(ctx);      // returns InitiativeDelayDiff[]
-            foreach (var d in diffs)
-                d.Apply();                         // mutates ctx.InitiativeTrack via SetDelay(...)
-        }
-
-        return ctx.InitiativeTrack;
+        var diffs = Initiative.Tick(ctx);
+        foreach (var d in diffs)
+            d.Apply();
     }
 
     private static void AssertSlots(
         InitiativeTrackState state,
-        params (int delay, ISubject[] row)[] expected)
+        params (IHasInitiative? occupant, bool isStaggered)[] expected)
     {
-        var actual = Initiative.ReadSlots(state); // IReadOnlyList<InitiativeSlotDTO>
-
+        var actual = Initiative.ReadSlots(state);
         Assert.Equal(expected.Length, actual.Count);
-
         for (int i = 0; i < expected.Length; i++)
         {
-            Assert.Equal(expected[i].delay, actual[i].Delay);
-            Assert.Equal(expected[i].row.Length, actual[i].Row.Length);
-
-            for (int j = 0; j < expected[i].row.Length; j++)
-                Assert.Same(expected[i].row[j], actual[i].Row[j]);
+            Assert.Same(expected[i].occupant, actual[i].Occupant);
+            Assert.Equal(expected[i].isStaggered, actual[i].IsStaggered);
         }
     }
 
     /*
     Scenario: Tick on an empty track yields an empty track
-      Given an initiative state with no slots
-      When I tick the track once
-      Then the track has no slots
-      And GetCurrent returns null
+      Given no slots
+      When I tick once
+      Then no slots and GetCurrent returns null
     */
     [Fact]
     public void Tick_EmptyTrack_RemainsEmpty()
     {
         var ctx = new TestContext
         {
-            InitiativeTrack = new InitiativeTrackState { Slots = Array.Empty<InitiativeSlotState>() }
+            InitiativeTrack = new InitiativeTrackState
+            {
+                CurrentIndex = 0,
+                RoundEndIndex = 0,
+                Slots = Array.Empty<InitiativeSlotState>()
+            }
         };
 
-        var diffs = Initiative.Tick(ctx);
-        foreach (var d in diffs)
-            d.Apply();
+        Tick(ctx);
 
         Assert.Empty(Initiative.ReadSlots(ctx.InitiativeTrack));
         Assert.Null(Initiative.GetCurrent(ctx.InitiativeTrack));
     }
 
     /*
-    Scenario: Tick decrements all positive delays by 1 and merges collisions
-      Given an initiative state with slots:
-        | delay | row |
-        | 0     | A   |
-        | 2     | B   |
-        | 1     | C   |
-      When I tick the track once
-      Then ReadSlots returns:
-        | delay | row |
-        | 0     | A,C |
-        | 1     | B   |
-      And GetCurrent returns A
+    Scenario: Tick advances CurrentIndex by one without changing slots
+      Given RoundEndIndex=4, CurrentIndex=2
+      And slots: A, (empty), B, C, (empty)
+      When I tick once
+      Then CurrentIndex is 3
+      And slots unchanged
     */
     [Fact]
-    public void Tick_DecrementsAndMergesCollisions()
+    public void Tick_AdvancesCurrentIndex_SlotUnchanged()
     {
-        var A = S("A");
-        var B = S("B");
-        var C = S("C");
+        var A = E("A");
+        var B = E("B");
+        var C = E("C");
 
         var ctx = new TestContext
         {
-            InitiativeTrack = State(
-                (0, new[] { A }),
-                (2, new[] { B }),
-                (1, new[] { C })
-            )
+            InitiativeTrack = State(2, 4,
+                (A,    false),
+                (null, false),
+                (B,    false),
+                (C,    false),
+                (null, false))
         };
 
-        var diffs = Initiative.Tick(ctx);
-        foreach (var d in diffs)
-            d.Apply();
+        Tick(ctx);
+
+        Assert.Equal(3, ctx.InitiativeTrack.CurrentIndex);
 
         AssertSlots(ctx.InitiativeTrack,
-            (0, new[] { A, C }),
-            (1, new[] { B })
-        );
-
-        Assert.Same(A, Initiative.GetCurrent(ctx.InitiativeTrack));
+            (A,    false),
+            (null, false),
+            (B,    false),
+            (C,    false),
+            (null, false));
     }
 
     /*
-    Scenario: Tick preserves order when multiple slots merge into the same delay
-      Given an initiative state with slots:
-        | delay | row |
-        | 2     | B   |
-        | 1     | C   |
-      When I tick the track once
-      Then ReadSlots returns:
-        | delay | row |
-        | 0     | C   |
-        | 1     | B   |
+    Scenario: GetCurrent returns Slots[CurrentIndex].Occupant after tick
+      Given RoundEndIndex=4, CurrentIndex=2
+      And slots: A, (empty), B, C, (empty)
+      When I tick once (CurrentIndex becomes 3)
+      Then GetCurrent returns C
     */
     [Fact]
-    public void Tick_PreservesOrder_WhenSlotsShift()
+    public void Tick_GetCurrent_ReturnsOccupantAtNewCurrentIndex()
     {
-        var B = S("B");
-        var C = S("C");
+        var A = E("A");
+        var B = E("B");
+        var C = E("C");
 
         var ctx = new TestContext
         {
-            InitiativeTrack = State(
-                (2, new[] { B }),
-                (1, new[] { C })
-            )
+            InitiativeTrack = State(2, 4,
+                (A,    false),
+                (null, false),
+                (B,    false),
+                (C,    false),
+                (null, false))
         };
 
-        var diffs = Initiative.Tick(ctx);
-        foreach (var d in diffs)
-            d.Apply();
-
-        AssertSlots(ctx.InitiativeTrack,
-            (0, new[] { C }),
-            (1, new[] { B })
-        );
+        Tick(ctx);
 
         Assert.Same(C, Initiative.GetCurrent(ctx.InitiativeTrack));
     }
 
     /*
-    Scenario: Tick does not move entities already at delay 0
-      Given an initiative state with slots:
-        | delay | row |
-        | 0     | A,B |
-        | 1     | C   |
-      When I tick the track once
-      Then ReadSlots returns:
-        | delay | row   |
-        | 0     | A,B,C |
+    Scenario: Ticking when CurrentIndex == RoundEndIndex rebuilds next round
+      Given RoundEndIndex=4, CurrentIndex=4, TrackLength=7
+      And slots: A(0), (empty)(1), B(2), C(3), (empty)(4), X(5,staggered), Y(6,staggered)
+      When I tick once
+      Then new round begins: CurrentIndex=0, TrackLength=5
+      And slots: X, Y, A, B, C — all not staggered
     */
     [Fact]
-    public void Tick_DoesNotMoveDelay0_OnlyAddsArrivals()
+    public void Tick_AtRoundEnd_RebuildsNextRound_StaggeredFirst()
     {
-        var A = S("A");
-        var B = S("B");
-        var C = S("C");
+        var A = E("A");
+        var B = E("B");
+        var C = E("C");
+        var X = E("X");
+        var Y = E("Y");
 
         var ctx = new TestContext
         {
-            InitiativeTrack = State(
-                (0, new[] { A, B }),
-                (1, new[] { C })
-            )
+            InitiativeTrack = State(4, 4,
+                (A,    false),
+                (null, false),
+                (B,    false),
+                (C,    false),
+                (null, false),
+                (X,    true),
+                (Y,    true))
         };
 
-        var diffs = Initiative.Tick(ctx);
-        foreach (var d in diffs)
-            d.Apply();
+        Tick(ctx);
+
+        Assert.Equal(0, ctx.InitiativeTrack.CurrentIndex);
+        Assert.Equal(4, ctx.InitiativeTrack.RoundEndIndex);
+        Assert.Equal(5, ctx.InitiativeTrack.TrackLength);
 
         AssertSlots(ctx.InitiativeTrack,
-            (0, new[] { A, B, C })
-        );
-
-        Assert.Same(A, Initiative.GetCurrent(ctx.InitiativeTrack));
+            (X, false),
+            (Y, false),
+            (A, false),
+            (B, false),
+            (C, false));
     }
 
     /*
-    Scenario: Repeated ticks eventually produce a current when an entity reaches delay 0
-      Given an initiative state with slots:
-        | delay | row |
-        | 2     | A   |
-      When I tick the track twice
-      Then GetCurrent returns A
-      And ReadSlots returns:
-        | delay | row |
-        | 0     | A   |
+    Scenario: Round rebuild skips empty slots in active range
+      Given RoundEndIndex=3, CurrentIndex=3, TrackLength=5
+      And slots: A(0), (empty)(1), B(2), (empty)(3), Z(4,staggered)
+      When I tick once
+      Then new round: CurrentIndex=0, RoundEndIndex=3, TrackLength=4
+      And slots: Z, A, B, (empty) — Z not staggered
     */
     [Fact]
-    public void Tick_Repeated_EntityReachesZero_BecomesCurrent()
+    public void Tick_AtRoundEnd_SkipsEmptySlotsInRebuild()
     {
-        var A = S("A");
+        var A = E("A");
+        var B = E("B");
+        var Z = E("Z");
 
-        var state = State(
-            (2, new[] { A })
-        );
+        var ctx = new TestContext
+        {
+            InitiativeTrack = State(3, 3,
+                (A,    false),
+                (null, false),
+                (B,    false),
+                (null, false),
+                (Z,    true))
+        };
 
-        var ticked = TickN(state, 2);
+        Tick(ctx);
 
-        AssertSlots(ticked,
-            (0, new[] { A })
-        );
+        Assert.Equal(0, ctx.InitiativeTrack.CurrentIndex);
+        Assert.Equal(3, ctx.InitiativeTrack.RoundEndIndex);
+        Assert.Equal(4, ctx.InitiativeTrack.TrackLength);
 
-        Assert.Same(A, Initiative.GetCurrent(ticked));
+        AssertSlots(ctx.InitiativeTrack,
+            (Z,    false),
+            (A,    false),
+            (B,    false),
+            (null, false));
     }
 }

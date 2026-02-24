@@ -74,8 +74,8 @@ public abstract partial class Context : Node, IContext
 
             var slots = _initiativeTrack.Slots;
             
-            if(slots == null || slots.Length == 0 || slots[0].Row.Length == 0) ActiveLawyer = null;
-            ActiveLawyer = _initiativeTrack.Slots[0].Row[0] as Lawyer;
+            if(slots == null || slots.Length == 0 || slots[0].Occupant == null) ActiveLawyer = null;
+            ActiveLawyer = _initiativeTrack.Slots[0].Occupant as Lawyer;
         }
     }
 

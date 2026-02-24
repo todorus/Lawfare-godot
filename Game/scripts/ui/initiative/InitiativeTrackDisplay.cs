@@ -73,31 +73,23 @@ public partial class InitiativeTrackDisplay : Control
         for(int i = 0; i < slots.Count; i++)
         {
             var slot = slots[i];
-            if (i != 0)
+            deltaX += i * _slotDistance;
+            var entity = slot.Occupant;
+            if(_portraitInstances.TryGetValue(entity as ICharacter, out var portrait))
             {
-                deltaX += (slot.Delay - lastDelay) * _slotDistance;
-                lastDelay = slot.Delay;
-            }
-            
-            for(int j = 0; j < slot.Row.Length; j++)
-            {
-                var entity = slot.Row[j];
-                if(_portraitInstances.TryGetValue(entity as ICharacter, out var portrait))
-                {
-                    // Position the portrait based on the slot index and stack 
-                    deltaX += _stackDistance;
+                // Position the portrait based on the slot index and stack 
+                deltaX += _stackDistance;
                     
-                    var targetX = Size.X - deltaX - portrait.Size.X;
-                    var targetPos = new Vector2(targetX, 0);
+                var targetX = Size.X - deltaX - portrait.Size.X;
+                var targetPos = new Vector2(targetX, 0);
                     
-                    // Tween position for easing.
-                    tween.TweenProperty(portrait, "position", targetPos, _moveDuration)
-                        .SetTrans(_transition)
-                        .SetEase(_ease);
+                // Tween position for easing.
+                tween.TweenProperty(portrait, "position", targetPos, _moveDuration)
+                    .SetTrans(_transition)
+                    .SetEase(_ease);
 
-                    portrait.ZIndex = portraitIndex;
-                    portraitIndex++;
-                }
+                portrait.ZIndex = portraitIndex;
+                portraitIndex++;
             }
         }
     }

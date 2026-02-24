@@ -1,49 +1,28 @@
 using System;
 using System.Linq;
 using Xunit;
-using Godot;
-using Lawfare.scripts.board.dice;
-using Lawfare.scripts.board.factions;
-using Lawfare.scripts.characters;
-using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.context;
 using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.logic.initiative.state;
-using Lawfare.scripts.logic.keywords;
-using Lawfare.scripts.logic.triggers;
-using Lawfare.scripts.logic.modifiers;
+using Lawfare.scripts.board.factions;
+using Lawfare.scripts.characters;
+using Lawfare.scripts.characters.lawyers;
+using Lawfare.scripts.logic.effects.initiative;
 using Lawfare.scripts.subject;
-using Lawfare.scripts.subject.quantities;
-using Lawfare.scripts.subject.relations;
 
 namespace Tests.Lawfare.scripts.logic.initiative;
 
 public sealed class InitiativeMovingTest
 {
-    // Minimal test subject: must be both ISubject and IHasInitiative for initiative diffs.
-    private sealed class TestEntity : ISubject, IHasInitiative
+    private sealed class TestEntity : SubjectStub, IHasInitiative
     {
-        public TestEntity(string name) => Name = name;
-        public string Name { get; }
-        public override string ToString() => Name;
-
-        public Quantities Quantities => throw new NotImplementedException();
-        public Relations Relations { get; }
-        public KeywordBase[] Keywords { get; }
-        public Allegiances Allegiances => throw new NotImplementedException();
-        public bool CanHaveFaction { get; }
-        public System.Collections.Generic.IEnumerable<SkillPool> Pools { get; }
-        public bool IsExpired { get; set; }
-        public HostedTrigger[] Triggers => Array.Empty<HostedTrigger>();
-        public int Minimum(Property property) => 0;
-        public Vector3 DamagePosition { get; }
+        public TestEntity(string name) : base(name) { }
+        public override string ToString() => Label;
     }
 
-    // Minimal context that only needs to carry the initiative track for diff Apply().
     private sealed class TestContext : IContext
     {
         public InitiativeTrackState InitiativeTrack { get; set; } = new();
-
         public Faction[] Factions => Array.Empty<Faction>();
         public Lawyer[] Lawyers => Array.Empty<Lawyer>();
         public Witness[] Witnesses => Array.Empty<Witness>();
@@ -52,274 +31,412 @@ public sealed class InitiativeMovingTest
         public Team[] Teams => Array.Empty<Team>();
         public ISubject[] AllSubjects => Array.Empty<ISubject>();
         public Lawyer GetSpeaker(Team team) => null;
-
         public Team GetTeam(ISubject subject) => throw new NotImplementedException();
         public Team GetOpposingTeam(ISubject subject) => throw new NotImplementedException();
     }
 
-    private static TestEntity S(string name) => new TestEntity(name);
+    private static TestEntity E(string name) => new TestEntity(name);
 
-    private static InitiativeTrackState State(params (int delay, ISubject[] row)[] slots)
+    private static InitiativeTrackState State(
+        int currentIndex,
+        int roundEndIndex,
+        params (IHasInitiative? occupant, bool isStaggered)[] slots)
     {
         return new InitiativeTrackState
         {
-            Slots = slots
-                .Select(s => new InitiativeSlotState
-                {
-                    Delay = s.delay,
-                    Row = s.row.Cast<IHasInitiative>().ToArray()
-                })
-                .ToArray()
+            CurrentIndex = currentIndex,
+            RoundEndIndex = roundEndIndex,
+            Slots = slots.Select(s => new InitiativeSlotState
+            {
+                Occupant = s.occupant,
+                IsStaggered = s.isStaggered
+            }).ToArray()
         };
     }
 
-    private static void ApplyMove(TestContext ctx, TestEntity entity, int dt)
+    private static void ApplyDiffs(TestContext ctx, InitiativeDiff[] diffs)
     {
-        var diff = Initiative.MoveEntity(ctx, entity, dt);
-        if (diff != null)
-            diff.Value.Apply(); // mutates ctx.InitiativeTrack via SetDelay(...)
+        foreach (var d in diffs)
+            d.Apply();
     }
 
     private static void AssertSlots(
         InitiativeTrackState state,
-        params (int delay, ISubject[] row)[] expected)
+        params (IHasInitiative? occupant, bool isStaggered)[] expected)
     {
-        var actual = Initiative.ReadSlots(state); // IReadOnlyList<InitiativeSlotDTO>
-
+        var actual = Initiative.ReadSlots(state);
         Assert.Equal(expected.Length, actual.Count);
-
         for (int i = 0; i < expected.Length; i++)
         {
-            Assert.Equal(expected[i].delay, actual[i].Delay);
-            Assert.Equal(expected[i].row.Length, actual[i].Row.Length);
-
-            for (int j = 0; j < expected[i].row.Length; j++)
-                Assert.Same(expected[i].row[j], actual[i].Row[j]);
+            Assert.Same(expected[i].occupant, actual[i].Occupant);
+            Assert.Equal(expected[i].isStaggered, actual[i].IsStaggered);
         }
     }
 
     /*
-    Scenario: MoveEntity with dt=0 leaves the state unchanged
-      Given an initiative state with slots:
-        | delay | row |
-        | 0     | A   |
-        | 2     | B   |
-      When I move entity A by dt 0
-      Then ReadSlots returns:
-        | delay | row |
-        | 0     | A   |
-        | 2     | B   |
+    Scenario: MoveEntity to an empty destination produces one diff and vacates the source slot
+      Given RoundEndIndex is 4, CurrentIndex is 1, TrackLength is 5
+      And slots: (empty), B, X, (empty), (empty)
+      When I move entity X by dt 2
+      Then slots become: (empty), B, (empty), (empty), X
+      And exactly 1 diff: X originalIndex=2 updatedIndex=4 becameStaggered=false
     */
     [Fact]
-    public void MoveEntity_DtZero_NoChange()
+    public void MoveEntity_ToEmptyDestination_ProducesOneDiff()
     {
-        var A = S("A");
-        var B = S("B");
+        var B = E("B");
+        var X = E("X");
 
         var ctx = new TestContext
         {
-            InitiativeTrack = State(
-                (0, new[] { A }),
-                (2, new[] { B })
-            )
+            InitiativeTrack = State(1, 4,
+                (null, false),
+                (B,    false),
+                (X,    false),
+                (null, false),
+                (null, false))
         };
 
-        ApplyMove(ctx, A, 0);
+        var diffs = Initiative.MoveEntity(ctx, X, 2);
+        ApplyDiffs(ctx, diffs);
 
         AssertSlots(ctx.InitiativeTrack,
-            (0, new[] { A }),
-            (2, new[] { B })
-        );
+            (null, false),
+            (B,    false),
+            (null, false),
+            (null, false),
+            (X,    false));
+
+        Assert.Single(diffs);
+        Assert.Same(X, diffs[0].Subject);
+        Assert.Equal(2, diffs[0].OriginalIndex);
+        Assert.Equal(4, diffs[0].UpdatedIndex);
+        Assert.False(diffs[0].BecameStaggered);
     }
 
     /*
-    Scenario: MoveEntity relocates the current entity to delay dt and appends on collision
-      Given an initiative state with slots:
-        | delay | row |
-        | 0     | A   |
-        | 2     | B   |
-        | 3     | C   |
-      When I move entity A by dt 3
-      Then ReadSlots returns:
-        | delay | row |
-        | 2     | B   |
-        | 3     | C,A |
-      And GetCurrent returns null
+    Scenario: Destination at or before CurrentIndex is clamped to CurrentIndex+1
+      Given RoundEndIndex is 5, CurrentIndex is 2, TrackLength is 6
+      And slots: A, (empty), C, (empty), (empty), X
+      When I move entity X by dt -10
+      Then slots become: A, (empty), C, X, (empty), (empty)
+      And diff: X originalIndex=5 updatedIndex=3 becameStaggered=false
     */
     [Fact]
-    public void MoveEntity_Current_ToDelayDt_AppendsOnCollision()
+    public void MoveEntity_DestinationBeforeCurrentIndex_ClampedToCurrentPlusOne()
     {
-        var A = S("A");
-        var B = S("B");
-        var C = S("C");
+        var A = E("A");
+        var C = E("C");
+        var X = E("X");
 
         var ctx = new TestContext
         {
-            InitiativeTrack = State(
-                (0, new[] { A }),
-                (2, new[] { B }),
-                (3, new[] { C })
-            )
+            InitiativeTrack = State(2, 5,
+                (A,    false),
+                (null, false),
+                (C,    false),
+                (null, false),
+                (null, false),
+                (X,    false))
         };
 
-        ApplyMove(ctx, A, 3);
+        var diffs = Initiative.MoveEntity(ctx, X, -10);
+        ApplyDiffs(ctx, diffs);
 
         AssertSlots(ctx.InitiativeTrack,
-            (2, new[] { B }),
-            (3, new[] { C, A })
-        );
+            (A,    false),
+            (null, false),
+            (C,    false),
+            (X,    false),
+            (null, false),
+            (null, false));
 
-        Assert.Null(Initiative.GetCurrent(ctx.InitiativeTrack));
+        Assert.Single(diffs);
+        Assert.Equal(5, diffs[0].OriginalIndex);
+        Assert.Equal(3, diffs[0].UpdatedIndex);
+        Assert.False(diffs[0].BecameStaggered);
     }
 
     /*
-    Scenario: MoveEntity relocates the current entity but preserves remaining slot 0 queue
-      Given an initiative state with slots:
-        | delay | row   |
-        | 0     | A,B,C |
-        | 2     | D     |
-      When I move entity A by dt 2
-      Then ReadSlots returns:
-        | delay | row |
-        | 0     | B,C |
-        | 2     | D,A |
-      And GetCurrent returns B
+    Scenario: Collision resolves via forward cascade when a vacancy exists between CurrentIndex and destination
+      Given RoundEndIndex is 6, CurrentIndex is 1, TrackLength is 7
+      And slots: (empty), B, (empty), C, D, (empty), X
+      When I move entity X by dt=-2 (destination index 4)
+      Then slots become: (empty), B, C, D, X, (empty), (empty)
+      And diffs for C, D, X — none becameStaggered
     */
     [Fact]
-    public void MoveEntity_Current_PreservesSlot0Queue()
+    public void MoveEntity_ForwardCascade_WhenVacancyExistsBetweenCurrentAndDestination()
     {
-        var A = S("A");
-        var B = S("B");
-        var C = S("C");
-        var D = S("D");
+        var B = E("B");
+        var C = E("C");
+        var D = E("D");
+        var X = E("X");
 
         var ctx = new TestContext
         {
-            InitiativeTrack = State(
-                (0, new[] { A, B, C }),
-                (2, new[] { D })
-            )
+            InitiativeTrack = State(1, 6,
+                (null, false),
+                (B,    false),
+                (null, false),
+                (C,    false),
+                (D,    false),
+                (null, false),
+                (X,    false))
         };
 
-        ApplyMove(ctx, A, 2);
+        var diffs = Initiative.MoveEntity(ctx, X, -2);
+        ApplyDiffs(ctx, diffs);
 
         AssertSlots(ctx.InitiativeTrack,
-            (0, new[] { B, C }),
-            (2, new[] { D, A })
-        );
+            (null, false),
+            (B,    false),
+            (C,    false),
+            (D,    false),
+            (X,    false),
+            (null, false),
+            (null, false));
 
-        Assert.Same(B, Initiative.GetCurrent(ctx.InitiativeTrack));
+        var subjects = diffs.Select(d => d.Subject).ToArray();
+        Assert.Contains(C, subjects);
+        Assert.Contains(D, subjects);
+        Assert.Contains(X, subjects);
+        Assert.All(diffs, d => Assert.False(d.BecameStaggered));
     }
 
     /*
-    Scenario: MoveEntity relocates a non-current entity by increasing its delay by dt
-      Given an initiative state with slots:
-        | delay | row |
-        | 0     | A   |
-        | 1     | B   |
-      When I move entity B by dt 2
-      Then ReadSlots returns:
-        | delay | row |
-        | 0     | A   |
-        | 3     | B   |
-      And GetCurrent returns A
+    Scenario: Forward cascade uses the vacancy left by the moved object itself
+      Given RoundEndIndex is 3, CurrentIndex is 0, TrackLength is 4
+      And slots: Z, A, B, C
+      When I move entity A by dt 1 (destination index 2)
+      Then slots become: Z, B, A, C
+      And diffs for A (1->2) and B (2->1), none staggered
     */
     [Fact]
-    public void MoveEntity_NonCurrent_IncreasesDelayByDt()
+    public void MoveEntity_ForwardCascade_UsesVacancyCreatedByMove()
     {
-        var A = S("A");
-        var B = S("B");
+        var Z = E("Z");
+        var A = E("A");
+        var B = E("B");
+        var C = E("C");
 
         var ctx = new TestContext
         {
-            InitiativeTrack = State(
-                (0, new[] { A }),
-                (1, new[] { B })
-            )
+            InitiativeTrack = State(0, 3,
+                (Z, false),
+                (A, false),
+                (B, false),
+                (C, false))
         };
 
-        ApplyMove(ctx, B, 2);
+        var diffs = Initiative.MoveEntity(ctx, A, 1);
+        ApplyDiffs(ctx, diffs);
 
         AssertSlots(ctx.InitiativeTrack,
-            (0, new[] { A }),
-            (3, new[] { B })
-        );
+            (Z, false),
+            (B, false),
+            (A, false),
+            (C, false));
 
-        Assert.Same(A, Initiative.GetCurrent(ctx.InitiativeTrack));
+        var aDiff = diffs.Single(d => ReferenceEquals(d.Subject, A));
+        var bDiff = diffs.Single(d => ReferenceEquals(d.Subject, B));
+        Assert.Equal(1, aDiff.OriginalIndex);
+        Assert.Equal(2, aDiff.UpdatedIndex);
+        Assert.Equal(2, bDiff.OriginalIndex);
+        Assert.Equal(1, bDiff.UpdatedIndex);
+        Assert.False(aDiff.BecameStaggered);
+        Assert.False(bDiff.BecameStaggered);
     }
 
     /*
-    Scenario: MoveEntity appends a moved non-current entity to the back of the destination slot row
-      Given an initiative state with slots:
-        | delay | row |
-        | 0     | A   |
-        | 2     | C   |
-        | 4     | B   |
-        | 6     | D   |
-      When I move entity B by dt 2
-      Then ReadSlots returns:
-        | delay | row |
-        | 0     | A   |
-        | 2     | C   |
-        | 6     | D,B |
+    Scenario: Moving entity beyond RoundEndIndex places it in a stagger slot and grows the track
+      Given RoundEndIndex is 3, CurrentIndex is 0, TrackLength is 4
+      And slots: A, (empty), X, (empty)
+      When I move entity X by dt 4 (destination index 6)
+      Then TrackLength becomes 7
+      And slots: A, (empty), (empty), (empty), (empty), (empty), X(staggered)
+      And diff: X originalIndex=2 updatedIndex=6 becameStaggered=true
     */
     [Fact]
-    public void MoveEntity_NonCurrent_AppendsOnCollision()
+    public void MoveEntity_BeyondRoundEndIndex_BecomesStaggered_TrackGrows()
     {
-        var A = S("A");
-        var B = S("B");
-        var C = S("C");
-        var D = S("D");
+        var A = E("A");
+        var X = E("X");
 
         var ctx = new TestContext
         {
-            InitiativeTrack = State(
-                (0, new[] { A }),
-                (2, new[] { C }),
-                (4, new[] { B }),
-                (6, new[] { D })
-            )
+            InitiativeTrack = State(0, 3,
+                (A,    false),
+                (null, false),
+                (X,    false),
+                (null, false))
         };
 
-        ApplyMove(ctx, B, 2);
+        var diffs = Initiative.MoveEntity(ctx, X, 4);
+        ApplyDiffs(ctx, diffs);
+
+        Assert.Equal(7, ctx.InitiativeTrack.TrackLength);
 
         AssertSlots(ctx.InitiativeTrack,
-            (0, new[] { A }),
-            (2, new[] { C }),
-            (6, new[] { D, B })
-        );
+            (A,    false),
+            (null, false),
+            (null, false),
+            (null, false),
+            (null, false),
+            (null, false),
+            (X,    true));
+
+        Assert.Single(diffs);
+        Assert.Equal(2, diffs[0].OriginalIndex);
+        Assert.Equal(6, diffs[0].UpdatedIndex);
+        Assert.True(diffs[0].BecameStaggered);
     }
 
     /*
-    Scenario: MoveEntity is a no-op when the entity is not present in the state
-      Given an initiative state with slots:
-        | delay | row |
-        | 0     | A   |
+    Scenario: Moving the current occupant with forward cascade available
+      Given RoundEndIndex is 6, CurrentIndex is 2, TrackLength is 7
+      And slots: A, B, C(current), (empty), D, E, (empty)
+      When I move entity C by dt 2 (destination index 4)
+      Then CurrentIndex remains 2, slots: A, B, (empty), D, C, E, (empty)
+      And diffs for C and D
+    */
+    [Fact]
+    public void MoveEntity_CurrentOccupant_ForwardCascade()
+    {
+        var A = E("A");
+        var B = E("B");
+        var C = E("C");
+        var D = E("D");
+        var E_ = E("E");
+
+        var ctx = new TestContext
+        {
+            InitiativeTrack = State(2, 6,
+                (A,    false),
+                (B,    false),
+                (C,    false),
+                (null, false),
+                (D,    false),
+                (E_,   false),
+                (null, false))
+        };
+
+        var diffs = Initiative.MoveEntity(ctx, C, 2);
+        ApplyDiffs(ctx, diffs);
+
+        Assert.Equal(2, ctx.InitiativeTrack.CurrentIndex);
+
+        AssertSlots(ctx.InitiativeTrack,
+            (A,    false),
+            (B,    false),
+            (null, false),
+            (D,    false),
+            (C,    false),
+            (E_,   false),
+            (null, false));
+
+        var subjects = diffs.Select(d => d.Subject).ToArray();
+        Assert.Contains(C, subjects);
+        Assert.Contains(D, subjects);
+    }
+
+    /*
+    Scenario: Moving the current occupant triggers backward cascade and stagger
+      Given RoundEndIndex is 3, CurrentIndex is 1, TrackLength is 4
+      And slots: A, B(current), C, D
+      When I move entity B by dt 1 (destination index 2)
+      Then TrackLength becomes 5, CurrentIndex remains 1
+      And slots: A, (empty), B, C, D(staggered)
+      And diffs for B, C, D — only D becameStaggered
+    */
+    [Fact]
+    public void MoveEntity_CurrentOccupant_BackwardCascade_StaggersTail()
+    {
+        var A = E("A");
+        var B = E("B");
+        var C = E("C");
+        var D = E("D");
+
+        var ctx = new TestContext
+        {
+            InitiativeTrack = State(1, 3,
+                (A, false),
+                (B, false),
+                (C, false),
+                (D, false))
+        };
+
+        var diffs = Initiative.MoveEntity(ctx, B, 1);
+        ApplyDiffs(ctx, diffs);
+
+        Assert.Equal(5, ctx.InitiativeTrack.TrackLength);
+        Assert.Equal(1, ctx.InitiativeTrack.CurrentIndex);
+
+        AssertSlots(ctx.InitiativeTrack,
+            (A,    false),
+            (null, false),
+            (B,    false),
+            (C,    false),
+            (D,    true));
+
+        var dDiff = diffs.Single(d => ReferenceEquals(d.Subject, D));
+        Assert.True(dDiff.BecameStaggered);
+        Assert.All(diffs.Where(d => !ReferenceEquals(d.Subject, D)), d => Assert.False(d.BecameStaggered));
+    }
+
+    /*
+    Scenario: MoveEntity is a no-op when the entity is not present
+      Given CurrentIndex is 0, RoundEndIndex is 0, slots: A
       When I move entity D by dt 3
-      Then ReadSlots returns:
-        | delay | row |
-        | 0     | A   |
+      Then slots unchanged: A
       And GetCurrent returns A
     */
     [Fact]
     public void MoveEntity_EntityNotPresent_NoOp()
     {
-        var A = S("A");
-        var D = S("D");
+        var A = E("A");
+        var D = E("D");
 
         var ctx = new TestContext
         {
-            InitiativeTrack = State(
-                (0, new[] { A })
-            )
+            InitiativeTrack = State(0, 0,
+                (A, false))
         };
 
-        ApplyMove(ctx, D, 3);
+        var diffs = Initiative.MoveEntity(ctx, D, 3);
+        ApplyDiffs(ctx, diffs);
+
+        AssertSlots(ctx.InitiativeTrack, (A, false));
+        Assert.Same(A, Initiative.GetCurrent(ctx.InitiativeTrack));
+        Assert.Empty(diffs);
+    }
+
+    /*
+    Scenario: MoveEntity with dt=0 is a no-op
+      Given CurrentIndex is 0, RoundEndIndex is 1, slots: A, B
+      When I move entity A by dt 0
+      Then slots unchanged, no diffs
+    */
+    [Fact]
+    public void MoveEntity_DtZero_NoOp()
+    {
+        var A = E("A");
+        var B = E("B");
+
+        var ctx = new TestContext
+        {
+            InitiativeTrack = State(0, 1,
+                (A, false),
+                (B, false))
+        };
+
+        var diffs = Initiative.MoveEntity(ctx, A, 0);
+        ApplyDiffs(ctx, diffs);
 
         AssertSlots(ctx.InitiativeTrack,
-            (0, new[] { A })
-        );
+            (A, false),
+            (B, false));
 
-        Assert.Same(A, Initiative.GetCurrent(ctx.InitiativeTrack));
+        Assert.Empty(diffs);
     }
 }

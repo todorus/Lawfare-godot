@@ -18,87 +18,113 @@ public sealed class InitiativeSeedingTest
 
     private static void AssertSlots(
         InitiativeTrackState state,
-        params (int delay, IHasInitiative[] row)[] expected)
+        params (IHasInitiative? occupant, bool isStaggered)[] expected)
     {
-        var actual = Initiative.ReadSlots(state); // IReadOnlyList<InitiativeSlotDTO>
-
+        var actual = Initiative.ReadSlots(state);
         Assert.Equal(expected.Length, actual.Count);
-
         for (int i = 0; i < expected.Length; i++)
         {
-            Assert.Equal(expected[i].delay, actual[i].Delay);
-            Assert.Equal(expected[i].row.Length, actual[i].Row.Length);
-
-            for (int j = 0; j < expected[i].row.Length; j++)
-                Assert.Same(expected[i].row[j], actual[i].Row[j]);
+            Assert.Same(expected[i].occupant, actual[i].Occupant);
+            Assert.Equal(expected[i].isStaggered, actual[i].IsStaggered);
         }
     }
 
     /*
     Scenario: Seed with empty entries yields an empty track
       When I seed initiative with no entries
-      Then the track has no slots
+      Then TrackLength is 0
+      And CurrentIndex is 0
+      And RoundEndIndex is 0
       And GetCurrent returns null
       And ReadSlots returns an empty list
     */
     [Fact]
     public void Seed_EmptyEntries_YieldsEmptyTrack()
     {
-        var state = Initiative.Seed(Array.Empty<(IHasInitiative entity, int delay)>());
+        var state = Initiative.Seed(Array.Empty<(IHasInitiative entity, int initiative)>());
 
         Assert.Empty(Initiative.ReadSlots(state));
         Assert.Null(Initiative.GetCurrent(state));
+        Assert.Equal(0, state.CurrentIndex);
+        Assert.Equal(0, state.RoundEndIndex);
     }
 
     /*
-    Scenario: Seed normalizes delays so the minimum becomes 0
-      When I seed initiative with:
-        | entity | delay |
-        | A      | 2     |
-        | B      | 5     |
-        | C      | 5     |
-      Then ReadSlots returns:
-        | delay | row |
-        | 0     | A   |
-        | 3     | B,C |
+    Scenario: Seed with a single entity produces two slots
+      When I seed initiative with: A=5
+      Then TrackLength is 2
+      And RoundEndIndex is 1
+      And CurrentIndex is 0
+      And slots: A, (empty) — all not staggered
       And GetCurrent returns A
     */
     [Fact]
-    public void Seed_NormalizesMinimumToZero_Example_2_5_5()
+    public void Seed_SingleEntity_ProducesTwoSlots()
     {
         var A = S("A");
-        var B = S("B");
-        var C = S("C");
 
-        var state = Initiative.Seed(new[]
-        {
-            (A, 2),
-            (B, 5),
-            (C, 5),
-        });
+        var state = Initiative.Seed(new[] { (A, 5) });
+
+        Assert.Equal(2, state.TrackLength);
+        Assert.Equal(1, state.RoundEndIndex);
+        Assert.Equal(0, state.CurrentIndex);
 
         AssertSlots(state,
-            (0, new[] { A }),
-            (3, new[] { B, C })
-        );
+            (A,    false),
+            (null, false));
 
         Assert.Same(A, Initiative.GetCurrent(state));
     }
 
     /*
-    Scenario: Seed preserves input order within equal delays
-      When I seed initiative with:
-        | entity | delay |
-        | A      | 2     |
-        | B      | 2     |
-        | C      | 2     |
-      Then ReadSlots returns:
-        | delay | row   |
-        | 0     | A,B,C |
+    Scenario: Seed places entities in ascending initiative order with one trailing empty slot
+      When I seed initiative with: C=3, A=1, D=4, B=2
+      Then TrackLength is 5
+      And RoundEndIndex is 4
+      And CurrentIndex is 0
+      And slots: A, B, C, D, (empty) — all not staggered
       And GetCurrent returns A
     */
     [Fact]
-    public void Seed_PreservesInputOrder_WithinEqualDelays()
+    public void Seed_SortsEntitiesByInitiative_ConsecutiveNoGaps()
+    {
+        var A = S("A");
+        var B = S("B");
+        var C = S("C");
+        var D = S("D");
+
+        var state = Initiative.Seed(new[]
+        {
+            (C, 3),
+            (A, 1),
+            (D, 4),
+            (B, 2),
+        });
+
+        Assert.Equal(5, state.TrackLength);
+        Assert.Equal(4, state.RoundEndIndex);
+        Assert.Equal(0, state.CurrentIndex);
+
+        AssertSlots(state,
+            (A,    false),
+            (B,    false),
+            (C,    false),
+            (D,    false),
+            (null, false));
+
+        Assert.Same(A, Initiative.GetCurrent(state));
+    }
+
+    /*
+    Scenario: Seed preserves input order for entities with equal initiative values
+      When I seed initiative with: A=2, B=2, C=2
+      Then TrackLength is 4
+      And RoundEndIndex is 3
+      And slots: A, B, C, (empty) — all not staggered
+      And GetCurrent returns A
+    */
+    [Fact]
+    public void Seed_PreservesInputOrder_WithinEqualInitiativeValues()
     {
         var A = S("A");
         var B = S("B");
@@ -111,25 +137,24 @@ public sealed class InitiativeSeedingTest
             (C, 2),
         });
 
+        Assert.Equal(4, state.TrackLength);
+        Assert.Equal(3, state.RoundEndIndex);
+        Assert.Equal(0, state.CurrentIndex);
+
         AssertSlots(state,
-            (0, new[] { A, B, C })
-        );
+            (A,    false),
+            (B,    false),
+            (C,    false),
+            (null, false));
 
         Assert.Same(A, Initiative.GetCurrent(state));
     }
 
     /*
-    Scenario: Seed tiebreak for current when multiple entities share the minimum delay
-      When I seed initiative with:
-        | entity | delay |
-        | B      | 1     |
-        | A      | 1     |
-        | C      | 2     |
-      Then GetCurrent returns B
-      And ReadSlots returns:
-        | delay | row |
-        | 0     | B,A |
-        | 1     | C   |
+    Scenario: Seed tiebreak for current when multiple entities share the minimum initiative value
+      When I seed initiative with: B=1, A=1, C=2
+      Then GetCurrent returns B (first in input order among tied minimum)
+      And slots: B, A, C, (empty) — all not staggered
     */
     [Fact]
     public void Seed_TiedMinimum_PicksCurrentByInputOrder()
@@ -146,28 +171,55 @@ public sealed class InitiativeSeedingTest
         });
 
         Assert.Same(B, Initiative.GetCurrent(state));
+
         AssertSlots(state,
-            (0, new[] { B, A }),
-            (1, new[] { C })
-        );
+            (B,    false),
+            (A,    false),
+            (C,    false),
+            (null, false));
     }
 
     /*
-    Scenario: Seed supports negative delays and normalizes them
-      When I seed initiative with:
-        | entity | delay |
-        | A      | -3    |
-        | B      | 0     |
-        | C      | -1    |
-      Then ReadSlots returns:
-        | delay | row |
-        | 0     | A   |
-        | 2     | C   |
-        | 3     | B   |
+    Scenario: Seed places entities consecutively regardless of gaps in initiative values
+      When I seed initiative with: A=1, B=10, C=100
+      Then TrackLength is 4 (no gaps — consecutive slots)
+      And slots: A, B, C, (empty) — all not staggered
       And GetCurrent returns A
     */
     [Fact]
-    public void Seed_AllowsNegativeDelays_AndNormalizes()
+    public void Seed_ConsecutiveSlots_EvenWithLargeInitiativeGaps()
+    {
+        var A = S("A");
+        var B = S("B");
+        var C = S("C");
+
+        var state = Initiative.Seed(new[]
+        {
+            (A, 1),
+            (B, 10),
+            (C, 100),
+        });
+
+        Assert.Equal(4, state.TrackLength);
+        Assert.Equal(3, state.RoundEndIndex);
+
+        AssertSlots(state,
+            (A,    false),
+            (B,    false),
+            (C,    false),
+            (null, false));
+
+        Assert.Same(A, Initiative.GetCurrent(state));
+    }
+
+    /*
+    Scenario: Seed with negative initiative values still sorts correctly
+      When I seed initiative with: A=-3, B=0, C=-1
+      Then slots: A, C, B, (empty) — sorted ascending, no gaps
+      And GetCurrent returns A
+    */
+    [Fact]
+    public void Seed_NegativeInitiativeValues_SortCorrectly()
     {
         var A = S("A");
         var B = S("B");
@@ -180,49 +232,15 @@ public sealed class InitiativeSeedingTest
             (C, -1),
         });
 
+        Assert.Equal(4, state.TrackLength);
+        Assert.Equal(3, state.RoundEndIndex);
+
         AssertSlots(state,
-            (0, new[] { A }),
-            (2, new[] { C }),
-            (3, new[] { B })
-        );
+            (A,    false),
+            (C,    false),
+            (B,    false),
+            (null, false));
 
         Assert.Same(A, Initiative.GetCurrent(state));
-    }
-
-    /*
-    Scenario: Seed groups entities by resulting normalized delay
-      When I seed initiative with:
-        | entity | delay |
-        | A      | 10    |
-        | B      | 12    |
-        | C      | 12    |
-        | D      | 11    |
-      Then ReadSlots returns:
-        | delay | row |
-        | 0     | A   |
-        | 1     | D   |
-        | 2     | B,C |
-    */
-    [Fact]
-    public void Seed_GroupsByShiftedDelay()
-    {
-        var A = S("A");
-        var B = S("B");
-        var C = S("C");
-        var D = S("D");
-
-        var state = Initiative.Seed(new[]
-        {
-            (A, 10),
-            (B, 12),
-            (C, 12),
-            (D, 11),
-        });
-
-        AssertSlots(state,
-            (0, new[] { A }),
-            (1, new[] { D }),
-            (2, new[] { B, C })
-        );
     }
 }

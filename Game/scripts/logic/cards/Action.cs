@@ -66,9 +66,10 @@ public partial class Action : Resource, IAction
     
     private ChangeGroup[] StageInitiative(GameEvent gameEvent)
     {
-        IDiff diff = Initiative.MoveEntity(gameEvent.Context, gameEvent.Source as IHasInitiative, _initiativeCost);
-        if(diff == null) return [];
-        
-        return [new ChangeGroup([diff])];
+        IDiff[] diffs = Initiative.MoveEntity(gameEvent.Context, gameEvent.Source as IHasInitiative, _initiativeCost)
+            .Cast<IDiff>().ToArray();
+        if(diffs.Length == 0) return [];
+
+        return [diffs.ToChangeGroup()];
     }
 }

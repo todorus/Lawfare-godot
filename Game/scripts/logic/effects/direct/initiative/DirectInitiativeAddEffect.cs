@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using Lawfare.scripts.logic.@event;
 using Lawfare.scripts.logic.initiative;
@@ -23,7 +24,8 @@ public partial class DirectInitiativeAddEffect : Effect
         var amountInput = gameEvent.Inputs[_amount] as AmountInput;
         var amount = amountInput?.GetValue(gameEvent) as int? ?? 0;
         
-        IDiff[] changes = [Initiative.MoveEntity(gameEvent.Context, target as IHasInitiative, amount)];
+        IDiff[] changes = Initiative.MoveEntity(gameEvent.Context, target as IHasInitiative, amount)
+            .Cast<IDiff>().ToArray();
         var changeGroup = changes.ToChangeGroup();
         
         return [changeGroup];

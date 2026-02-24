@@ -5,54 +5,35 @@ using Lawfare.scripts.subject;
 
 namespace Lawfare.scripts.logic.effects.initiative;
 
-public readonly struct InitiativeDiff(IContext context, ISubject subject, int original, int updated) : IDiff<int>
+public readonly struct InitiativeDiff(IContext context, ISubject subject, int originalIndex, int updatedIndex, bool becameStaggered) : IDiff
 {
     public ISubject Subject { get; } = subject;
-    public int Original { get; } = original;
-    public int Updated { get; } = updated;
+    public int OriginalIndex { get; } = originalIndex;
+    public int UpdatedIndex { get; } = updatedIndex;
+    public bool BecameStaggered { get; } = becameStaggered;
 
     public bool CanMerge(IDiff other) => other is InitiativeDiff o && ReferenceEquals(Subject, o.Subject);
 
-    public bool CanMerge(IDiff<int> other) =>
-        other is InitiativeDiff o && ReferenceEquals(Subject, o.Subject);
-
-    public IDiff Merge(IDiff other) => Merge((IDiff<int>)other);
-
-    public IDiff<int> Merge(IDiff<int> other)
+    public IDiff Merge(IDiff other)
     {
-        if (other is not InitiativeDiff o)
-        {
-            GD.PushWarning("InitiativeDiff.Merge: other is not InitiativeDiff");
-            return this;
-        }
-
-        if (!ReferenceEquals(Subject, o.Subject))
-        {
-            GD.PushWarning("InitiativeDiff.Merge: Subjects do not match");
-            return this;
-        }
-
-        // Merge by applying delta of the later diff on top of this diff.
-        // This supports both:
-        // - o.Original == this.Original (both based on same snapshot)
-        // - o.Original == this.Updated  (staged sequentially against a staged state)
-        var delta = o.Updated - o.Original;
-        var mergedUpdated = checked(Updated + delta);
-
-        return new InitiativeDiff(context, Subject, Original, mergedUpdated);
+        var o = (InitiativeDiff)other;
+        return new InitiativeDiff(context, Subject, OriginalIndex, o.UpdatedIndex, o.BecameStaggered);
     }
 
     public IDiff Apply()
     {
-        if (Subject is not IHasInitiative entity)
+        var state = context.InitiativeTrack;
+        var occupant = Subject as IHasInitiative;
+
+        // Clear original slot only if it still holds this subject
+        if (OriginalIndex < state.Slots.Length &&
+            ReferenceEquals(state.Slots[OriginalIndex].Occupant, occupant))
         {
-            GD.PushWarning("InitiativeDiff.Apply: Subject does not implement IHasInitiative");
-            return this;
+            Initiative.SetSlot(state, OriginalIndex, null, false);
         }
 
-        // Apply is absolute: set the entity to Updated.
-        // This avoids ordering issues when multiple diffs apply in sequence.
-        context.InitiativeTrack = Initiative.SetDelay(context.InitiativeTrack, entity, Updated);
+        Initiative.SetSlot(state, UpdatedIndex, occupant, becameStaggered);
+
         return this;
     }
 }
