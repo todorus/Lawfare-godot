@@ -1,33 +1,33 @@
 [gd_resource type="Resource" script_class="Action" format=3 uid="uid://bqk366drvqyud"]
 
-[ext_resource type="Script" uid="uid://c2n1x3onwgqnq" path="res://scripts/logic/effects/property/amounts/StaticAmount.cs" id="1_84w0s"]
-[ext_resource type="Script" uid="uid://ds1gqt268e3q8" path="res://scripts/logic/effects/initiative/InitiativeAddEffect.cs" id="2_2j8mu"]
-[ext_resource type="Script" uid="uid://b2u2rn01b0l0o" path="res://scripts/logic/effects/root/BasicEffect.cs" id="3_vjc66"]
-[ext_resource type="Script" uid="uid://blba6n07exhaq" path="res://scripts/logic/effects/root/MultiEffect.cs" id="4_augey"]
+[ext_resource type="Resource" uid="uid://dqijt2ntr8tp1" path="res://data/actions2/inputlabels/Strength.tres" id="1_2j8mu"]
+[ext_resource type="Script" uid="uid://d2frc3gu4tk33" path="res://scripts/logic/inputs/subject/refs/TargetRef.cs" id="2_vjc66"]
+[ext_resource type="Script" uid="uid://cfj4apn5dneu7" path="res://scripts/logic/effects/direct/initiative/DirectInitiativeAddEffect.cs" id="3_augey"]
+[ext_resource type="Script" uid="uid://bygourootjc2o" path="res://scripts/logic/inputs/InputLabel.cs" id="4_jp0tj"]
 [ext_resource type="Script" uid="uid://dpeknvqfvfhx" path="res://scripts/logic/cards/Action.cs" id="5_jp0tj"]
-
-[sub_resource type="Resource" id="Resource_jvn4d"]
-script = ExtResource("1_84w0s")
-Amount = 3
-metadata/_custom_type_script = "uid://c2n1x3onwgqnq"
+[ext_resource type="Script" uid="uid://b5oedw2d8n5oi" path="res://scripts/logic/inputs/EffectInput.cs" id="5_jvn4d"]
+[ext_resource type="Script" uid="uid://ck3aocmfew6an" path="res://scripts/logic/inputs/amount/FixedAmountInput.cs" id="6_vjc66"]
 
 [sub_resource type="Resource" id="Resource_p32y6"]
-script = ExtResource("2_2j8mu")
-AmountProvider = SubResource("Resource_jvn4d")
-metadata/_custom_type_script = "uid://ds1gqt268e3q8"
+script = ExtResource("2_vjc66")
+metadata/_custom_type_script = "uid://d2frc3gu4tk33"
 
-[sub_resource type="Resource" id="Resource_r5b45"]
-script = ExtResource("3_vjc66")
-Effects = [SubResource("Resource_p32y6")]
-metadata/_custom_type_script = "uid://b2u2rn01b0l0o"
+[sub_resource type="Resource" id="Resource_lsdf5"]
+script = ExtResource("3_augey")
+_target = SubResource("Resource_p32y6")
+_amount = ExtResource("1_2j8mu")
+metadata/_custom_type_script = "uid://cfj4apn5dneu7"
 
-[sub_resource type="Resource" id="Resource_yhs1e"]
-script = ExtResource("4_augey")
-Effects = [SubResource("Resource_r5b45")]
-metadata/_custom_type_script = "uid://blba6n07exhaq"
+[sub_resource type="Resource" id="Resource_augey"]
+script = ExtResource("6_vjc66")
+Amount = 2
+metadata/_custom_type_script = "uid://ck3aocmfew6an"
 
 [resource]
 script = ExtResource("5_jp0tj")
 Label = "Stall"
-Effect = SubResource("Resource_yhs1e")
+Inputs = Dictionary[ExtResource("4_jp0tj"), ExtResource("5_jvn4d")]({
+ExtResource("1_2j8mu"): SubResource("Resource_augey")
+})
+Effects = [SubResource("Resource_lsdf5")]
 metadata/_custom_type_script = "uid://dpeknvqfvfhx"
