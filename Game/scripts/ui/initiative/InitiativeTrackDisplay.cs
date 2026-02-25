@@ -46,6 +46,7 @@ public partial class InitiativeTrackDisplay : Control
         {
             var instance = _portraitScene.Instantiate<CharacterObserver>();
             instance.Character = lawyer;
+            instance.Mirror = context.GetTeam(lawyer) == context.MirroredTeam;
             _portraitInstances[lawyer] = instance;
             AddChild(instance);
         }

@@ -110,6 +110,8 @@ public partial class Hearing : Context
         }
     }
 
+    public override Team MirroredTeam => DocketEntry.Defense;
+
     public override void _Ready()
     {
         base._Ready();

@@ -21,6 +21,8 @@ public abstract partial class Context : Node, IContext
     public abstract Judge[] Judges { get; }
     public abstract Team[] Teams { get; }
     
+    public abstract Team MirroredTeam { get; }
+    
     private Dictionary<Team, Lawyer> _speakers = new();
     public Lawyer GetSpeaker(Team team) => _speakers.ContainsKey(team) ? _speakers[team] : null;
 
