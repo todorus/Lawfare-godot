@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://d11duad18l3hi"]
+
+[ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_vqyee"]
+[ext_resource type="Texture2D" uid="uid://cjv55m3atnh3k" path="res://data/lawyers/lawyer2Portrait.png" id="2_vqyee"]
+
+[node name="Control" type="MarginContainer" unique_id=1305796820]
+custom_minimum_size = Vector2(80, 80)
+offset_right = 80.0
+offset_bottom = 80.0
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 9
+theme_override_constants/margin_bottom = 9
+script = ExtResource("1_vqyee")
+
+[node name="Portrait" type="TextureRect" parent="." unique_id=1571689859]
+layout_mode = 2
+texture = ExtResource("2_vqyee")
+expand_mode = 3
+stretch_mode = 4
+
+[connection signal="MirrorChanged" from="." to="Portrait" method="set_flip_h" flags=3]
+[connection signal="PortraitChange" from="." to="Portrait" method="set_texture" flags=3]

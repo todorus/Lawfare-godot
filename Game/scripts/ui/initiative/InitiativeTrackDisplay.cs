@@ -6,7 +6,6 @@ using Lawfare.scripts.context;
 using Lawfare.scripts.logic.initiative;
 using Lawfare.scripts.logic.initiative.state;
 using Lawfare.scripts.ui.character;
-using Lawfare.scripts.ui.character.portrait;
 
 namespace Lawfare.scripts.ui.initiative;
 
@@ -20,6 +19,12 @@ public partial class InitiativeTrackDisplay : Control
     
     [Export]
     private PackedScene _portraitScene;
+    
+    [Export]
+    private PackedScene _slotBackgroundScene;
+    
+    [Export]
+    private Control _slotContainer;
     
     [ExportGroup("Spacing")]
     [Export]
@@ -67,18 +72,26 @@ public partial class InitiativeTrackDisplay : Control
         tween.SetParallel(true);
         var portraitIndex = 0;
         
+        _slotContainer.ClearChildren();
+        
         for(int i = 0; i < slots.Count; i++)
         {
             var slot = slots[i];
             var entity = slot.Occupant;
             
+            
+            var deltaX = i * _slotDistance;
+            var bg = _slotBackgroundScene.Instantiate<Control>();
+            // Position the portrait based on the slot index and stack 
+            // var targetX = Size.X - deltaX - portrait.Size.X;
+            var targetX = Size.X - deltaX - bg.Size.X;
+            var targetPos = new Vector2(targetX, 0);
+            
+            bg.Position = targetPos;
+            _slotContainer.AddChild(bg);
+            
             if(entity != null && _portraitInstances.TryGetValue(entity as ICharacter, out var portrait))
             {
-                // Position the portrait based on the slot index and stack 
-                    
-                var deltaX = i * _slotDistance;
-                var targetX = Size.X - deltaX - portrait.Size.X;
-                var targetPos = new Vector2(targetX, 0);
                     
                 // Tween position for easing.
                 tween.TweenProperty(portrait, "position", targetPos, _moveDuration)

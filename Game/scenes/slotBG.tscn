@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b3i8yatxkku01"]
+
+[ext_resource type="Texture2D" uid="uid://b6dvbvunbo4cg" path="res://data/initiative/Slot.png" id="1_e8hor"]
+
+[node name="Control" type="Control" unique_id=1555256559]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Portrait" type="TextureRect" parent="." unique_id=1571689859]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_e8hor")
+expand_mode = 3
+stretch_mode = 4

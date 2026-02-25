@@ -25,9 +25,10 @@
 [ext_resource type="Script" uid="uid://d1uv6yv1kas2g" path="res://scripts/ui/initiative/InitiativeTrackDisplay.cs" id="23_g8kxy"]
 [ext_resource type="Script" uid="uid://bvrg8o5u7s743" path="res://scripts/ui/team/TeamObserver.cs" id="24_erabv"]
 [ext_resource type="Script" uid="uid://b2svjsvpg03ps" path="res://scripts/ui/character/team/TeamPortraitDisplay.cs" id="24_l8syn"]
-[ext_resource type="PackedScene" uid="uid://c18ew30a8q6yr" path="res://scenes/portrait.tscn" id="24_t2k2p"]
 [ext_resource type="Script" uid="uid://bsjh6vwaeum7f" path="res://scripts/ui/quantities/QuantitiesObserver.cs" id="25_xjkrd"]
+[ext_resource type="PackedScene" uid="uid://d11duad18l3hi" path="res://scenes/slot.tscn" id="26_8gn2p"]
 [ext_resource type="PackedScene" uid="uid://1vn4b4btu520" path="res://scenes/meter.tscn" id="26_v012p"]
+[ext_resource type="PackedScene" uid="uid://b3i8yatxkku01" path="res://scenes/slotBG.tscn" id="27_2rloc"]
 [ext_resource type="Resource" uid="uid://cf62sltuoikad" path="res://data/relations/Favor.tres" id="27_erabv"]
 [ext_resource type="Resource" uid="uid://b3wnho0mbwqki" path="res://data/properties/Leniency.tres" id="29_clopl"]
 [ext_resource type="PackedScene" uid="uid://0sri7pfs0uyu" path="res://scenes/member.tscn" id="30_33ers"]
@@ -168,7 +169,7 @@ alignment = 1
 script = ExtResource("7_qyj8n")
 _cardScene = ExtResource("8_15585")
 
-[node name="Initiative" type="Control" parent="UI" unique_id=1545941221]
+[node name="Initiative" type="Control" parent="UI" unique_id=1545941221 node_paths=PackedStringArray("_slotContainer")]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -177,10 +178,20 @@ offset_right = -443.0
 offset_bottom = 100.0
 grow_horizontal = 2
 script = ExtResource("23_g8kxy")
-_portraitScene = ExtResource("24_t2k2p")
+_portraitScene = ExtResource("26_8gn2p")
+_slotBackgroundScene = ExtResource("27_2rloc")
+_slotContainer = NodePath("Slots")
 _slotDistance = 90.0
 _stackDistance = 60.0
 _moveDuration = 0.4
+
+[node name="Slots" type="Control" parent="UI/Initiative" unique_id=1246728686]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Prosecution" type="VBoxContainer" parent="UI" unique_id=614781712]
 layout_mode = 1
