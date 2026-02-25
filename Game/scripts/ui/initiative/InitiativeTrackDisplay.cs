@@ -58,16 +58,16 @@ public partial class InitiativeTrackDisplay : Control
     public void UpdateFromContext(Context context)
     {
         var slots = Initiative.ReadSlots(context.InitiativeTrack);
-        OnSlotsChanged(slots);
+        OnSlotsChanged(slots, context.InitiativeTrack.CurrentIndex);
     }
     
     private void OnTrackChanged(InitiativeTrackState track)
     {
         var slots = Initiative.ReadSlots(track);
-        OnSlotsChanged(slots);
+        OnSlotsChanged(slots, track.CurrentIndex);
     }
     
-    private void OnSlotsChanged(IReadOnlyList<InitiativeSlotState> slots)
+    private void OnSlotsChanged(IReadOnlyList<InitiativeSlotState> slots, int currentIndex)
     {
         var tween = CreateTween();
         tween.SetParallel(true);
@@ -84,6 +84,7 @@ public partial class InitiativeTrackDisplay : Control
             var deltaX = i * _slotDistance;
             var bg = _slotBackgroundScene.Instantiate<SlotDisplay>();
             bg.IsStaggered = slot.IsStaggered;
+            bg.IsCurrent = i == currentIndex;
             // Position the portrait based on the slot index and stack 
             // var targetX = Size.X - deltaX - portrait.Size.X;
             var targetX = Size.X - deltaX - bg.Size.X;

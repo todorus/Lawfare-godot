@@ -4,13 +4,21 @@ namespace Lawfare.scripts.ui.initiative;
 
 public partial class SlotDisplay : Control
 {
+    [Signal]
+    public delegate void BackgroundImageEventHandler(Texture2D texture);
+    
+    [Signal]
+    public delegate void CurrentSlotChangedEventHandler(bool isCurrent);
+    
     [Export] 
     private Texture2D _texture;
     [Export] 
     private Texture2D _staggeredTexture;
     
-    [Signal]
-    public delegate void BackgroundImageEventHandler(Texture2D texture);
+    public bool IsCurrent
+    {
+        set => EmitSignalCurrentSlotChanged(value);
+    }
     
     public bool IsStaggered
     {
