@@ -1,11 +1,16 @@
 [gd_scene format=3 uid="uid://b3i8yatxkku01"]
 
+[ext_resource type="Script" uid="uid://ccwfblnf8bdkn" path="res://scripts/ui/initiative/SlotDisplay.cs" id="1_16fdy"]
 [ext_resource type="Texture2D" uid="uid://b6dvbvunbo4cg" path="res://data/initiative/Slot.png" id="1_e8hor"]
+[ext_resource type="Texture2D" uid="uid://bm7yy3pfegfwt" path="res://data/initiative/SlotStaggered.png" id="3_bnuhm"]
 
 [node name="Control" type="Control" unique_id=1555256559]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_16fdy")
+_texture = ExtResource("1_e8hor")
+_staggeredTexture = ExtResource("3_bnuhm")
 
 [node name="Portrait" type="TextureRect" parent="." unique_id=1571689859]
 layout_mode = 1
@@ -17,3 +22,5 @@ grow_vertical = 2
 texture = ExtResource("1_e8hor")
 expand_mode = 3
 stretch_mode = 4
+
+[connection signal="BackgroundImage" from="." to="Portrait" method="set_texture" flags=3]

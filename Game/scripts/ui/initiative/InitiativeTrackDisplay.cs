@@ -81,7 +81,8 @@ public partial class InitiativeTrackDisplay : Control
             
             
             var deltaX = i * _slotDistance;
-            var bg = _slotBackgroundScene.Instantiate<Control>();
+            var bg = _slotBackgroundScene.Instantiate<SlotDisplay>();
+            bg.IsStaggered = slot.IsStaggered;
             // Position the portrait based on the slot index and stack 
             // var targetX = Size.X - deltaX - portrait.Size.X;
             var targetX = Size.X - deltaX - bg.Size.X;

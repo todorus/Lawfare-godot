@@ -74,7 +74,7 @@ public static class Initiative
         if (destination <= state.CurrentIndex)
             destination = state.CurrentIndex + 1;
 
-        var slots = GrowIfNeeded(state.Slots, destination + 1);
+        var slots = GrowIfNeeded(state.Slots, destination + 1, state.RoundEndIndex);
 
         slots[src] = new InitiativeSlotState { Occupant = null, IsStaggered = false };
 
@@ -126,7 +126,7 @@ public static class Initiative
 
                 // Place moved entity at destination
                 bool destStaggered = destination > state.RoundEndIndex;
-                slots = GrowIfNeeded(slots, destination + 1);
+                slots = GrowIfNeeded(slots, destination + 1, state.RoundEndIndex);
                 slots[destination] = new InitiativeSlotState { Occupant = entity, IsStaggered = destStaggered };
                 diffs.Add(new InitiativeDiff(context, entity as ISubject, src, destination, destStaggered));
 
@@ -134,7 +134,7 @@ public static class Initiative
                 foreach (var (pushed, from) in chain)
                 {
                     int pushTo = from + 1;
-                    slots = GrowIfNeeded(slots, pushTo + 1);
+                    slots = GrowIfNeeded(slots, pushTo + 1, state.RoundEndIndex);
                     bool becameStaggered = pushTo > state.RoundEndIndex && from <= state.RoundEndIndex;
                     bool isStaggered = pushTo > state.RoundEndIndex;
                     slots[pushTo] = new InitiativeSlotState { Occupant = pushed, IsStaggered = isStaggered };
@@ -186,20 +186,20 @@ public static class Initiative
 
     public static InitiativeTrackState SetSlot(InitiativeTrackState state, int index, IHasInitiative? occupant, bool isStaggered = false)
     {
-        var slots = GrowIfNeeded(state.Slots, index + 1);
+        var slots = GrowIfNeeded(state.Slots, index + 1, state.RoundEndIndex);
         slots[index] = new InitiativeSlotState { Occupant = occupant, IsStaggered = isStaggered };
         state.Slots = slots;
         return state;
     }
 
-    private static InitiativeSlotState[] GrowIfNeeded(InitiativeSlotState[] slots, int requiredLength)
+    private static InitiativeSlotState[] GrowIfNeeded(InitiativeSlotState[] slots, int requiredLength, int roundEndIndex)
     {
         if (slots.Length >= requiredLength) return slots;
 
         var grown = new InitiativeSlotState[requiredLength];
         Array.Copy(slots, grown, slots.Length);
         for (int i = slots.Length; i < requiredLength; i++)
-            grown[i] = new InitiativeSlotState { Occupant = null, IsStaggered = false };
+            grown[i] = new InitiativeSlotState { Occupant = null, IsStaggered = i > roundEndIndex };
         return grown;
     }
 }
