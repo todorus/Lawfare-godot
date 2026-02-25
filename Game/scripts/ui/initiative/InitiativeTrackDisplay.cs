@@ -52,7 +52,7 @@ public partial class InitiativeTrackDisplay : Control
         }
 
         context.InitiativeTrackChanged += OnTrackChanged;
-        UpdateFromContext(context);
+        CallDeferred(MethodName.UpdateFromContext, context);
     }
     
     public void UpdateFromContext(Context context)
