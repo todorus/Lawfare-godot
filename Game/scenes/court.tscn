@@ -33,6 +33,7 @@
 [ext_resource type="Resource" uid="uid://b3wnho0mbwqki" path="res://data/properties/Leniency.tres" id="29_clopl"]
 [ext_resource type="PackedScene" uid="uid://0sri7pfs0uyu" path="res://scenes/member.tscn" id="30_33ers"]
 [ext_resource type="PackedScene" uid="uid://b5im4vyxk71p0" path="res://scenes/speaker.tscn" id="32_8gn2p"]
+[ext_resource type="PackedScene" uid="uid://el8kmhpp7xcw" path="res://scenes/member2.tscn" id="32_gon6x"]
 
 [sub_resource type="Resource" id="Resource_revm4"]
 script = ExtResource("3_c6ra0")
@@ -218,7 +219,7 @@ Property = ExtResource("29_clopl")
 layout_mode = 2
 size_flags_horizontal = 0
 script = ExtResource("24_l8syn")
-_characterScene = ExtResource("30_33ers")
+_characterScene = ExtResource("32_gon6x")
 
 [node name="Member" parent="UI/Prosecution/ProsecutionPortraits" unique_id=1728950275 instance=ExtResource("30_33ers")]
 layout_mode = 2

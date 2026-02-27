@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using Godot;
 using Lawfare.scripts.characters.lawyers;
 using Lawfare.scripts.logic.@event;
-using Lawfare.scripts.ui.character.portrait;
 
 namespace Lawfare.scripts.ui.character.team;
 
-public partial class TeamPortraitDisplay : Container
+public partial class TeamPortraitDisplay : Control
 {
     
     [Export]

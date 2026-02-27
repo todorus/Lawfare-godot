@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://el8kmhpp7xcw"]
+
+[ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_ehcdj"]
+[ext_resource type="Shader" uid="uid://cgttofkrvfcki" path="res://scripts/ui/character/skewShader.gdshader" id="2_yk2e3"]
+[ext_resource type="Texture2D" uid="uid://dui5p8b102a0" path="res://data/bars/CredBarEmptyRect.png" id="3_6a3ic"]
+[ext_resource type="Texture2D" uid="uid://b7j5gskddkf4" path="res://data/bars/CredBarFullRect.png" id="4_p6br1"]
+[ext_resource type="Texture2D" uid="uid://dj8ttolmsix23" path="res://data/bars/UltBarEmptyRect.png" id="5_ehcdj"]
+[ext_resource type="Texture2D" uid="uid://de3t3wgj4s84p" path="res://data/bars/UltBarFulRect.png" id="6_cxqg8"]
+[ext_resource type="Script" uid="uid://c3ra1t4m0gxg1" path="res://scripts/ui/character/PropertyObserver.cs" id="6_ehcdj"]
+[ext_resource type="Texture2D" uid="uid://hv8x8eqrxuaw" path="res://data/bars/portraitSkewed.png" id="7_7mqva"]
+[ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="7_l702e"]
+[ext_resource type="FontFile" uid="uid://csohic0rao1mf" path="res://data/bars/Inter_28pt-Black.ttf" id="8_l702e"]
+[ext_resource type="Texture2D" uid="uid://ce37gapyfwrfn" path="res://data/lawyers/lawyer4Portrait.png" id="9_ri82t"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="10_ri82t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_exryp"]
+shader = ExtResource("2_yk2e3")
+shader_parameter/skew_px = -7.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t3uwv"]
+shader = ExtResource("2_yk2e3")
+shader_parameter/skew_px = -3.0
+
+[node name="Member" type="Control" unique_id=1134892749]
+custom_minimum_size = Vector2(419, 105)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 419.0
+offset_bottom = 105.0
+script = ExtResource("1_ehcdj")
+
+[node name="Cred" type="TextureProgressBar" parent="." unique_id=1959999755]
+material = SubResource("ShaderMaterial_exryp")
+custom_minimum_size = Vector2(277, 30)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 127.6915
+offset_top = 1.0
+offset_right = -14.308502
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 70.0
+nine_patch_stretch = true
+texture_under = ExtResource("3_6a3ic")
+texture_progress = ExtResource("4_p6br1")
+script = ExtResource("6_ehcdj")
+_property = ExtResource("7_l702e")
+
+[node name="Ult" type="TextureProgressBar" parent="." unique_id=1078276606]
+material = SubResource("ShaderMaterial_t3uwv")
+custom_minimum_size = Vector2(277, 14)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 122.0
+offset_top = 33.0
+offset_right = -20.0
+offset_bottom = -58.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 70.0
+nine_patch_stretch = true
+texture_under = ExtResource("5_ehcdj")
+texture_progress = ExtResource("6_cxqg8")
+script = ExtResource("6_ehcdj")
+_property = ExtResource("10_ri82t")
+
+[node name="PortraitBG" type="TextureRect" parent="." unique_id=716420637]
+layout_mode = 0
+offset_right = 130.0
+offset_bottom = 104.0
+texture = ExtResource("7_7mqva")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Name" type="Label" parent="." unique_id=570018791]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 47.0
+offset_right = 543.0
+offset_bottom = 104.0
+theme_override_colors/font_color = Color(0.8560673, 0.8560673, 0.85606724, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("8_l702e")
+theme_override_font_sizes/font_size = 46
+text = "edgeworth"
+vertical_alignment = 1
+uppercase = true
+
+[node name="Portrait" type="TextureRect" parent="." unique_id=836277537]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 107.0
+offset_bottom = 102.0
+texture = ExtResource("9_ri82t")
+expand_mode = 3
+stretch_mode = 4
+
+[connection signal="LabelChanged" from="." to="Name" method="set_text" flags=3]
+[connection signal="PortraitChange" from="." to="Portrait" method="set_texture" flags=3]
+[connection signal="QuantitiesChanged" from="." to="Cred" method="SetQuantities" flags=3]
+[connection signal="QuantitiesChanged" from="." to="Ult" method="SetQuantities" flags=3]
+[connection signal="MeterProgress" from="Cred" to="Cred" method="set_as_ratio" flags=3]
+[connection signal="MeterProgress" from="Ult" to="Ult" method="set_as_ratio" flags=3]
