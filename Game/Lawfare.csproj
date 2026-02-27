@@ -7,6 +7,8 @@
   <ItemGroup>
     <Content Include="scripts\ui\character\portrait\circle.gdshader" />
     <Content Include="scripts\ui\character\portrait\portraitMaterial.tres" />
+    <Content Include="scripts\ui\character\skewShader.gdshader" />
+    <Content Include="scripts\ui\character\skewShaderSimple.gdshader" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="scripts\logic\targeting\" />
