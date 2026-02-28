@@ -1,0 +1,126 @@
+[gd_scene format=3 uid="uid://5fugj4j3kfyr"]
+
+[ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_qq1or"]
+[ext_resource type="Shader" uid="uid://cgttofkrvfcki" path="res://scripts/ui/character/skewShader.gdshader" id="2_61okn"]
+[ext_resource type="Texture2D" uid="uid://dui5p8b102a0" path="res://data/bars/CredBarEmptyRect.png" id="3_rpc0p"]
+[ext_resource type="Texture2D" uid="uid://b7j5gskddkf4" path="res://data/bars/CredBarFullRect.png" id="4_85vii"]
+[ext_resource type="Script" uid="uid://c3ra1t4m0gxg1" path="res://scripts/ui/character/PropertyObserver.cs" id="5_lavcb"]
+[ext_resource type="Resource" uid="uid://cqoe0iuv53eqr" path="res://data/properties/Credibility.tres" id="6_yn8sr"]
+[ext_resource type="Texture2D" uid="uid://dj8ttolmsix23" path="res://data/bars/UltBarEmptyRect.png" id="7_43o5n"]
+[ext_resource type="Texture2D" uid="uid://de3t3wgj4s84p" path="res://data/bars/UltBarFulRect.png" id="8_j5lax"]
+[ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="9_873ff"]
+[ext_resource type="Texture2D" uid="uid://hv8x8eqrxuaw" path="res://data/bars/portraitSkewed.png" id="10_uoxx0"]
+[ext_resource type="FontFile" uid="uid://csohic0rao1mf" path="res://data/bars/Inter_28pt-Black.ttf" id="11_cv17o"]
+[ext_resource type="Texture2D" uid="uid://ce37gapyfwrfn" path="res://data/lawyers/lawyer4Portrait.png" id="12_6ky7n"]
+[ext_resource type="Script" uid="uid://bjq45b826ls1c" path="res://scripts/ui/ParentClickable.cs" id="13_61okn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_exryp"]
+shader = ExtResource("2_61okn")
+shader_parameter/skew_px = 7.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t3uwv"]
+shader = ExtResource("2_61okn")
+shader_parameter/skew_px = 3.5
+
+[node name="Member" type="Control" unique_id=1134892749]
+custom_minimum_size = Vector2(419, 105)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 419.0
+offset_bottom = 105.0
+script = ExtResource("1_qq1or")
+
+[node name="Cred" type="TextureProgressBar" parent="." unique_id=1959999755]
+material = SubResource("ShaderMaterial_exryp")
+custom_minimum_size = Vector2(277, 30)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 1.0
+offset_right = -127.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 70.0
+fill_mode = 1
+nine_patch_stretch = true
+texture_under = ExtResource("3_rpc0p")
+texture_progress = ExtResource("4_85vii")
+script = ExtResource("5_lavcb")
+_property = ExtResource("6_yn8sr")
+
+[node name="Ult" type="TextureProgressBar" parent="." unique_id=1078276606]
+material = SubResource("ShaderMaterial_t3uwv")
+custom_minimum_size = Vector2(277, 14)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = 33.0
+offset_right = -121.0
+offset_bottom = -58.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 70.0
+fill_mode = 1
+nine_patch_stretch = true
+texture_under = ExtResource("7_43o5n")
+texture_progress = ExtResource("8_j5lax")
+script = ExtResource("5_lavcb")
+_property = ExtResource("9_873ff")
+
+[node name="PortraitBG" type="TextureRect" parent="." unique_id=716420637]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -130.0
+offset_bottom = 104.0
+grow_horizontal = 0
+texture = ExtResource("10_uoxx0")
+expand_mode = 3
+stretch_mode = 4
+flip_h = true
+
+[node name="Name" type="Label" parent="." unique_id=570018791]
+layout_mode = 0
+offset_top = 46.0
+offset_right = 300.0
+offset_bottom = 103.0
+theme_override_colors/font_color = Color(0.8560673, 0.8560673, 0.85606724, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("11_cv17o")
+theme_override_font_sizes/font_size = 46
+text = "maria"
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+
+[node name="Portrait" type="TextureRect" parent="." unique_id=836277537]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -108.0
+offset_right = -7.0
+offset_bottom = 101.0
+grow_horizontal = 0
+texture = ExtResource("12_6ky7n")
+expand_mode = 3
+stretch_mode = 4
+flip_h = true
+
+[node name="Click" type="Node" parent="." unique_id=1534421815]
+script = ExtResource("13_61okn")
+
+[connection signal="LabelChanged" from="." to="Name" method="set_text" flags=3]
+[connection signal="PortraitChange" from="." to="Portrait" method="set_texture" flags=3]
+[connection signal="QuantitiesChanged" from="." to="Cred" method="SetQuantities" flags=3]
+[connection signal="QuantitiesChanged" from="." to="Ult" method="SetQuantities" flags=3]
+[connection signal="MeterProgress" from="Cred" to="Cred" method="set_as_ratio" flags=3]
+[connection signal="MeterProgress" from="Ult" to="Ult" method="set_as_ratio" flags=3]
+[connection signal="Clicked" from="Click" to="." method="OnClicked" flags=3]
