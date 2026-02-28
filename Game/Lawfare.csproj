@@ -5,6 +5,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="scripts\ui\character\anchoredSkewShader.gdshader" />
     <Content Include="scripts\ui\character\portrait\circle.gdshader" />
     <Content Include="scripts\ui\character\portrait\portraitMaterial.tres" />
     <Content Include="scripts\ui\character\skewShader.gdshader" />

@@ -224,16 +224,10 @@ _characterScene = ExtResource("32_gon6x")
 _memberSpacing = 105
 _memberOffset = 27
 
-[node name="Member" parent="UI/Prosecution/ProsecutionPortraits" unique_id=1728950275 instance=ExtResource("30_33ers")]
+[node name="Member" parent="UI/Prosecution/ProsecutionPortraits" unique_id=458919592 instance=ExtResource("32_gon6x")]
 layout_mode = 0
-offset_right = 432.0
-offset_bottom = 100.0
-
-[node name="Member2" parent="UI/Prosecution/ProsecutionPortraits" unique_id=433187948 instance=ExtResource("30_33ers")]
-layout_mode = 0
-offset_top = 104.0
-offset_right = 432.0
-offset_bottom = 204.0
+offset_right = 632.0
+Mirror = true
 
 [node name="ProsecutionSpeaker" parent="UI" unique_id=1066444419 instance=ExtResource("32_8gn2p")]
 layout_mode = 1
@@ -307,12 +301,12 @@ Mirror = true
 
 [connection signal="ActiveLawyerChanged" from="." to="Interaction" method="SetSourceLawyer" flags=3]
 [connection signal="DefenseChanged" from="." to="UI/Defense" method="SetTeam" flags=3]
-[connection signal="DefenseChanged" from="." to="UI/DefenseSpeaker" method="SetTeam" flags=3]
 [connection signal="DefenseChanged" from="." to="UI/Defense/DefensePortraits" method="SetTeam" flags=3]
+[connection signal="DefenseChanged" from="." to="UI/DefenseSpeaker" method="SetTeam" flags=3]
 [connection signal="Initialized" from="." to="UI/Initiative" method="SeedFromContext" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution" method="SetTeam" flags=3]
-[connection signal="ProsecutionChanged" from="." to="UI/ProsecutionSpeaker" method="SetTeam" flags=3]
 [connection signal="ProsecutionChanged" from="." to="UI/Prosecution/ProsecutionPortraits" method="SetTeam" flags=3]
+[connection signal="ProsecutionChanged" from="." to="UI/ProsecutionSpeaker" method="SetTeam" flags=3]
 [connection signal="SpeakerChanged" from="." to="UI/ProsecutionSpeaker" method="OnSpeakerChange" flags=3]
 [connection signal="SpeakerChanged" from="." to="UI/DefenseSpeaker" method="OnSpeakerChange" flags=3]
 [connection signal="TestimonyChanged" from="." to="UI/Witness2/Witness/Testimony" method="SetTestimonies" flags=3]

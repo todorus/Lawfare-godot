@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cuaoa2nbjs7eb" path="res://scripts/ui/character/CharacterObserver.cs" id="1_ehcdj"]
 [ext_resource type="Shader" uid="uid://cgttofkrvfcki" path="res://scripts/ui/character/skewShader.gdshader" id="2_yk2e3"]
 [ext_resource type="Texture2D" uid="uid://dui5p8b102a0" path="res://data/bars/CredBarEmptyRect.png" id="3_6a3ic"]
+[ext_resource type="Shader" uid="uid://bgxmwt6qavh4a" path="res://scripts/ui/character/anchoredSkewShader.gdshader" id="4_cxqg8"]
 [ext_resource type="Texture2D" uid="uid://b7j5gskddkf4" path="res://data/bars/CredBarFullRect.png" id="4_p6br1"]
 [ext_resource type="Texture2D" uid="uid://dj8ttolmsix23" path="res://data/bars/UltBarEmptyRect.png" id="5_ehcdj"]
 [ext_resource type="Texture2D" uid="uid://de3t3wgj4s84p" path="res://data/bars/UltBarFulRect.png" id="6_cxqg8"]
@@ -14,63 +15,27 @@
 [ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="10_ri82t"]
 [ext_resource type="Script" uid="uid://bjq45b826ls1c" path="res://scripts/ui/ParentClickable.cs" id="13_ehcdj"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_exryp"]
-shader = ExtResource("2_yk2e3")
-shader_parameter/skew_px = -7.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cxqg8"]
+shader = ExtResource("4_cxqg8")
+shader_parameter/skew_px = -12.0
+shader_parameter/anchor_right = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t3uwv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ehcdj"]
 shader = ExtResource("2_yk2e3")
-shader_parameter/skew_px = -3.0
+shader_parameter/skew_px = 40.0
 
-[node name="Member" type="Control" unique_id=1134892749]
-custom_minimum_size = Vector2(419, 105)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 419.0
-offset_bottom = 105.0
+[node name="Member" type="HBoxContainer" unique_id=458919592]
+offset_right = 422.0
+offset_bottom = 108.0
+size_flags_horizontal = 0
+theme_override_constants/separation = 2
 script = ExtResource("1_ehcdj")
 
-[node name="Cred" type="TextureProgressBar" parent="." unique_id=1959999755]
-material = SubResource("ShaderMaterial_exryp")
-custom_minimum_size = Vector2(277, 30)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 127.6915
-offset_top = 1.0
-offset_right = -14.308502
-offset_bottom = -74.0
-grow_horizontal = 2
-grow_vertical = 2
-value = 70.0
-nine_patch_stretch = true
-texture_under = ExtResource("3_6a3ic")
-texture_progress = ExtResource("4_p6br1")
-script = ExtResource("6_ehcdj")
-_property = ExtResource("7_l702e")
+[node name="PortraitHolder" type="Control" parent="." unique_id=1861085676]
+custom_minimum_size = Vector2(118, 0)
+layout_mode = 2
 
-[node name="Ult" type="TextureProgressBar" parent="." unique_id=1078276606]
-material = SubResource("ShaderMaterial_t3uwv")
-custom_minimum_size = Vector2(277, 14)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 122.0
-offset_top = 33.0
-offset_right = -20.0
-offset_bottom = -58.0
-grow_horizontal = 2
-grow_vertical = 2
-value = 70.0
-nine_patch_stretch = true
-texture_under = ExtResource("5_ehcdj")
-texture_progress = ExtResource("6_cxqg8")
-script = ExtResource("6_ehcdj")
-_property = ExtResource("10_ri82t")
-
-[node name="PortraitBG" type="TextureRect" parent="." unique_id=716420637]
+[node name="PortraitBG" type="TextureRect" parent="PortraitHolder" unique_id=716420637]
 layout_mode = 0
 offset_right = 130.0
 offset_bottom = 104.0
@@ -78,12 +43,58 @@ texture = ExtResource("7_7mqva")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="Name" type="Label" parent="." unique_id=570018791]
+[node name="Portrait" type="TextureRect" parent="PortraitHolder" unique_id=836277537]
 layout_mode = 0
-offset_left = 120.0
-offset_top = 47.0
-offset_right = 543.0
-offset_bottom = 104.0
+offset_top = 1.0
+offset_right = 129.0
+offset_bottom = 102.0
+texture = ExtResource("9_ri82t")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1090732381]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="MetersContainer" type="SubViewportContainer" parent="VBoxContainer" unique_id=1945185504]
+material = SubResource("ShaderMaterial_cxqg8")
+custom_minimum_size = Vector2(278, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="MetersViewport" type="SubViewport" parent="VBoxContainer/MetersContainer" unique_id=2136831817]
+handle_input_locally = false
+size = Vector2i(278, 47)
+render_target_update_mode = 4
+
+[node name="Meters" type="VBoxContainer" parent="VBoxContainer/MetersContainer/MetersViewport" unique_id=368690588]
+material = SubResource("ShaderMaterial_ehcdj")
+offset_right = 278.0
+offset_bottom = 50.0
+theme_override_constants/separation = 2
+
+[node name="Cred" type="TextureProgressBar" parent="VBoxContainer/MetersContainer/MetersViewport/Meters" unique_id=1959999755]
+custom_minimum_size = Vector2(277, 30)
+layout_mode = 2
+value = 70.0
+nine_patch_stretch = true
+texture_under = ExtResource("3_6a3ic")
+texture_progress = ExtResource("4_p6br1")
+script = ExtResource("6_ehcdj")
+_property = ExtResource("7_l702e")
+
+[node name="Ult" type="TextureProgressBar" parent="VBoxContainer/MetersContainer/MetersViewport/Meters" unique_id=1078276606]
+custom_minimum_size = Vector2(277, 14)
+layout_mode = 2
+value = 70.0
+nine_patch_stretch = true
+texture_under = ExtResource("5_ehcdj")
+texture_progress = ExtResource("6_cxqg8")
+script = ExtResource("6_ehcdj")
+_property = ExtResource("10_ri82t")
+
+[node name="Name" type="Label" parent="VBoxContainer" unique_id=570018791]
+layout_mode = 2
 theme_override_colors/font_color = Color(0.8560673, 0.8560673, 0.85606724, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
@@ -93,23 +104,15 @@ text = "edgeworth"
 vertical_alignment = 1
 uppercase = true
 
-[node name="Portrait" type="TextureRect" parent="." unique_id=836277537]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 1.0
-offset_right = 107.0
-offset_bottom = 102.0
-texture = ExtResource("9_ri82t")
-expand_mode = 3
-stretch_mode = 4
-
 [node name="Click" type="Node" parent="." unique_id=172616537]
 script = ExtResource("13_ehcdj")
 
-[connection signal="LabelChanged" from="." to="Name" method="set_text" flags=3]
-[connection signal="PortraitChange" from="." to="Portrait" method="set_texture" flags=3]
-[connection signal="QuantitiesChanged" from="." to="Cred" method="SetQuantities" flags=3]
-[connection signal="QuantitiesChanged" from="." to="Ult" method="SetQuantities" flags=3]
-[connection signal="MeterProgress" from="Cred" to="Cred" method="set_as_ratio" flags=3]
-[connection signal="MeterProgress" from="Ult" to="Ult" method="set_as_ratio" flags=3]
+[connection signal="LabelChanged" from="." to="VBoxContainer/Name" method="set_text" flags=3]
+[connection signal="MirrorChanged" from="." to="PortraitHolder/PortraitBG" method="set_flip_h" flags=3]
+[connection signal="MirrorChanged" from="." to="PortraitHolder/Portrait" method="set_flip_h" flags=3]
+[connection signal="PortraitChange" from="." to="PortraitHolder/Portrait" method="set_texture" flags=3]
+[connection signal="QuantitiesChanged" from="." to="VBoxContainer/MetersContainer/MetersViewport/Meters/Cred" method="SetQuantities" flags=3]
+[connection signal="QuantitiesChanged" from="." to="VBoxContainer/MetersContainer/MetersViewport/Meters/Ult" method="SetQuantities" flags=3]
+[connection signal="MeterProgress" from="VBoxContainer/MetersContainer/MetersViewport/Meters/Cred" to="VBoxContainer/MetersContainer/MetersViewport/Meters/Cred" method="set_as_ratio" flags=3]
+[connection signal="MeterProgress" from="VBoxContainer/MetersContainer/MetersViewport/Meters/Ult" to="VBoxContainer/MetersContainer/MetersViewport/Meters/Ult" method="set_as_ratio" flags=3]
 [connection signal="Clicked" from="Click" to="." method="OnClicked" flags=3]
