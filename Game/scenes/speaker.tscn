@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://c3ra1t4m0gxg1" path="res://scripts/ui/character/PropertyObserver.cs" id="2_4xe8x"]
 [ext_resource type="Resource" uid="uid://env6fylvumkl" path="res://data/properties/Charge.tres" id="3_146hn"]
 [ext_resource type="Material" uid="uid://b44ipok7iyrxk" path="res://scripts/ui/character/characterMaterial.tres" id="4_1n7tg"]
-[ext_resource type="Texture2D" uid="uid://dnu7prw70nt6t" path="res://data/cases/testcase/molly/MollyF.png" id="5_qat21"]
+[ext_resource type="Texture2D" uid="uid://cucymd5t1bikd" path="res://data/lawyers/lawyer4.png" id="5_7mjfu"]
 [ext_resource type="Script" uid="uid://5e8whvir25un" path="res://scripts/ui/Clickable.cs" id="6_3qj02"]
 [ext_resource type="Material" uid="uid://cfs3ia1qgvmee" path="res://scripts/ui/character/ultMaterial.tres" id="7_2wd8r"]
 [ext_resource type="Script" uid="uid://bb8ya73qwcytc" path="res://scripts/ui/toggles/VisibilityToggle.cs" id="8_2ka1m"]
@@ -37,7 +37,7 @@ offset_top = -416.0
 offset_right = 134.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("5_qat21")
+texture = ExtResource("5_7mjfu")
 expand_mode = 3
 stretch_mode = 5
 script = ExtResource("6_3qj02")
