@@ -53,6 +53,7 @@ public partial class TeamPortraitDisplay : Control
             if (value == null) return;
             
             var memberCount = value.Members.Length;
+            var memberOffset = _mirror ? -_memberOffset : _memberOffset;
             for(int i = 0; i < memberCount; i++)
             {
                 var member = value.Members[i];
@@ -60,7 +61,7 @@ public partial class TeamPortraitDisplay : Control
                 characterObserver.CharacterClicked += OnCharacterClicked;
                 characterObserver.Character = member;
                 characterObserver.Mirror = _mirror;
-                characterObserver.Position = new Vector2((memberCount - i - 1) * _memberOffset, i * _memberSpacing);
+                characterObserver.Position = new Vector2((memberCount - i - 1) * memberOffset, i * _memberSpacing);
                 
                 AddChild(characterObserver);
                 _characterObservers.Add(characterObserver);

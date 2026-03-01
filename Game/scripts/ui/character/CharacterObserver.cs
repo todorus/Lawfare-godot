@@ -30,6 +30,18 @@ public partial class CharacterObserver : Control
     public delegate void MirrorChangedEventHandler(bool mirror);
     
     [Signal]
+    public delegate void OnLayoutDirectionChangedEventHandler(Window.LayoutDirection layoutDirection);
+    
+    [Signal]
+    public delegate void OnOppositeLayoutDirectionChangedEventHandler(Window.LayoutDirection layoutDirection);
+    
+    [Signal]
+    public delegate void OnFillModeChangedEventHandler(TextureProgressBar.FillModeEnum fillModeEnum);
+    
+    [Signal]
+    public delegate void OnOppositeFillModeChangedEventHandler(TextureProgressBar.FillModeEnum fillModeEnum);
+    
+    [Signal]
     public delegate void CharacterClickedEventHandler(GodotObject character);
     
     [Signal]
@@ -48,6 +60,11 @@ public partial class CharacterObserver : Control
         {
             _mirror = value;
             EmitSignalMirrorChanged(value);
+            EmitSignalOnLayoutDirectionChanged(value ? Window.LayoutDirection.Rtl : Window.LayoutDirection.Ltr);
+            EmitSignalOnOppositeLayoutDirectionChanged(value ? Window.LayoutDirection.Ltr : Window.LayoutDirection.Rtl);
+            
+            EmitSignalOnFillModeChanged(value ? TextureProgressBar.FillModeEnum.RightToLeft : TextureProgressBar.FillModeEnum.LeftToRight);
+            EmitSignalOnOppositeFillModeChanged(value ? TextureProgressBar.FillModeEnum.LeftToRight : TextureProgressBar.FillModeEnum.RightToLeft);
         }
     }
     

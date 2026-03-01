@@ -3,7 +3,7 @@ using Lawfare.scripts.subject.quantities;
 
 namespace Lawfare.scripts.ui.quantities;
 
-public partial class PropertyObserver : Node
+public partial class PropertyObserver : Control
 {
     [Signal]
     public delegate void IconChangedEventHandler(Texture2D icon);

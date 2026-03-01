@@ -3,7 +3,7 @@ using Lawfare.scripts.subject.quantities;
 
 namespace Lawfare.scripts.ui.character;
 
-public partial class PropertyObserver : Node
+public partial class PropertyObserver : Control
 {
     [Signal]
     public delegate void MeterVisibleEventHandler(bool visible);
