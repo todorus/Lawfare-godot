@@ -7,7 +7,6 @@
 [ext_resource type="Resource" uid="uid://big1ymofv5jcs" path="res://data/actions/ClarifyRecord.tres" id="3_dwf32"]
 [ext_resource type="Texture2D" uid="uid://4bnw78ms326q" path="res://data/lawyers/lawyer3Portrait.png" id="4_0bh71"]
 [ext_resource type="Resource" uid="uid://bqk366drvqyud" path="res://data/actions/Stall.tres" id="4_dwf32"]
-[ext_resource type="Resource" uid="uid://6wesnofhtwsj" path="res://data/actions/Diminish.tres" id="5_coi7s"]
 [ext_resource type="Resource" uid="uid://kpkh2hwl0lv4" path="res://data/lawyers/StartCredibility.tres" id="5_lrfmm"]
 [ext_resource type="Script" uid="uid://bjcste7ntxgww" path="res://scripts/logic/cards/Ultimate.cs" id="7_4b7ae"]
 
@@ -23,6 +22,6 @@ Image = ExtResource("1_x31pi")
 Portrait = ExtResource("4_0bh71")
 Initiative = 3
 Ultimate = SubResource("Resource_dwf32")
-Actions = [ExtResource("1_pp2ni"), ExtResource("2_4b7ae"), ExtResource("3_dwf32"), ExtResource("4_dwf32"), ExtResource("5_coi7s")]
+Actions = [ExtResource("1_pp2ni"), ExtResource("2_4b7ae"), ExtResource("3_dwf32"), ExtResource("4_dwf32")]
 Quantities = [ExtResource("5_lrfmm")]
 metadata/_custom_type_script = "uid://cnj2arvpule3p"

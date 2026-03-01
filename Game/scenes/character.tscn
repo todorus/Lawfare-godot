@@ -24,6 +24,7 @@ size_flags_vertical = 3
 script = ExtResource("1_rkhd4")
 
 [node name="UltObserver" type="Control" parent="." unique_id=1060125002]
+anchors_preset = 0
 script = ExtResource("2_irmqu")
 _property = ExtResource("3_7eonc")
 
